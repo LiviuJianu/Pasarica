@@ -12,7 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var bird = SKSpriteNode()
     var skyColor = SKColor()
-    var pipeUpTexture = SKTexture()
+    var pipeUpTexture = SKTexture() 
     var pipeDownTexture = SKTexture()
     var PipesMoveAndRemove = SKAction()
 	
