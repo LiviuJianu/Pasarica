@@ -15,18 +15,12 @@
 		8434DC6319C788CA00825DF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC6219C788CA00825DF3 /* Images.xcassets */; };
 		8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC6419C788CA00825DF3 /* LaunchScreen.xib */; };
 		8434DC7219C788CA00825DF3 /* PasaricaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC7119C788CA00825DF3 /* PasaricaTests.swift */; };
-		8434DC7E19C78A7D00825DF3 /* Bird.png in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC7C19C78A7D00825DF3 /* Bird.png */; };
-		8434DC8519C79E5300825DF3 /* Skyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC8419C79E5300825DF3 /* Skyline.png */; };
-		8434DC8819C79E5C00825DF3 /* PipeUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC8619C79E5C00825DF3 /* PipeUp.png */; };
-		8434DC8919C79E5C00825DF3 /* PipeDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC8719C79E5C00825DF3 /* PipeDown.png */; };
-		8434DC8B19C7A11900825DF3 /* Ground.png in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC8A19C7A11900825DF3 /* Ground.png */; };
 		8460D08019C7BCF300E6602E /* BirdUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D07E19C7BCF300E6602E /* BirdUp.png */; };
 		8460D08119C7BCF300E6602E /* BirdDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D07F19C7BCF300E6602E /* BirdDown.png */; };
-		8460D08819C7C00F00E6602E /* PasaricaIcon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D08319C7C00F00E6602E /* PasaricaIcon120x120.png */; };
-		8460D08919C7C00F00E6602E /* PasaricaIcon180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D08419C7C00F00E6602E /* PasaricaIcon180x180.png */; };
-		8460D08A19C7C00F00E6602E /* PasaricaIcon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D08519C7C00F00E6602E /* PasaricaIcon58x58.png */; };
-		8460D08B19C7C00F00E6602E /* PasaricaIcon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D08619C7C00F00E6602E /* PasaricaIcon80x80.png */; };
-		8460D08C19C7C00F00E6602E /* PasaricaIcon87x87.png in Resources */ = {isa = PBXBuildFile; fileRef = 8460D08719C7C00F00E6602E /* PasaricaIcon87x87.png */; };
+		84AE6AFA19C8B8B700E06CFE /* Ground.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF619C8B8B700E06CFE /* Ground.png */; };
+		84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF719C8B8B700E06CFE /* PipeDown.png */; };
+		84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF819C8B8B700E06CFE /* PipeUp.png */; };
+		84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF919C8B8B700E06CFE /* Skyline.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,18 +46,12 @@
 		8434DC6B19C788CA00825DF3 /* PasaricaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PasaricaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434DC7019C788CA00825DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8434DC7119C788CA00825DF3 /* PasaricaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasaricaTests.swift; sourceTree = "<group>"; };
-		8434DC7C19C78A7D00825DF3 /* Bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bird.png; sourceTree = "<group>"; };
-		8434DC8419C79E5300825DF3 /* Skyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Skyline.png; path = ../../Downloads/SwiftFlappy/swiftflappy/MyResources.atlas/Skyline.png; sourceTree = "<group>"; };
-		8434DC8619C79E5C00825DF3 /* PipeUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PipeUp.png; path = ../../Downloads/SwiftFlappy/swiftflappy/MyResources.atlas/PipeUp.png; sourceTree = "<group>"; };
-		8434DC8719C79E5C00825DF3 /* PipeDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PipeDown.png; path = ../../Downloads/SwiftFlappy/swiftflappy/MyResources.atlas/PipeDown.png; sourceTree = "<group>"; };
-		8434DC8A19C7A11900825DF3 /* Ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ground.png; path = ../../Downloads/SwiftFlappy/swiftflappy/MyResources.atlas/Ground.png; sourceTree = "<group>"; };
 		8460D07E19C7BCF300E6602E /* BirdUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BirdUp.png; sourceTree = "<group>"; };
 		8460D07F19C7BCF300E6602E /* BirdDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BirdDown.png; sourceTree = "<group>"; };
-		8460D08319C7C00F00E6602E /* PasaricaIcon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PasaricaIcon120x120.png; sourceTree = "<group>"; };
-		8460D08419C7C00F00E6602E /* PasaricaIcon180x180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PasaricaIcon180x180.png; sourceTree = "<group>"; };
-		8460D08519C7C00F00E6602E /* PasaricaIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PasaricaIcon58x58.png; sourceTree = "<group>"; };
-		8460D08619C7C00F00E6602E /* PasaricaIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PasaricaIcon80x80.png; sourceTree = "<group>"; };
-		8460D08719C7C00F00E6602E /* PasaricaIcon87x87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PasaricaIcon87x87.png; sourceTree = "<group>"; };
+		84AE6AF619C8B8B700E06CFE /* Ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ground.png; sourceTree = "<group>"; };
+		84AE6AF719C8B8B700E06CFE /* PipeDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeDown.png; sourceTree = "<group>"; };
+		84AE6AF819C8B8B700E06CFE /* PipeUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeUp.png; sourceTree = "<group>"; };
+		84AE6AF919C8B8B700E06CFE /* Skyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Skyline.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +101,6 @@
 				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
 				8434DC6219C788CA00825DF3 /* Images.xcassets */,
 				8434DC6419C788CA00825DF3 /* LaunchScreen.xib */,
-				8460D08219C7C00F00E6602E /* AppIcons */,
 				8434DC7B19C78A7D00825DF3 /* BirdImages */,
 				8434DC5519C788CA00825DF3 /* Supporting Files */,
 			);
@@ -148,29 +135,14 @@
 		8434DC7B19C78A7D00825DF3 /* BirdImages */ = {
 			isa = PBXGroup;
 			children = (
-				8434DC7C19C78A7D00825DF3 /* Bird.png */,
+				84AE6AF619C8B8B700E06CFE /* Ground.png */,
+				84AE6AF719C8B8B700E06CFE /* PipeDown.png */,
+				84AE6AF819C8B8B700E06CFE /* PipeUp.png */,
+				84AE6AF919C8B8B700E06CFE /* Skyline.png */,
 				8460D07E19C7BCF300E6602E /* BirdUp.png */,
 				8460D07F19C7BCF300E6602E /* BirdDown.png */,
-				8434DC8619C79E5C00825DF3 /* PipeUp.png */,
-				8434DC8719C79E5C00825DF3 /* PipeDown.png */,
-				8434DC8419C79E5300825DF3 /* Skyline.png */,
-				8434DC8A19C7A11900825DF3 /* Ground.png */,
 			);
-			name = BirdImages;
-			path = ../../../../../Desktop/BirdImages;
-			sourceTree = "<group>";
-		};
-		8460D08219C7C00F00E6602E /* AppIcons */ = {
-			isa = PBXGroup;
-			children = (
-				8460D08319C7C00F00E6602E /* PasaricaIcon120x120.png */,
-				8460D08419C7C00F00E6602E /* PasaricaIcon180x180.png */,
-				8460D08519C7C00F00E6602E /* PasaricaIcon58x58.png */,
-				8460D08619C7C00F00E6602E /* PasaricaIcon80x80.png */,
-				8460D08719C7C00F00E6602E /* PasaricaIcon87x87.png */,
-			);
-			name = AppIcons;
-			path = ../../../../../Desktop/BirdImages/AppIcons;
+			path = BirdImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,22 +226,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8434DC8519C79E5300825DF3 /* Skyline.png in Resources */,
-				8460D08819C7C00F00E6602E /* PasaricaIcon120x120.png in Resources */,
+				84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */,
 				8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */,
-				8460D08B19C7C00F00E6602E /* PasaricaIcon80x80.png in Resources */,
 				8460D08019C7BCF300E6602E /* BirdUp.png in Resources */,
-				8460D08919C7C00F00E6602E /* PasaricaIcon180x180.png in Resources */,
-				8434DC8819C79E5C00825DF3 /* PipeUp.png in Resources */,
+				84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */,
 				8434DC6319C788CA00825DF3 /* Images.xcassets in Resources */,
-				8434DC7E19C78A7D00825DF3 /* Bird.png in Resources */,
 				8460D08119C7BCF300E6602E /* BirdDown.png in Resources */,
-				8460D08A19C7C00F00E6602E /* PasaricaIcon58x58.png in Resources */,
-				8460D08C19C7C00F00E6602E /* PasaricaIcon87x87.png in Resources */,
 				8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */,
+				84AE6AFA19C8B8B700E06CFE /* Ground.png in Resources */,
 				8434DC6119C788CA00825DF3 /* Main.storyboard in Resources */,
-				8434DC8B19C7A11900825DF3 /* Ground.png in Resources */,
-				8434DC8919C79E5C00825DF3 /* PipeDown.png in Resources */,
+				84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
