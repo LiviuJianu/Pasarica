@@ -32,6 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var scoreLabelNode = SKLabelNode()
 	var score = NSInteger()
 	
+	var highScoreLabelNode = SKLabelNode()
+	var highScore = NSInteger()
+	
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
 		
@@ -142,13 +145,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(spawnThenDelayForever)
 		
 		score = 0
-		scoreLabelNode.fontName = "HelVetica-Bold"
+		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height / 6)
 		scoreLabelNode.fontSize = 600
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
 		scoreLabelNode.text = "\(score)"
 		self.addChild(scoreLabelNode)
+		
+		highScore = 0
+		highScoreLabelNode.fontName = "Helvetica"
+		highScoreLabelNode.fontSize = 20
+		highScoreLabelNode.position = CGPointMake(self.frame.width - 300.0 , self.frame.height - highScoreLabelNode.fontSize)
+
+		highScoreLabelNode.alpha = 0.5
+		highScoreLabelNode.zPosition = -30
+		highScoreLabelNode.text = "record: " + "\(score)"
+		self.addChild(highScoreLabelNode)
         
     }
     
@@ -207,6 +220,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		moving.speed = 1
 		
+		highScore = score
+		highScoreLabelNode.text = "record: "+"\(highScore)"
+		
 		score = 0
 		scoreLabelNode.text = "\(score)"
 		
@@ -252,8 +268,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				score++
 				scoreLabelNode.text = "\(score)"
 			} else {
-			moving.speed = 0
 
+			moving.speed = 0
 			bird.physicsBody?.collisionBitMask = worldCategory
 			
 			var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
