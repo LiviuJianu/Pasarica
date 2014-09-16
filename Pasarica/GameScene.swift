@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pipeDownTexture = SKTexture()
     var PipesMoveAndRemove = SKAction()
 	
-	var gravity = CGFloat(-8.0)
+	var gravity = CGFloat(-5.0)
 	
     let pipeGap = 130.0
 	let birdCategory: UInt32	= 1 << 0
