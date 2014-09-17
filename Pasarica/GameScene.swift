@@ -31,9 +31,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	var scoreLabelNode = SKLabelNode()
 	var score = NSInteger()
-	
+
+	var highscore : Int {
+		get {
+			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
+				return high
+			} else {
+				self.highscore = 0 // this calls the setter
+				return 0
+			}
+		}
+		set (newHighscore){
+			NSUserDefaults.standardUserDefaults().setInteger(newHighscore, forKey: "highscore")
+			NSUserDefaults.standardUserDefaults().synchronize()
+		}
+	}
 	var highScoreLabelNode = SKLabelNode()
-	var highScore = NSInteger()
 	
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -153,14 +166,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		scoreLabelNode.text = "\(score)"
 		self.addChild(scoreLabelNode)
 		
-		highScore = 0
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
-		highScoreLabelNode.position = CGPointMake(self.frame.width - 300.0 , self.frame.height - highScoreLabelNode.fontSize)
+		highScoreLabelNode.position = CGPointMake(self.frame.width - 400.0 , self.frame.height - highScoreLabelNode.fontSize)
 
 		highScoreLabelNode.alpha = 0.5
 		highScoreLabelNode.zPosition = -30
-		highScoreLabelNode.text = "record: " + "\(score)"
+
+		highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		self.addChild(highScoreLabelNode)
         
     }
@@ -219,10 +232,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		canRestart = false
 		
 		moving.speed = 1
-		
-		highScore = score
-		highScoreLabelNode.text = "record: "+"\(highScore)"
-		
+
+		highScoreLabelNode.text = "record: \(self.highscore)"
+
 		score = 0
 		scoreLabelNode.text = "\(score)"
 		
@@ -267,6 +279,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			if((contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory) {
 				score++
 				scoreLabelNode.text = "\(score)"
+				
+				self.highscore = max(score, self.highscore);
 			} else {
 
 			moving.speed = 0
