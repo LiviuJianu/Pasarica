@@ -10,6 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
+	//MARK: Game variables
 	var bird = SKSpriteNode()
 	var skyColor = SKColor()
 	var PipesMoveAndRemove = SKAction()
@@ -22,10 +23,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var BirdUpTexture = SKTexture(imageNamed: "BirdUp")
 	var BirdDownTexture = SKTexture(imageNamed: "BirdDown")
 	
-	
+	//World gravity
 	var gravity = CGFloat(-5.0)
 	
 	var pipes = SKNode()
+	var moving = SKNode()
 	let pipeGap = 130.0
 	
 	//Collision bit masks
@@ -33,15 +35,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let worldCategory: UInt32	= 1 << 1
 	let pipeCategory: UInt32	= 1 << 2
 	let scoreCategory: UInt32	= 1 << 3
-	
-	var moving = SKNode()
+
+	//Restart game if bird collided
 	var canRestart = false
-	
-	
-	var scoreLabelNode = SKLabelNode()
+
+	//Scoring variables
 	var score = NSInteger()
+	var scoreLabelNode = SKLabelNode()
+
 	var highScoreLabelNode = SKLabelNode()
-	
 	var highscore : Int {
 		get {
 			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
@@ -57,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 	
+	//MARK: Scene setup
 	override func didMoveToView(view: SKView) {
 		/* Setup your scene here */
 		
@@ -76,17 +79,138 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//Draw the Sky and set the limits
 		drawSky()
 		
-		//Draw the Ground and set the limits
-		drawGround()
-		
-		
 		//Draw the pipes
 		drawPipes()
 		
+		//Draw the Ground and set the limits
+		drawGround()
+
 		//Draw the score and high score
 		drawScores()
 		
+	}
+	
+	override func update(currentTime: CFTimeInterval) {
+		/* Called before each frame is rendered */
 		
+		if(moving.speed > 0) {
+			var birdVelocity = bird.physicsBody?.velocity.dy
+			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
+		}
+	}
+	
+	func clamp(min: CGFloat, max: CGFloat, value: CGFloat) -> CGFloat {
+		if(value>max) {
+			return max
+		} else if(value < min) {
+			return min
+		} else {
+			return value
+		}
+	}
+	
+	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+		/* Called when a touch begins */
+		
+		if(moving.speed > 0) {
+			
+			bird.physicsBody?.velocity = CGVectorMake(0, 0)
+			bird.physicsBody?.applyImpulse(CGVectorMake(0, 6))
+			
+		} else if(canRestart) {
+			self.resetScene()
+		}
+	}
+	
+	func resetScene() {
+		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
+		bird.physicsBody?.velocity = CGVectorMake(0, 0)
+		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
+		bird.speed = 1.0
+		bird.zRotation = 0.0
+		
+		pipes.removeAllChildren()
+		
+		canRestart = false
+		
+		moving.speed = 1
+		
+		highScoreLabelNode.text = "record: \(self.highscore)"
+		
+		score = 0
+		scoreLabelNode.text = "\(score)"
+		
+	}
+	
+	//MARK: Bird
+	func createBird() {
+		BirdUpTexture.filteringMode = SKTextureFilteringMode.Nearest
+		BirdDownTexture.filteringMode = SKTextureFilteringMode.Nearest
+		
+		bird = SKSpriteNode(texture: BirdUpTexture)
+		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
+		
+		
+		var animation = SKAction.animateWithTextures([BirdUpTexture,BirdDownTexture], timePerFrame: 0.2)
+		var flap = SKAction.repeatActionForever(animation)
+		bird.runAction(flap)
+		
+		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
+		bird.physicsBody?.dynamic = true
+		bird.physicsBody?.allowsRotation = false
+		
+		bird.physicsBody?.categoryBitMask = birdCategory
+		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
+		bird.physicsBody?.contactTestBitMask = worldCategory | pipeCategory
+		
+		self.addChild(bird)
+	}
+	
+	//MARK: Sky
+	func drawSky() {
+		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
+		
+		var moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
+		var resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
+		var moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
+		
+		for var i: CGFloat = 0; i<2 + self.frame.size.width / (skylineTexture.size().width); ++i {
+			var sprite = SKSpriteNode(texture: skylineTexture)
+			sprite.zPosition = -20
+			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
+			sprite.runAction(moveSkylineSpritesForever)
+			moving.addChild(sprite)
+		}
+		
+		//Sky - upper screen limit
+		var skyLimit = SKNode()
+		skyLimit.position = CGPointMake(0, self.frame.size.height)
+		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, 1.0))
+		skyLimit.physicsBody?.categoryBitMask = worldCategory
+		skyLimit.physicsBody?.dynamic = false
+		
+		self.addChild(skyLimit)
+	}
+	
+	//MARK: Pipes
+	func drawPipes() {
+		//Create the Pipes
+		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
+		pipeDownTexture.filteringMode = SKTextureFilteringMode.Nearest
+		//movement of pipes
+		let distanceToMove = CGFloat(self.frame.size.width + 2.0 * pipeUpTexture.size().width)
+		let movePipes = SKAction.moveByX(-distanceToMove, y: 0.0, duration: NSTimeInterval(0.01 * distanceToMove))
+		let removePipes = SKAction.removeFromParent()
+		
+		PipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
+		
+		//Spawn Pipes
+		let spawn = SKAction.runBlock({() in self.spawnPipes()})
+		let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
+		let spawnThenDelay = SKAction.sequence([spawn,delay])
+		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+		
+		self.runAction(spawnThenDelayForever)
 	}
 	
 	func spawnPipes() {
@@ -131,111 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 	}
 	
-	func resetScene() {
-		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
-		bird.physicsBody?.velocity = CGVectorMake(0, 0)
-		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
-		bird.speed = 1.0
-		bird.zRotation = 0.0
-		
-		pipes.removeAllChildren()
-		
-		canRestart = false
-		
-		moving.speed = 1
-		
-		highScoreLabelNode.text = "record: \(self.highscore)"
-		
-		score = 0
-		scoreLabelNode.text = "\(score)"
-		
-	}
-	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-		/* Called when a touch begins */
-		
-		if(moving.speed > 0) {
-			
-			bird.physicsBody?.velocity = CGVectorMake(0, 0)
-			bird.physicsBody?.applyImpulse(CGVectorMake(0, 6))
-			
-		} else if(canRestart) {
-			self.resetScene()
-		}
-	}
-	
-	//Bird
-	func createBird() {
-		BirdUpTexture.filteringMode = SKTextureFilteringMode.Nearest
-		BirdDownTexture.filteringMode = SKTextureFilteringMode.Nearest
-		
-		bird = SKSpriteNode(texture: BirdUpTexture)
-		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
-		
-		
-		var animation = SKAction.animateWithTextures([BirdUpTexture,BirdDownTexture], timePerFrame: 0.2)
-		var flap = SKAction.repeatActionForever(animation)
-		bird.runAction(flap)
-		
-		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
-		bird.physicsBody?.dynamic = true
-		bird.physicsBody?.allowsRotation = false
-		
-		bird.physicsBody?.categoryBitMask = birdCategory
-		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
-		bird.physicsBody?.contactTestBitMask = worldCategory | pipeCategory
-		
-		self.addChild(bird)
-	}
-	
-	//Sky
-	func drawSky() {
-		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
-		
-		var moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
-		var resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
-		var moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
-		
-		for var i: CGFloat = 0; i<2 + self.frame.size.width / (skylineTexture.size().width); ++i {
-			var sprite = SKSpriteNode(texture: skylineTexture)
-			sprite.zPosition = -20
-			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
-			sprite.runAction(moveSkylineSpritesForever)
-			moving.addChild(sprite)
-		}
-		
-		//Sky - upper screen limit
-		var skyLimit = SKNode()
-		skyLimit.position = CGPointMake(0, self.frame.size.height)
-		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, 1.0))
-		skyLimit.physicsBody?.categoryBitMask = worldCategory
-		skyLimit.physicsBody?.dynamic = false
-		
-		self.addChild(skyLimit)
-	}
-	
-	//Pipes
-	func drawPipes() {
-		//Create the Pipes
-		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
-		pipeDownTexture.filteringMode = SKTextureFilteringMode.Nearest
-		//movement of pipes
-		let distanceToMove = CGFloat(self.frame.size.width + 2.0 * pipeUpTexture.size().width)
-		let movePipes = SKAction.moveByX(-distanceToMove, y: 0.0, duration: NSTimeInterval(0.01 * distanceToMove))
-		let removePipes = SKAction.removeFromParent()
-		
-		PipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
-		
-		//Spawn Pipes
-		let spawn = SKAction.runBlock({() in self.spawnPipes()})
-		let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-		let spawnThenDelay = SKAction.sequence([spawn,delay])
-		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-		
-		self.runAction(spawnThenDelayForever)
-	}
-	
-	//Ground
+	//MARK: Ground
 	func drawGround() {
 		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
@@ -260,6 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 	}
 	
+	//MARK: Scores
 	func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height / 6)
@@ -279,26 +300,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		self.addChild(highScoreLabelNode)
 	}
-	
-	func clamp(min: CGFloat, max: CGFloat, value: CGFloat) -> CGFloat {
-		if(value>max) {
-			return max
-		} else if(value < min) {
-			return min
-		} else {
-			return value
-		}
-	}
-	
-	override func update(currentTime: CFTimeInterval) {
-		/* Called before each frame is rendered */
-		
-		if(moving.speed > 0) {
-			var birdVelocity = bird.physicsBody?.velocity.dy
-			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
-		}
-	}
-	
+
+	//MARK: Contact detection
 	func didBeginContact(contact: SKPhysicsContact) {
 		
 		if(moving.speed > 0) {
@@ -337,11 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	func stopBirdFlight() {
 		bird.speed = 0
 	}
-	
-	func letItRestart() {
-		canRestart = true
-	}
-	
+
 	func setBackgroundRed() {
 		self.backgroundColor = UIColor.redColor()
 	}
@@ -350,5 +349,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	func setBackgroundColorSky() {
 		self.backgroundColor = SKColor(red: 113.0/255.0, green: 197.0/255.0, blue: 207.0/255.0, alpha: 1.0)
+	}
+	
+	func letItRestart() {
+		canRestart = true
 	}
 }
