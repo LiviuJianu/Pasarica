@@ -246,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if(moving.speed > 0) {
 			
 		    bird.physicsBody?.velocity = CGVectorMake(0, 0)
-            bird.physicsBody?.applyImpulse(CGVectorMake(0, 7))
+            bird.physicsBody?.applyImpulse(CGVectorMake(0, 3))
 			
 		} else if(canRestart) {
 			self.resetScene()
