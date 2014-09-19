@@ -16,12 +16,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var PipesMoveAndRemove = SKAction()
 	
 	//World Textures
+	var skylineTexture = SKTexture(imageNamed: "Skyline")
 	var pipeUpTexture = SKTexture(imageNamed: "PipeUp")
 	var pipeDownTexture = SKTexture(imageNamed: "PipeDown")
-	var skylineTexture = SKTexture(imageNamed: "Skyline")
-	var groundTexture = SKTexture(imageNamed: "Ground")
 	var BirdUpTexture = SKTexture(imageNamed: "BirdUp")
 	var BirdDownTexture = SKTexture(imageNamed: "BirdDown")
+	var groundTexture = SKTexture(imageNamed: "Ground")
+	
+	override init(size: CGSize) {
+		super.init(size: size)
+		bird = SKSpriteNode(texture: BirdUpTexture)
+	}
+
+	required init(coder aDecoder: NSCoder) {
+			super.init(coder: aDecoder)
+	}
 	
 	//World gravity
 	var gravity = CGFloat(-5.0)
