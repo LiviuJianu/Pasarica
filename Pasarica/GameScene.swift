@@ -69,6 +69,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	//MARK: Scene setup
+	// Called immediately after a scene is presented by a view.
+	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
+	
 	override func didMoveToView(view: SKView) {
 		/* Setup your scene here */
 		
@@ -99,59 +102,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 	}
 	
-	override func update(currentTime: CFTimeInterval) {
-		/* Called before each frame is rendered */
-		
-		if(moving.speed > 0) {
-			var birdVelocity = bird.physicsBody?.velocity.dy
-			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
-		}
-	}
-	
-	func clamp(min: CGFloat, max: CGFloat, value: CGFloat) -> CGFloat {
-		if(value>max) {
-			return max
-		} else if(value < min) {
-			return min
-		} else {
-			return value
-		}
-	}
-	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-		/* Called when a touch begins */
-		
-		if(moving.speed > 0) {
-			
-			bird.physicsBody?.velocity = CGVectorMake(0, 0)
-			bird.physicsBody?.applyImpulse(CGVectorMake(0, 6))
-			
-		} else if(canRestart) {
-			self.resetScene()
-		}
-	}
-	
-	func resetScene() {
-		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
-		bird.physicsBody?.velocity = CGVectorMake(0, 0)
-		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
-		bird.speed = 1.0
-		bird.zRotation = 0.0
-		
-		pipes.removeAllChildren()
-		
-		canRestart = false
-		
-		moving.speed = 1
-		
-		highScoreLabelNode.text = "record: \(self.highscore)"
-		
-		score = 0
-		scoreLabelNode.text = "\(score)"
-		
-	}
-	
-	//MARK: Bird
 	func createBird() {
 		BirdUpTexture.filteringMode = SKTextureFilteringMode.Nearest
 		BirdDownTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -175,7 +125,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(bird)
 	}
 	
-	//MARK: Sky
 	func drawSky() {
 		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
@@ -201,7 +150,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(skyLimit)
 	}
 	
-	//MARK: Pipes
 	func drawPipes() {
 		//Create the Pipes
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -264,7 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 	}
 	
-	//MARK: Ground
 	func drawGround() {
 		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
@@ -289,7 +236,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 	}
 	
-	//MARK: Scores
 	func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height / 6)
@@ -309,8 +255,69 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		self.addChild(highScoreLabelNode)
 	}
+
+	//MARK: Updating
+	// Performs any scene-specific updates that need to occur before scene actions are evaluated.
+	// Do not call this method directly; it is called exactly once per frame, so long as the scene is presented in a view and is not paused. By default, this method does nothing. Your scene subclass should override this method and perform any necessary updates to the scene.
 	
-	//MARK: Contact detection
+
+	override func update(currentTime: CFTimeInterval) {
+		/* Called before each frame is rendered */
+		
+		if(moving.speed > 0) {
+			var birdVelocity = bird.physicsBody?.velocity.dy
+			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
+		}
+	}
+	
+	func clamp(min: CGFloat, max: CGFloat, value: CGFloat) -> CGFloat {
+		if(value>max) {
+			return max
+		} else if(value < min) {
+			return min
+		} else {
+			return value
+		}
+	}
+	
+	//MARK: User Interaction
+	
+	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+		
+		if(moving.speed > 0) {
+			
+			bird.physicsBody?.velocity = CGVectorMake(0, 0)
+			bird.physicsBody?.applyImpulse(CGVectorMake(0, 6))
+			
+		} else if(canRestart) {
+			self.resetScene()
+		}
+	}
+	
+	func resetScene() {
+		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
+		bird.physicsBody?.velocity = CGVectorMake(0, 0)
+		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
+		bird.speed = 1.0
+		bird.zRotation = 0.0
+		
+		pipes.removeAllChildren()
+		
+		canRestart = false
+		
+		moving.speed = 1
+		
+		highScoreLabelNode.text = "record: \(self.highscore)"
+		
+		score = 0
+		scoreLabelNode.text = "\(score)"
+		
+	}
+	
+	
+	//MARK: Contact detection - SKPhysicsContactDelegate
+	
+	// Called when two bodies first contact each other.
 	func didBeginContact(contact: SKPhysicsContact) {
 		
 		if(moving.speed > 0) {
