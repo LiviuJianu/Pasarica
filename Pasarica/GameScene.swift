@@ -25,11 +25,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	override init(size: CGSize) {
 		super.init(size: size)
-		bird = SKSpriteNode(texture: BirdUpTexture)
+		createBird()
 	}
-
+	
 	required init(coder aDecoder: NSCoder) {
-			super.init(coder: aDecoder)
+		super.init(coder: aDecoder)
 	}
 	
 	//World gravity
@@ -44,14 +44,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let worldCategory: UInt32	= 1 << 1
 	let pipeCategory: UInt32	= 1 << 2
 	let scoreCategory: UInt32	= 1 << 3
-
+	
 	//Restart game if bird collided
 	var canRestart = false
-
+	
 	//Scoring variables
 	var score = NSInteger()
 	var scoreLabelNode = SKLabelNode()
-
+	
 	var highScoreLabelNode = SKLabelNode()
 	var highscore : Int {
 		get {
@@ -93,7 +93,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		//Draw the Ground and set the limits
 		drawGround()
-
+		
 		//Draw the score and high score
 		drawScores()
 		
@@ -309,7 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		self.addChild(highScoreLabelNode)
 	}
-
+	
 	//MARK: Contact detection
 	func didBeginContact(contact: SKPhysicsContact) {
 		
@@ -349,7 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	func stopBirdFlight() {
 		bird.speed = 0
 	}
-
+	
 	func setBackgroundRed() {
 		self.backgroundColor = UIColor.redColor()
 	}
