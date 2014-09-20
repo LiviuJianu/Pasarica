@@ -315,40 +315,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			if((contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory) {
 				score++
 				scoreLabelNode.text = "\(score)"
-
+				
 				self.highscore = max(score, self.highscore);
-			} else {
-				var maybeBird : SKNode?
+			} else if (contact.bodyA.node == bird || contact.bodyB.node == bird) {
 				
-				if (contact.bodyA.categoryBitMask & birdCategory == birdCategory) {
-					maybeBird = contact.bodyA.node
-				} else if (contact.bodyB.categoryBitMask & birdCategory == birdCategory) {
-					maybeBird = contact.bodyB.node
-				}
+				moving.speed = 0
+				bird.physicsBody?.collisionBitMask = worldCategory
 				
-				if let bird = maybeBird{
-					moving.speed = 0
-					bird.physicsBody?.collisionBitMask = worldCategory
-					
-					var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
-					var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
-					var birdSequence = SKAction.sequence([rotateBird,stopBird])
-					bird.runAction(birdSequence)
-					
-					self.removeActionForKey("flash")
-					var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
-					var wait = SKAction.waitForDuration(0.05)
-					var turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
-					var turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
-					
-					var sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
-					var repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
-					var canRestartAction = SKAction.runBlock({() in self.letItRestart()})
-					var groupOfActions = SKAction.group([repeatSequence, canRestartAction])
-					
-					self.runAction(groupOfActions, withKey:"flash")
-
-				}
+				var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
+				var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
+				var birdSequence = SKAction.sequence([rotateBird,stopBird])
+				bird.runAction(birdSequence)
+				
+				self.removeActionForKey("flash")
+				var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
+				var wait = SKAction.waitForDuration(0.05)
+				var turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
+				var turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
+				
+				var sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
+				var repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
+				var canRestartAction = SKAction.runBlock({() in self.letItRestart()})
+				var groupOfActions = SKAction.group([repeatSequence, canRestartAction])
+				
+				self.runAction(groupOfActions, withKey:"flash")
 				
 			}
 		}
