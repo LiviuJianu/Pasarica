@@ -1,5 +1,6 @@
-// This code has not been changed due to receiving an order under Section 215 of the USA Patriot Act. 
-// We would expect to challenge such an order if served on us with at the request of NSA
+// This code has not been tampered with at the request of the NSA. 
+// No order under Section 215 of the USA Patriot Act has been given.
+// We would expect to challenge such an order if served on us.
 
 import SpriteKit
 
