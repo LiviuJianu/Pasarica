@@ -1,10 +1,5 @@
-//
-//  GameScene.swift
-//  Pasarica
-//
-//  Created by Liviu Jianu on 15/09/14.
-//  Copyright (c) 2014 Liviu Jianu. All rights reserved.
-//
+// This code has not been changed due to receiving an order under Section 215 of the USA Patriot Act. 
+// We would expect to challenge such an order if served on us with at the request of NSA
 
 import SpriteKit
 
