@@ -21,6 +21,7 @@
 		84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF719C8B8B700E06CFE /* PipeDown.png */; };
 		84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF819C8B8B700E06CFE /* PipeUp.png */; };
 		84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF919C8B8B700E06CFE /* Skyline.png */; };
+		FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEECFA5819D016CC00AE7B4F /* Gameplay.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		84AE6AF719C8B8B700E06CFE /* PipeDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeDown.png; sourceTree = "<group>"; };
 		84AE6AF819C8B8B700E06CFE /* PipeUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeUp.png; sourceTree = "<group>"; };
 		84AE6AF919C8B8B700E06CFE /* Skyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Skyline.png; sourceTree = "<group>"; };
+		FEECFA5819D016CC00AE7B4F /* Gameplay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Gameplay.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				8434DC5919C788CA00825DF3 /* GameScene.sks */,
 				8434DC5B19C788CA00825DF3 /* GameScene.swift */,
 				8434DC5D19C788CA00825DF3 /* GameViewController.swift */,
+				FEECFA5819D016CC00AE7B4F /* Gameplay.plist */,
 				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
 				8434DC6219C788CA00825DF3 /* Images.xcassets */,
 				8434DC6419C788CA00825DF3 /* LaunchScreen.xib */,
@@ -226,6 +229,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */,
 				84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */,
 				8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */,
 				8460D08019C7BCF300E6602E /* BirdUp.png in Resources */,

@@ -9,9 +9,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: Game variables
 	var bird = SKSpriteNode()
 	
-	//World gravity
-	var gravity = CGFloat(-5.0)
-	
 	var pipes = SKNode()
 	var moving = SKNode()
 	
@@ -20,6 +17,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let worldCategory: UInt32	= 1 << 1
 	let pipeCategory: UInt32	= 1 << 2
 	let scoreCategory: UInt32	= 1 << 3
+	
+	let gameplayDict : NSDictionary = {
+		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
+		let dict = NSDictionary(contentsOfFile: path!)
+		return dict
+		}()
 	
 	//Restart game if bird collided
 	var canRestart = false
@@ -60,6 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.setBackgroundColorSky()
 		
 		//Physics
+		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
+		
 		self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
 		self.physicsWorld.contactDelegate = self
 		
@@ -173,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let removePipes = SKAction.removeFromParent()
 		
 		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
-		let pipeGap = 130.0
+		let pipeGap : CGFloat = 130.0
 		
 		//Spawn Pipes
 		let spawn = SKAction.runBlock({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
@@ -280,7 +285,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if(moving.speed > 0) {
 			
 			bird.physicsBody?.velocity = CGVectorMake(0, 0)
-			bird.physicsBody?.applyImpulse(CGVectorMake(0, 6))
+			
+			let impulse = CGVectorFromString(gameplayDict.valueForKey("Impulse-Vector") as String)
+			bird.physicsBody?.applyImpulse(impulse)
 			
 		} else if(canRestart) {
 			self.resetScene()
