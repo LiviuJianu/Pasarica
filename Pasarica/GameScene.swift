@@ -263,18 +263,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		/* Called before each frame is rendered */
 		
 		if(visibleNodes.speed > 0) {
-			var birdVelocity = bird.physicsBody?.velocity.dy
-			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
-		}
-	}
-	
-	func clamp(min: CGFloat, max: CGFloat, value: CGFloat) -> CGFloat {
-		if(value>max) {
-			return max
-		} else if(value < min) {
-			return min
-		} else {
-			return value
+			if var birdVelocity = bird.physicsBody?.velocity.dy {
+				
+				var rotation : CGFloat = 0
+				
+				if (birdVelocity < 0.0){
+					rotation = birdVelocity * 0.003;
+				}
+				else {
+					rotation = birdVelocity * 0.001;
+				}
+
+				rotation = max(-1, min(0.5, rotation))
+				
+				bird.zRotation = rotation
+			}
 		}
 	}
 	
