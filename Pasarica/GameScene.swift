@@ -13,9 +13,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var moving = SKNode()
 	
 	//Collision bit masks
-	let birdCategory: UInt32	= 1 << 0
+	let birdCategory : UInt32	= 1 << 0
 	let worldCategory: UInt32	= 1 << 1
-	let pipeCategory: UInt32	= 1 << 2
+	let pipeCategory : UInt32	= 1 << 2
 	let scoreCategory: UInt32	= 1 << 3
 	
 	let gameplayDict : NSDictionary = {
