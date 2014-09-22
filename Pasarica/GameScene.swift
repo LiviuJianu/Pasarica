@@ -13,10 +13,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var visibleNodes = SKNode()
 	
 	//Collision bit masks
-	let birdCategory : UInt32	= 1 << 0
-	let worldCategory: UInt32	= 1 << 1
-	let pipeCategory : UInt32	= 1 << 2
-	let scoreCategory: UInt32	= 1 << 3
+	enum CollisionCategory : UInt32 {
+		case Bird  = 1
+		case World = 2
+		case Pipe  = 4
+		case Score = 8
+		
+		func isBitmask(bitmask : UInt32) -> Bool {
+			return self == CollisionCategory.fromRaw(bitmask)
+		}
+	}
 	
 	let gameplayDict : NSDictionary = {
 		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
@@ -112,9 +118,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		bird.physicsBody?.dynamic = true
 		bird.physicsBody?.allowsRotation = false
 		
-		bird.physicsBody?.categoryBitMask = birdCategory
-		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
-		bird.physicsBody?.contactTestBitMask = worldCategory | pipeCategory
+		bird.physicsBody?.categoryBitMask = CollisionCategory.Bird.toRaw()
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
+		bird.physicsBody?.contactTestBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
 		
 		self.addChild(bird)
 	}
@@ -138,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
 		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height))
 		groundLimit.physicsBody?.dynamic = false
-		groundLimit.physicsBody?.categoryBitMask = worldCategory
+		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.World.toRaw()
 		self.addChild(groundLimit)
 		
 	}
@@ -162,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		var skyLimit = SKNode()
 		skyLimit.position = CGPointMake(0, self.frame.size.height)
 		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, 1.0))
-		skyLimit.physicsBody?.categoryBitMask = worldCategory
+		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.toRaw()
 		skyLimit.physicsBody?.dynamic = false
 		
 		self.addChild(skyLimit)
@@ -203,8 +209,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		pipeDown.physicsBody = SKPhysicsBody(rectangleOfSize: pipeDown.size)
 		pipeDown.physicsBody?.dynamic = false
-		pipeDown.physicsBody?.categoryBitMask = pipeCategory
-		pipeDown.physicsBody?.contactTestBitMask = birdCategory
+		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.Pipe.toRaw()
+		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
 		
 		pipePair.addChild(pipeDown)
 		
@@ -213,16 +219,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		pipeUp.physicsBody = SKPhysicsBody(rectangleOfSize: pipeUp.size)
 		pipeUp.physicsBody?.dynamic = false
-		pipeUp.physicsBody?.categoryBitMask = pipeCategory
-		pipeUp.physicsBody?.contactTestBitMask = birdCategory
+		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.Pipe.toRaw()
+		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
 		pipePair.addChild(pipeUp)
 		
 		var contactNode = SKNode()
 		contactNode.position = CGPointMake(pipeUp.size.width + bird.size.width / 2, CGRectGetMidY(self.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.frame.size.height))
 		contactNode.physicsBody?.dynamic = false
-		contactNode.physicsBody?.categoryBitMask = scoreCategory
-		contactNode.physicsBody?.contactTestBitMask = birdCategory
+		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.toRaw()
+		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
 		pipePair.addChild(contactNode)
 		
 		
@@ -300,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	func resetScene() {
 		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
 		bird.physicsBody?.velocity = CGVectorMake(0, 0)
-		bird.physicsBody?.collisionBitMask = worldCategory | pipeCategory
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
 		bird.speed = 1.0
 		bird.zRotation = 0.0
 		
@@ -321,8 +327,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	func didBeginContact(contact: SKPhysicsContact) {
 		
 		if(visibleNodes.speed > 0) {
- 
-			if((contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory) {
+			
+			if(CollisionCategory.Score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.Score.isBitmask(contact.bodyB.categoryBitMask)) {
+
 				score++
 				scoreLabelNode.text = "\(score)"
 				
@@ -330,7 +337,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			} else if (contact.bodyA.node == bird || contact.bodyB.node == bird) {
 				
 				visibleNodes.speed = 0
-				bird.physicsBody?.collisionBitMask = worldCategory
+				bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
 				
 				var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
 				var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
