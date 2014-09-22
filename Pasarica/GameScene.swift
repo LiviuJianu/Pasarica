@@ -10,7 +10,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = SKSpriteNode()
 	
 	var pipes = SKNode()
-	var moving = SKNode()
+	var visibleNodes = SKNode()
 	
 	//Collision bit masks
 	let birdCategory : UInt32	= 1 << 0
@@ -57,8 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	override func didMoveToView(view: SKView) {
 
-		self.addChild(moving)
-		moving.addChild(pipes)
+		self.addChild(visibleNodes)
+		visibleNodes.addChild(pipes)
 		
 		self.setBackgroundColorSky()
 		
@@ -130,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			var sprite = SKSpriteNode(texture: groundTexture)
 			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
 			sprite.runAction(moveGroundSpritesForever)
-			moving.addChild(sprite)
+			visibleNodes.addChild(sprite)
 		}
 		
 		//Ground - lower screen limit
@@ -155,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			sprite.zPosition = -20
 			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
 			sprite.runAction(moveSkylineSpritesForever)
-			moving.addChild(sprite)
+			visibleNodes.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
@@ -262,7 +262,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	override func update(currentTime: CFTimeInterval) {
 		/* Called before each frame is rendered */
 		
-		if(moving.speed > 0) {
+		if(visibleNodes.speed > 0) {
 			var birdVelocity = bird.physicsBody?.velocity.dy
 			bird.zRotation = self.clamp(-1, max: 0.5, value: birdVelocity! * (birdVelocity! < 0.0 ? 0.003 : 0.001))
 		}
@@ -282,7 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		
-		if(moving.speed > 0) {
+		if(visibleNodes.speed > 0) {
 			
 			bird.physicsBody?.velocity = CGVectorMake(0, 0)
 			
@@ -305,7 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		canRestart = false
 		
-		moving.speed = 1
+		visibleNodes.speed = 1
 		
 		score = 0
 		scoreLabelNode.text = "\(score)"
@@ -317,7 +317,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	// Called when two bodies first contact each other.
 	func didBeginContact(contact: SKPhysicsContact) {
 		
-		if(moving.speed > 0) {
+		if(visibleNodes.speed > 0) {
  
 			if((contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory) {
 				score++
@@ -326,7 +326,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				self.highscore = max(score, self.highscore);
 			} else if (contact.bodyA.node == bird || contact.bodyB.node == bird) {
 				
-				moving.speed = 0
+				visibleNodes.speed = 0
 				bird.physicsBody?.collisionBitMask = worldCategory
 				
 				var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
