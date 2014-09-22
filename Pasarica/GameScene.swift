@@ -14,7 +14,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	var pipes = SKNode()
 	var moving = SKNode()
-	let pipeGap = 130.0
 	
 	//Collision bit masks
 	let birdCategory: UInt32	= 1 << 0
@@ -174,9 +173,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let removePipes = SKAction.removeFromParent()
 		
 		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
+		let pipeGap = 130.0
 		
 		//Spawn Pipes
-		let spawn = SKAction.runBlock({() in self.spawnPipes(pipesMoveAndRemove, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
+		let spawn = SKAction.runBlock({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
 		let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
 		let spawnThenDelay = SKAction.sequence([spawn,delay])
 		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
@@ -184,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.runAction(spawnThenDelayForever)
 	}
 	
-	func spawnPipes(pipesMoveAndRemove : SKAction, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
+	func spawnPipes(pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
 		
 		let pipePair = SKNode()
 		pipePair.position = CGPointMake(self.frame.size.width + pipeUpTexture.size().width * 2.0, 0)
