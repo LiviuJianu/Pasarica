@@ -304,11 +304,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	func resetScene() {
-		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
 		bird.physicsBody?.velocity = CGVectorMake(0, 0)
 		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
-		bird.speed = 1.0
-		bird.zRotation = 0.0
+
+		if bird.actionForKey("stopBirdAction") != nil {
+			bird.removeActionForKey("stopBirdAction")
+		}
+		
+		let birdProps = SKAction.runBlock({() in self.resetBird()})
+		bird.runAction(birdProps, completion: {() in print("Finished running starting bird")})
 		
 		pipes.removeAllChildren()
 		
@@ -320,7 +324,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		scoreLabelNode.text = "\(score)"
 	}
 	
-	
+	func resetBird() {
+		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
+		bird.speed = 1.0
+		bird.zRotation = 0.0
+	}
 	//MARK: Contact detection - SKPhysicsContactDelegate
 	
 	// Called when two bodies first contact each other.
@@ -342,7 +350,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
 				var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
 				var birdSequence = SKAction.sequence([rotateBird,stopBird])
-				bird.runAction(birdSequence)
+				bird.runAction(birdSequence, withKey: "stopBirdAction")
 				
 				self.removeActionForKey("flash")
 				var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
