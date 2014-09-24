@@ -22,8 +22,6 @@ class World {
 	var scoreLabelNode = SKLabelNode()
 	var highScoreLabelNode = SKLabelNode()
 	
-	var score = 0
-
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
 		createWorld()
@@ -204,7 +202,7 @@ class World {
 		scoreLabelNode.fontSize = 600
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
-		scoreLabelNode.text = "\(score)"
+		scoreLabelNode.text = "0"
 		self.gameScene.addChild(scoreLabelNode)
 		
 		highScoreLabelNode.fontName = "Helvetica"
