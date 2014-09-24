@@ -33,9 +33,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var canRestart = false
 	
 	//Scoring variables
-	var scoreLabelNode = SKLabelNode()
-	
-	var score = 0
+	var score : Int = 0 {
+		didSet {
+			self.world?.setScore(score)
+		}
+	}
 	var highscore : Int {
 		get {
 			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
@@ -75,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.world!.setHighscore(self.highscore)
 		
 		self.bird  = world!.bird
-		self.scoreLabelNode = world!.scoreLabelNode
 
 		//Physics
 		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
@@ -146,7 +147,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		world!.startWorld()
 		
 		score = 0
-		scoreLabelNode.text = "\(score)"
 	}
 	
 	func resetBird() {
@@ -177,7 +177,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	internal func increaseScore(){
 		score++
-		scoreLabelNode.text = "\(score)"
 		birdAudioPlayer.play()
 		
 		if (score > self.highscore){

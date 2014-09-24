@@ -241,4 +241,8 @@ class World {
 		highScoreLabelNode.text = "record: " + "\(highscore)"
 	}
 	
+	func setScore(score : Int) {
+		scoreLabelNode.text = "\(score)"
+	}
+	
 }
