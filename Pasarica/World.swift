@@ -11,16 +11,16 @@ import Foundation
 
 class World {
 	
-	let gameScene : GameScene;
+	internal let gameScene : GameScene;
 	
 	let bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
 	
-	let pipes = SKNode()
-	let visibleNodes = SKNode()
+	internal let pipes = SKNode()
+	internal let visibleNodes = SKNode()
 	
 	//Scoring variables
-	let scoreLabelNode = SKLabelNode()
-	let highScoreLabelNode = SKLabelNode()
+	internal let scoreLabelNode = SKLabelNode()
+	internal let highScoreLabelNode = SKLabelNode()
 	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
