@@ -14,10 +14,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var visibleNodes = SKNode()
 	
 	//Sound variables
-	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
+	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
 	var birdAudioPlayer = AVAudioPlayer()
 	
-	var gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gameOver", ofType: "mp3")!)
+	var gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
 	var gameOverAudioPlayer = AVAudioPlayer()
 	
 	//Collision bit masks
