@@ -21,6 +21,9 @@
 		84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF719C8B8B700E06CFE /* PipeDown.png */; };
 		84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF819C8B8B700E06CFE /* PipeUp.png */; };
 		84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AE6AF919C8B8B700E06CFE /* Skyline.png */; };
+		84FE7BC519D27C0B0009D4F6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE7BC419D27C0B0009D4F6 /* AVFoundation.framework */; };
+		84FE7BC819D27CD00009D4F6 /* gameOver.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84FE7BC619D27CD00009D4F6 /* gameOver.mp3 */; };
+		84FE7BC919D27CD00009D4F6 /* pass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84FE7BC719D27CD00009D4F6 /* pass.mp3 */; };
 		FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEECFA5819D016CC00AE7B4F /* Gameplay.plist */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +56,9 @@
 		84AE6AF719C8B8B700E06CFE /* PipeDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeDown.png; sourceTree = "<group>"; };
 		84AE6AF819C8B8B700E06CFE /* PipeUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PipeUp.png; sourceTree = "<group>"; };
 		84AE6AF919C8B8B700E06CFE /* Skyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Skyline.png; sourceTree = "<group>"; };
+		84FE7BC419D27C0B0009D4F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		84FE7BC619D27CD00009D4F6 /* gameOver.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOver.mp3; sourceTree = "<group>"; };
+		84FE7BC719D27CD00009D4F6 /* pass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pass.mp3; sourceTree = "<group>"; };
 		FEECFA5819D016CC00AE7B4F /* Gameplay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Gameplay.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FE7BC519D27C0B0009D4F6 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +84,7 @@
 		8434DC4919C788CA00825DF3 = {
 			isa = PBXGroup;
 			children = (
+				84FE7BC419D27C0B0009D4F6 /* AVFoundation.framework */,
 				8434DC5419C788CA00825DF3 /* Pasarica */,
 				8434DC6E19C788CA00825DF3 /* PasaricaTests */,
 				8434DC5319C788CA00825DF3 /* Products */,
@@ -104,6 +112,7 @@
 				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
 				8434DC6219C788CA00825DF3 /* Images.xcassets */,
 				8434DC6419C788CA00825DF3 /* LaunchScreen.xib */,
+				84FE7BCA19D27CD60009D4F6 /* Sound */,
 				8434DC7B19C78A7D00825DF3 /* BirdImages */,
 				8434DC5519C788CA00825DF3 /* Supporting Files */,
 			);
@@ -146,6 +155,15 @@
 				8460D07F19C7BCF300E6602E /* BirdDown.png */,
 			);
 			path = BirdImages;
+			sourceTree = "<group>";
+		};
+		84FE7BCA19D27CD60009D4F6 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				84FE7BC619D27CD00009D4F6 /* gameOver.mp3 */,
+				84FE7BC719D27CD00009D4F6 /* pass.mp3 */,
+			);
+			name = Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,10 +251,12 @@
 				84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */,
 				8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */,
 				8460D08019C7BCF300E6602E /* BirdUp.png in Resources */,
+				84FE7BC919D27CD00009D4F6 /* pass.mp3 in Resources */,
 				84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */,
 				8434DC6319C788CA00825DF3 /* Images.xcassets in Resources */,
 				8460D08119C7BCF300E6602E /* BirdDown.png in Resources */,
 				8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */,
+				84FE7BC819D27CD00009D4F6 /* gameOver.mp3 in Resources */,
 				84AE6AFA19C8B8B700E06CFE /* Ground.png in Resources */,
 				8434DC6119C788CA00825DF3 /* Main.storyboard in Resources */,
 				84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */,

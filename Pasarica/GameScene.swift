@@ -3,6 +3,7 @@
 // We would expect to challenge such an order if served on us.
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
@@ -11,6 +12,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	var pipes = SKNode()
 	var visibleNodes = SKNode()
+	
+	//Sound variables
+	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
+	var birdAudioPlayer = AVAudioPlayer()
+	
+	var gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gameOver", ofType: "mp3")!)
+	var gameOverAudioPlayer = AVAudioPlayer()
 	
 	//Collision bit masks
 	enum CollisionCategory : UInt32 {
@@ -62,7 +70,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
 	
 	override func didMoveToView(view: SKView) {
+		
+		birdAudioPlayer = AVAudioPlayer(contentsOfURL: birdHasScoredSound, error: nil)
+		birdAudioPlayer.prepareToPlay()
 
+		gameOverAudioPlayer = AVAudioPlayer(contentsOfURL: gameOverSound, error: nil)
+		gameOverAudioPlayer.prepareToPlay()
+		
 		self.addChild(visibleNodes)
 		visibleNodes.addChild(pipes)
 		
@@ -340,10 +354,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 				score++
 				scoreLabelNode.text = "\(score)"
+				birdAudioPlayer.play()
 				
 				self.highscore = max(score, self.highscore);
 			} else if (contact.bodyA.node == bird || contact.bodyB.node == bird) {
-				
+				gameOverAudioPlayer.play()
 				visibleNodes.speed = 0
 				bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
 				
