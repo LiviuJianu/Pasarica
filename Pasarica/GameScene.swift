@@ -38,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		get {
 			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
 				return high
+
 			} else {
 				self.highscore = 0 // this calls the setter
 				return 0
@@ -69,6 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.setBackgroundColorSky()
 		
 		self.world = World(gameScene: self)
+		self.world!.setHighscore(self.highscore)
 		
 		self.bird  = world!.bird
 		self.pipes = world!.pipes
@@ -176,7 +178,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		score++
 		scoreLabelNode.text = "\(score)"
 		birdAudioPlayer.play()
-		self.highscore = max(score, self.highscore);
+		
+		if (score > self.highscore){
+			self.highscore = score
+			self.world!.setHighscore(self.highscore)
+		}
 	}
 	
 	internal func shouldGameBeTerminated(contact : SKPhysicsContact) -> Bool {

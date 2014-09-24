@@ -20,22 +20,9 @@ class World {
 	
 	//Scoring variables
 	var scoreLabelNode = SKLabelNode()
+	var highScoreLabelNode = SKLabelNode()
 	
 	var score = 0
-	var highscore : Int {
-		get {
-			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
-				return high
-			} else {
-				self.highscore = 0 // this calls the setter
-				return 0
-			}
-		}
-		set (newHighscore){
-			NSUserDefaults.standardUserDefaults().setInteger(newHighscore, forKey: "highscore")
-			NSUserDefaults.standardUserDefaults().synchronize()
-		}
-	}
 
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
@@ -220,16 +207,15 @@ class World {
 		scoreLabelNode.text = "\(score)"
 		self.gameScene.addChild(scoreLabelNode)
 		
-		let highScoreLabelNode = SKLabelNode()
-		
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
 		highScoreLabelNode.position = CGPointMake(self.gameScene.frame.width - 400.0 , self.gameScene.frame.height - highScoreLabelNode.fontSize)
 		
 		highScoreLabelNode.alpha = 0.5
 		highScoreLabelNode.zPosition = -30
-		
-		highScoreLabelNode.text = "record: " + "\(self.highscore)"
+
+		highScoreLabelNode.text = "N/A"
+
 		self.gameScene.addChild(highScoreLabelNode)
 	}
 	
@@ -245,6 +231,10 @@ class World {
 	
 	func isWorldMoving() -> Bool {
 		return visibleNodes.speed > 0
+	}
+	
+	func setHighscore(highscore : Int) {
+		highScoreLabelNode.text = "record: " + "\(highscore)"
 	}
 	
 }
