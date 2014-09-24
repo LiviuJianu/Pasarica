@@ -233,6 +233,10 @@ class World {
 		return visibleNodes.speed > 0
 	}
 	
+	func resetWorld() {
+		pipes.removeAllChildren()
+	}
+	
 	func setHighscore(highscore : Int) {
 		highScoreLabelNode.text = "record: " + "\(highscore)"
 	}

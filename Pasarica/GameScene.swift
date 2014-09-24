@@ -10,8 +10,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//MARK: Game variables
 	var bird = SKSpriteNode()
 	
-	var pipes = SKNode()
-	
 	//Sound variables
 	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
 	var birdAudioPlayer = AVAudioPlayer()
@@ -73,7 +71,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.world!.setHighscore(self.highscore)
 		
 		self.bird  = world!.bird
-		self.pipes = world!.pipes
 		self.scoreLabelNode = world!.scoreLabelNode
 
 		//Physics
@@ -138,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let birdProps = SKAction.runBlock({() in self.resetBird()})
 		bird.runAction(birdProps, completion: {() in print("Finished running starting bird")})
 		
-		pipes.removeAllChildren()
+		world!.resetWorld()
 		
 		canRestart = false
 		
