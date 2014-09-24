@@ -11,7 +11,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = SKSpriteNode()
 	
 	var pipes = SKNode()
-	var visibleNodes = SKNode()
 	
 	//Sound variables
 	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
@@ -25,6 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let dict = NSDictionary(contentsOfFile: path!)
 		return dict
 		}()
+	
+	var world : World?
 	
 	//Restart game if bird collided
 	var canRestart = false
@@ -67,12 +68,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		self.setBackgroundColorSky()
 		
-		let worldCreator = WorldCreator(gameScene: self)
+		self.world = World(gameScene: self)
 		
-		self.bird  = worldCreator.bird
-		self.pipes = worldCreator.pipes
-		self.visibleNodes = worldCreator.visibleNodes
-		self.scoreLabelNode = worldCreator.scoreLabelNode
+		self.bird  = world!.bird
+		self.pipes = world!.pipes
+		self.scoreLabelNode = world!.scoreLabelNode
 
 		//Physics
 		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
@@ -90,7 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	override func update(currentTime: CFTimeInterval) {
 		/* Called before each frame is rendered */
 		
-		if(visibleNodes.speed > 0) {
+		if(world!.isWorldMoving()) {
 			if var birdVelocity = bird.physicsBody?.velocity.dy {
 				
 				var rotation : CGFloat = 0
@@ -113,7 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		
-		if(visibleNodes.speed > 0) {
+		if(world!.isWorldMoving()) {
 			
 			bird.physicsBody?.velocity = CGVectorMake(0, 0)
 			
@@ -140,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		canRestart = false
 		
-		visibleNodes.speed = 1
+		world!.startWorld()
 		
 		score = 0
 		scoreLabelNode.text = "\(score)"
@@ -164,7 +164,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	internal func shouldScoreBeIncreased(contact : SKPhysicsContact) -> Bool {
-		if(visibleNodes.speed > 0) {
+		if(world!.isWorldMoving()) {
 			if(CollisionCategory.Score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.Score.isBitmask(contact.bodyB.categoryBitMask)) {
 				return true;
 			}
@@ -180,7 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	internal func shouldGameBeTerminated(contact : SKPhysicsContact) -> Bool {
-		if(visibleNodes.speed > 0) {
+		if(world!.isWorldMoving()) {
 			if(contact.bodyA.node == bird || contact.bodyB.node == bird) {
 				return true;
 			}
@@ -190,7 +190,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	internal func terminateGame(){
 		gameOverAudioPlayer.play()
-		visibleNodes.speed = 0
+		
+		world!.stopWorld();
+
 		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
 		
 		var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)

@@ -9,7 +9,7 @@
 import SpriteKit
 import Foundation
 
-class WorldCreator {
+class World {
 	
 	let gameScene : GameScene;
 	
@@ -41,6 +41,8 @@ class WorldCreator {
 		self.gameScene = gameScene;
 		createWorld()
 	}
+	
+	//MARK: Creating the world
 	
 	internal func createWorld()  {
 		
@@ -229,6 +231,20 @@ class WorldCreator {
 		
 		highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		self.gameScene.addChild(highScoreLabelNode)
+	}
+	
+	//MARK: App methods
+	
+	func stopWorld(){
+		visibleNodes.speed = 0
+	}
+	
+	func startWorld(){
+		visibleNodes.speed = 1
+	}
+	
+	func isWorldMoving() -> Bool {
+		return visibleNodes.speed > 0
 	}
 	
 }
