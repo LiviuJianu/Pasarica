@@ -26,6 +26,8 @@
 		84FE7BCC19D28DED0009D4F6 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84FE7BCB19D28DED0009D4F6 /* click.mp3 */; };
 		FE2DD4B519D339810067896C /* CollisionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2DD4B419D339810067896C /* CollisionCategory.swift */; };
 		FE2DD4B719D33FCB0067896C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2DD4B619D33FCB0067896C /* World.swift */; };
+		FE2DD4BA19D349040067896C /* aa_pacat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE2DD4B819D349040067896C /* aa_pacat.mp3 */; };
+		FE2DD4BB19D349040067896C /* hai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE2DD4B919D349040067896C /* hai.mp3 */; };
 		FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEECFA5819D016CC00AE7B4F /* Gameplay.plist */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		84FE7BCB19D28DED0009D4F6 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		FE2DD4B419D339810067896C /* CollisionCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionCategory.swift; sourceTree = "<group>"; };
 		FE2DD4B619D33FCB0067896C /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		FE2DD4B819D349040067896C /* aa_pacat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aa_pacat.mp3; sourceTree = "<group>"; };
+		FE2DD4B919D349040067896C /* hai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hai.mp3; sourceTree = "<group>"; };
 		FEECFA5819D016CC00AE7B4F /* Gameplay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Gameplay.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +170,8 @@
 		84FE7BCA19D27CD60009D4F6 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				FE2DD4B819D349040067896C /* aa_pacat.mp3 */,
+				FE2DD4B919D349040067896C /* hai.mp3 */,
 				84FE7BC719D27CD00009D4F6 /* pass.mp3 */,
 				84FE7BCB19D28DED0009D4F6 /* click.mp3 */,
 			);
@@ -255,9 +261,11 @@
 			files = (
 				FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */,
 				84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */,
+				FE2DD4BA19D349040067896C /* aa_pacat.mp3 in Resources */,
 				8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */,
 				8460D08019C7BCF300E6602E /* BirdUp.png in Resources */,
 				84FE7BC919D27CD00009D4F6 /* pass.mp3 in Resources */,
+				FE2DD4BB19D349040067896C /* hai.mp3 in Resources */,
 				84AE6AFD19C8B8B700E06CFE /* Skyline.png in Resources */,
 				8434DC6319C788CA00825DF3 /* Images.xcassets in Resources */,
 				84FE7BCC19D28DED0009D4F6 /* click.mp3 in Resources */,

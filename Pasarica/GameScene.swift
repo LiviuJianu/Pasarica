@@ -11,10 +11,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = SKSpriteNode()
 	
 	//Sound variables
-	var birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
+	var birdHasScoredSound =
+//	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
+	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("hai", ofType: "mp3")!)
 	var birdAudioPlayer = AVAudioPlayer()
 	
-	var gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
+	var gameOverSound =
+// NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
+	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("aa_pacat", ofType: "mp3")!)
 	var gameOverAudioPlayer = AVAudioPlayer()
 	
 	let gameplayDict : NSDictionary = {
