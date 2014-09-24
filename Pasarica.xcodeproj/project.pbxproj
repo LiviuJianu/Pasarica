@@ -24,6 +24,7 @@
 		84FE7BC519D27C0B0009D4F6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE7BC419D27C0B0009D4F6 /* AVFoundation.framework */; };
 		84FE7BC919D27CD00009D4F6 /* pass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84FE7BC719D27CD00009D4F6 /* pass.mp3 */; };
 		84FE7BCC19D28DED0009D4F6 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84FE7BCB19D28DED0009D4F6 /* click.mp3 */; };
+		84FE7BCE19D32C200009D4F6 /* WorldCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE7BCD19D32C200009D4F6 /* WorldCreator.swift */; };
 		FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEECFA5819D016CC00AE7B4F /* Gameplay.plist */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		84FE7BC419D27C0B0009D4F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		84FE7BC719D27CD00009D4F6 /* pass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pass.mp3; sourceTree = "<group>"; };
 		84FE7BCB19D28DED0009D4F6 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
+		84FE7BCD19D32C200009D4F6 /* WorldCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldCreator.swift; sourceTree = "<group>"; };
 		FEECFA5819D016CC00AE7B4F /* Gameplay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Gameplay.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +110,7 @@
 				8434DC5919C788CA00825DF3 /* GameScene.sks */,
 				8434DC5B19C788CA00825DF3 /* GameScene.swift */,
 				8434DC5D19C788CA00825DF3 /* GameViewController.swift */,
+				84FE7BCD19D32C200009D4F6 /* WorldCreator.swift */,
 				FEECFA5819D016CC00AE7B4F /* Gameplay.plist */,
 				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
 				8434DC6219C788CA00825DF3 /* Images.xcassets */,
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8434DC5C19C788CA00825DF3 /* GameScene.swift in Sources */,
+				84FE7BCE19D32C200009D4F6 /* WorldCreator.swift in Sources */,
 				8434DC5E19C788CA00825DF3 /* GameViewController.swift in Sources */,
 				8434DC5819C788CA00825DF3 /* AppDelegate.swift in Sources */,
 			);
