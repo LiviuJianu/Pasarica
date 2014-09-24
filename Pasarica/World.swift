@@ -13,14 +13,14 @@ class World {
 	
 	let gameScene : GameScene;
 	
-	var bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
+	let bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
 	
-	var pipes = SKNode()
-	var visibleNodes = SKNode()
+	let pipes = SKNode()
+	let visibleNodes = SKNode()
 	
 	//Scoring variables
-	var scoreLabelNode = SKLabelNode()
-	var highScoreLabelNode = SKLabelNode()
+	let scoreLabelNode = SKLabelNode()
+	let highScoreLabelNode = SKLabelNode()
 	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
