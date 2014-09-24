@@ -38,24 +38,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			self.world?.setScore(score)
 		}
 	}
-	var highscore : Int {
-		get {
-			if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
-				return high
-
-			} else {
-				self.highscore = 0 // this calls the setter
-				return 0
-			}
-		}
-		set (newHighscore){
-			NSUserDefaults.standardUserDefaults().setInteger(newHighscore, forKey: "highscore")
-			NSUserDefaults.standardUserDefaults().synchronize()
-		}
+	var highscore : Int = 0 {
+        didSet {
+            self.world?.setHighscore(highscore)
+            NSUserDefaults.standardUserDefaults().setInteger(highscore, forKey: "highscore")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
 	}
 	
 	required init(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+        // set value of the highscore to the saved one, if any
+        if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
+            highscore = high
+        }
 	}
 
 	
