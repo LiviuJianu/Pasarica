@@ -13,7 +13,7 @@ class World {
 	
 	let gameScene : GameScene;
 	
-	var bird = SKSpriteNode()
+	var bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
 	
 	var pipes = SKNode()
 	var visibleNodes = SKNode()
@@ -64,7 +64,6 @@ class World {
 		upTexture.filteringMode = SKTextureFilteringMode.Nearest
 		downTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
-		bird = SKSpriteNode(texture: upTexture)
 		bird.position = CGPoint(x: self.gameScene.frame.size.width / 2.8, y: CGRectGetMidY(self.gameScene.frame))
 		
 		
