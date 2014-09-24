@@ -158,41 +158,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	// Called when two bodies first contact each other.
 	func didBeginContact(contact: SKPhysicsContact) {
-		
+		if (shouldScoreBeIncreased(contact)){
+			increaseScore();
+		}
+		else if (shouldGameBeTerminated(contact)){
+			terminateGame();
+		}
+	}
+	
+	internal func shouldScoreBeIncreased(contact : SKPhysicsContact) -> Bool {
 		if(visibleNodes.speed > 0) {
-			
 			if(CollisionCategory.Score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.Score.isBitmask(contact.bodyB.categoryBitMask)) {
-
-				score++
-				scoreLabelNode.text = "\(score)"
-				birdAudioPlayer.play()
-				
-				self.highscore = max(score, self.highscore);
-			} else if (contact.bodyA.node == bird || contact.bodyB.node == bird) {
-				gameOverAudioPlayer.play()
-				visibleNodes.speed = 0
-				bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
-				
-				var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
-				var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
-				var birdSequence = SKAction.sequence([rotateBird,stopBird])
-				bird.runAction(birdSequence, withKey: "stopBirdAction")
-				
-				self.removeActionForKey("flash")
-				var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
-				var wait = SKAction.waitForDuration(0.05)
-				var turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
-				var turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
-				
-				var sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
-				var repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
-				var canRestartAction = SKAction.runBlock({() in self.letItRestart()})
-				var groupOfActions = SKAction.group([repeatSequence, canRestartAction])
-				
-				self.runAction(groupOfActions, withKey:"flash")
-				
+				return true;
 			}
 		}
+		return false;
+	}
+	
+	internal func increaseScore(){
+		score++
+		scoreLabelNode.text = "\(score)"
+		birdAudioPlayer.play()
+		self.highscore = max(score, self.highscore);
+	}
+	
+	internal func shouldGameBeTerminated(contact : SKPhysicsContact) -> Bool {
+		if(visibleNodes.speed > 0) {
+			if(contact.bodyA.node == bird || contact.bodyB.node == bird) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	internal func terminateGame(){
+		gameOverAudioPlayer.play()
+		visibleNodes.speed = 0
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
+		
+		var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
+		var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
+		var birdSequence = SKAction.sequence([rotateBird,stopBird])
+		bird.runAction(birdSequence, withKey: "stopBirdAction")
+		
+		self.removeActionForKey("flash")
+		var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
+		var wait = SKAction.waitForDuration(0.05)
+		var turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
+		var turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
+		
+		var sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
+		var repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
+		var canRestartAction = SKAction.runBlock({() in self.letItRestart()})
+		var groupOfActions = SKAction.group([repeatSequence, canRestartAction])
+		
+		self.runAction(groupOfActions, withKey:"flash")
 	}
 	
 	func stopBirdFlight() {
