@@ -65,9 +65,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		gameOverAudioPlayer = AVAudioPlayer(contentsOfURL: gameOverSound, error: nil)
 		gameOverAudioPlayer.prepareToPlay()
 		
-		self.addChild(visibleNodes)
-		visibleNodes.addChild(pipes)
-		
 		self.setBackgroundColorSky()
 		
 		let worldCreator = WorldCreator(gameScene: self)
@@ -76,7 +73,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.pipes = worldCreator.pipes
 		self.visibleNodes = worldCreator.visibleNodes
 		self.scoreLabelNode = worldCreator.scoreLabelNode
-		
+
+		self.addChild(visibleNodes)
+		visibleNodes.addChild(pipes)
+
 		//Physics
 		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
 		
