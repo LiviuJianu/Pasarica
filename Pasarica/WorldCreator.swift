@@ -65,9 +65,11 @@ class WorldCreator {
 		//Draw the pipes
 		drawPipes(up: pipeUpTexture, down: pipeDownTexture)
 	
-	
 		//Draw the score and high score
 		drawScores()
+		
+		self.gameScene.addChild(visibleNodes)
+		visibleNodes.addChild(pipes)
 	}
 	
 	internal func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {

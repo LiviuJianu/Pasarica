@@ -74,9 +74,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.visibleNodes = worldCreator.visibleNodes
 		self.scoreLabelNode = worldCreator.scoreLabelNode
 
-		self.addChild(visibleNodes)
-		visibleNodes.addChild(pipes)
-
 		//Physics
 		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
 		
