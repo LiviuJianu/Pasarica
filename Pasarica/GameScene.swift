@@ -134,7 +134,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 		
 		let birdProps = SKAction.runBlock({() in self.resetBird()})
-		bird.runAction(birdProps, completion: {() in print("Finished running starting bird")})
+		bird.runAction(birdProps)
 		
 		world!.resetWorld()
 		
@@ -173,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	internal func increaseScore(){
 		score++
-		birdAudioPlayer.play()
+//		birdAudioPlayer.play()
 		
 		if (score > self.highscore){
 			self.highscore = score
@@ -191,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	internal func terminateGame(){
-		gameOverAudioPlayer.play()
+//		gameOverAudioPlayer.play()
 		
 		world!.stopWorld();
 
