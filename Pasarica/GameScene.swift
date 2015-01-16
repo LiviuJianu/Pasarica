@@ -1,4 +1,4 @@
-// This code has not been tampered with at the request of the NSA. 
+// This code has not been tampered with at the request of the NSA.
 // No order under Section 215 of the USA Patriot Act has been given.
 // We would expect to challenge such an order if served on us.
 
@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	let gameplayDict : NSDictionary = {
 		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
 		let dict = NSDictionary(contentsOfFile: path!)
-		return dict
+		return dict!
 		}()
 	
 	var world : World?
@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 	}
 	
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
         // set value of the highscore to the saved one, if any
         if let high = NSUserDefaults.standardUserDefaults().objectForKey("highscore") as? Int	{
@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	func resetScene() {
 		bird.physicsBody?.velocity = CGVectorMake(0, 0)
-		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
 
 		if bird.actionForKey("stopBirdAction") != nil {
 			bird.removeActionForKey("stopBirdAction")
@@ -195,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		world!.stopWorld();
 
-		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw()
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue
 		
 		var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
 		var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})

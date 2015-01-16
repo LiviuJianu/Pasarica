@@ -16,6 +16,6 @@ enum CollisionCategory : UInt32 {
 	case Score = 8
 	
 	func isBitmask(bitmask : UInt32) -> Bool {
-		return self == CollisionCategory.fromRaw(bitmask)
+		return self == CollisionCategory(rawValue: bitmask)
 	}
 }

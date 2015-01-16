@@ -75,9 +75,9 @@ class World {
 		bird.physicsBody?.dynamic = true
 		bird.physicsBody?.allowsRotation = false
 		
-		bird.physicsBody?.categoryBitMask = CollisionCategory.Bird.toRaw()
-		bird.physicsBody?.collisionBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
-		bird.physicsBody?.contactTestBitMask = CollisionCategory.World.toRaw() | CollisionCategory.Pipe.toRaw()
+		bird.physicsBody?.categoryBitMask = CollisionCategory.Bird.rawValue
+		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
+		bird.physicsBody?.contactTestBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
 		
 		self.gameScene.addChild(bird)
 	}
@@ -101,7 +101,7 @@ class World {
 		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
 		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, groundTexture.size().height))
 		groundLimit.physicsBody?.dynamic = false
-		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.World.toRaw()
+		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
 		self.gameScene.addChild(groundLimit)
 		
 	}
@@ -125,7 +125,7 @@ class World {
 		var skyLimit = SKNode()
 		skyLimit.position = CGPointMake(0, self.gameScene.frame.size.height)
 		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, 1.0))
-		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.toRaw()
+		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
 		skyLimit.physicsBody?.dynamic = false
 		
 		self.gameScene.addChild(skyLimit)
@@ -166,8 +166,8 @@ class World {
 		
 		pipeDown.physicsBody = SKPhysicsBody(rectangleOfSize: pipeDown.size)
 		pipeDown.physicsBody?.dynamic = false
-		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.Pipe.toRaw()
-		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
+		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
+		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		
 		pipePair.addChild(pipeDown)
 		
@@ -176,16 +176,16 @@ class World {
 		
 		pipeUp.physicsBody = SKPhysicsBody(rectangleOfSize: pipeUp.size)
 		pipeUp.physicsBody?.dynamic = false
-		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.Pipe.toRaw()
-		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
+		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
+		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		pipePair.addChild(pipeUp)
 		
 		var contactNode = SKNode()
 		contactNode.position = CGPointMake(pipeUp.size.width + bird.size.width / 2, CGRectGetMidY(self.gameScene.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.gameScene.frame.size.height))
 		contactNode.physicsBody?.dynamic = false
-		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.toRaw()
-		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.Bird.toRaw()
+		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.rawValue
+		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		pipePair.addChild(contactNode)
 		
 		
