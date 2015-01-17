@@ -198,7 +198,7 @@ class World {
 	internal func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPointMake(CGRectGetMidX(self.gameScene.frame), self.gameScene.frame.height / 6)
-		scoreLabelNode.fontSize = 600
+		scoreLabelNode.fontSize = 400
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
 		scoreLabelNode.text = "0"
