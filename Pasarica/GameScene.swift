@@ -11,15 +11,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = SKSpriteNode()
 	
 	//Sound variables
-	var birdHasScoredSound =
-//	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click", ofType: "mp3")!)
-	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("hai", ofType: "mp3")!)
-	var birdAudioPlayer = AVAudioPlayer()
+//	let birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("hai", ofType: "mp3")!)
+//	var birdAudioPlayer = AVAudioPlayer()
+	var birdHasScoredSound = SKAction.playSoundFileNamed("hai.mp3", waitForCompletion: false)
+	var gameOverSound = SKAction.playSoundFileNamed("aa_pacat.mp3", waitForCompletion: false)
+
 	
-	var gameOverSound =
-// NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("pass", ofType: "mp3")!)
-	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("aa_pacat", ofType: "mp3")!)
-	var gameOverAudioPlayer = AVAudioPlayer()
+//	let gameOverSound =	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("aa_pacat", ofType: "mp3")!)
+//	var gameOverAudioPlayer = AVAudioPlayer()
 	
 	let gameplayDict : NSDictionary = {
 		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
@@ -60,12 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
 	
 	override func didMoveToView(view: SKView) {
-		
-		birdAudioPlayer = AVAudioPlayer(contentsOfURL: birdHasScoredSound, error: nil)
-		birdAudioPlayer.prepareToPlay()
 
-		gameOverAudioPlayer = AVAudioPlayer(contentsOfURL: gameOverSound, error: nil)
-		gameOverAudioPlayer.prepareToPlay()
 		
 		self.setBackgroundColorSky()
 		
@@ -151,11 +145,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		bird.zRotation = 0.0
 	}
 	//MARK: Contact detection - SKPhysicsContactDelegate
-	
+
 	// Called when two bodies first contact each other.
 	func didBeginContact(contact: SKPhysicsContact) {
 		if (shouldScoreBeIncreased(contact)){
 			increaseScore();
+			runAction(birdHasScoredSound)
 		}
 		else if (shouldGameBeTerminated(contact)){
 			terminateGame();
@@ -173,14 +168,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	internal func increaseScore(){
 		score++
-//		birdAudioPlayer.play()
-		
 		if (score > self.highscore){
 			self.highscore = score
 			self.world!.setHighscore(self.highscore)
 		}
 	}
-	
+
 	internal func shouldGameBeTerminated(contact : SKPhysicsContact) -> Bool {
 		if(world!.isWorldMoving()) {
 			if(contact.bodyA.node == bird || contact.bodyB.node == bird) {
@@ -191,10 +184,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	internal func terminateGame(){
-//		gameOverAudioPlayer.play()
-		
-		world!.stopWorld();
 
+		world!.stopWorld();
+		runAction(gameOverSound)
+		
 		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue
 		
 		var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
@@ -215,6 +208,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		self.runAction(groupOfActions, withKey:"flash")
 	}
+	
 	
 	func stopBirdFlight() {
 		bird.speed = 0
