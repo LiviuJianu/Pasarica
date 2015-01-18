@@ -5,6 +5,6 @@
 	<key>Impulse-Vector</key>
 	<string>{0,6}</string>
 	<key>Gravity</key>
-	<integer>-5</integer>
+	<integer>-4</integer>
 </dict>
 </plist>

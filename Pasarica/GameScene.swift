@@ -11,14 +11,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = SKSpriteNode()
 	
 	//Sound variables
-//	let birdHasScoredSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("hai", ofType: "mp3")!)
-//	var birdAudioPlayer = AVAudioPlayer()
 	var birdHasScoredSound = SKAction.playSoundFileNamed("hai.mp3", waitForCompletion: false)
 	var gameOverSound = SKAction.playSoundFileNamed("aa_pacat.mp3", waitForCompletion: false)
 
 	
-//	let gameOverSound =	NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("aa_pacat", ofType: "mp3")!)
-//	var gameOverAudioPlayer = AVAudioPlayer()
+	var replayButton:SKLabelNode!
+
 	
 	let gameplayDict : NSDictionary = {
 		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
@@ -53,6 +51,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 	}
 
+	func drawPlayLabel() {
+		// Play Button
+		replayButton = SKLabelNode(fontNamed: "Helvetica")
+		replayButton.text = "joaca"
+		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
+		replayButton.fontSize = 96
+		replayButton.fontColor = SKColor.redColor()
+		replayButton.zPosition = -10
+		self.addChild(replayButton)
+	}
 	
 	//MARK: Scene setup
 	// Called immediately after a scene is presented by a view.
@@ -108,7 +116,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		
 		if(world!.isWorldMoving()) {
-			
 			bird.physicsBody?.velocity = CGVectorMake(0, 0)
 			
 			let impulse = CGVectorFromString(gameplayDict.valueForKey("Impulse-Vector") as String)
@@ -133,7 +140,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		world!.resetWorld()
 		
 		canRestart = false
-		
+		//CREATE HERE THE CONDITION TO START THE WORLD AFTER THE START BUTTON IS PRESSED
+		self.removeChildrenInArray([replayButton])
+
 		world!.startWorld()
 		
 		score = 0
@@ -154,6 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 		else if (shouldGameBeTerminated(contact)){
 			terminateGame();
+			drawPlayLabel()
 		}
 	}
 	
