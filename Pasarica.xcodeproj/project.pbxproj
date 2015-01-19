@@ -91,6 +91,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B4B47551A6D8EAD0036255B /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				8434DC5919C788CA00825DF3 /* GameScene.sks */,
+				8434DC5B19C788CA00825DF3 /* GameScene.swift */,
+				1B5D17261A6B1B4200C38431 /* MenuScene.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		1B4B47561A6D8EB80036255B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8434DC5719C788CA00825DF3 /* AppDelegate.swift */,
+				8434DC5D19C788CA00825DF3 /* GameViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1B4B47571A6D8EC50036255B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FE2DD4B419D339810067896C /* CollisionCategory.swift */,
+				FEECFA5819D016CC00AE7B4F /* Gameplay.plist */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		1B4B47581A6D8ECE0036255B /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		1B4B47591A6D8ED80036255B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FE2DD4B619D33FCB0067896C /* World.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8434DC4919C788CA00825DF3 = {
 			isa = PBXGroup;
 			children = (
@@ -114,15 +158,11 @@
 		8434DC5419C788CA00825DF3 /* Pasarica */ = {
 			isa = PBXGroup;
 			children = (
-				8434DC5719C788CA00825DF3 /* AppDelegate.swift */,
-				8434DC5919C788CA00825DF3 /* GameScene.sks */,
-				8434DC5B19C788CA00825DF3 /* GameScene.swift */,
-				8434DC5D19C788CA00825DF3 /* GameViewController.swift */,
-				FE2DD4B419D339810067896C /* CollisionCategory.swift */,
-				1B5D17261A6B1B4200C38431 /* MenuScene.swift */,
-				FE2DD4B619D33FCB0067896C /* World.swift */,
-				FEECFA5819D016CC00AE7B4F /* Gameplay.plist */,
-				8434DC5F19C788CA00825DF3 /* Main.storyboard */,
+				1B4B47561A6D8EB80036255B /* Controller */,
+				1B4B47551A6D8EAD0036255B /* Scenes */,
+				1B4B47571A6D8EC50036255B /* Utilities */,
+				1B4B47591A6D8ED80036255B /* Model */,
+				1B4B47581A6D8ECE0036255B /* Storyboard */,
 				8434DC6219C788CA00825DF3 /* Images.xcassets */,
 				8434DC6419C788CA00825DF3 /* LaunchScreen.xib */,
 				84FE7BCA19D27CD60009D4F6 /* Sound */,
