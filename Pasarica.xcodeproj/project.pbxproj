@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B4B475B1A6EDDFF0036255B /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B475A1A6EDDFF0036255B /* Bird.swift */; };
 		1B5D17271A6B1B4200C38431 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D17261A6B1B4200C38431 /* MenuScene.swift */; };
 		8434DC5819C788CA00825DF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC5719C788CA00825DF3 /* AppDelegate.swift */; };
 		8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC5919C788CA00825DF3 /* GameScene.sks */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B4B475A1A6EDDFF0036255B /* Bird.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bird.swift; sourceTree = "<group>"; };
 		1B5D17261A6B1B4200C38431 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		8434DC5219C788CA00825DF3 /* Pasarica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pasarica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434DC5619C788CA00825DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				FE2DD4B619D33FCB0067896C /* World.swift */,
+				1B4B475A1A6EDDFF0036255B /* Bird.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8434DC5C19C788CA00825DF3 /* GameScene.swift in Sources */,
+				1B4B475B1A6EDDFF0036255B /* Bird.swift in Sources */,
 				FE2DD4B519D339810067896C /* CollisionCategory.swift in Sources */,
 				8434DC5E19C788CA00825DF3 /* GameViewController.swift in Sources */,
 				1B5D17271A6B1B4200C38431 /* MenuScene.swift in Sources */,

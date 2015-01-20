@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Impulse-Vector</key>
-	<string>{0,6}</string>
+	<integer>6</integer>
 	<key>Gravity</key>
 	<integer>-4</integer>
 </dict>

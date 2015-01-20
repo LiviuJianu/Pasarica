@@ -8,7 +8,7 @@ import AVFoundation
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	//MARK: Game variables
-	var bird = SKSpriteNode()
+	var bird = Bird()
 	
 	//Sound variables
 	var birdHasScoredSound = SKAction.playSoundFileNamed("hai.mp3", waitForCompletion: false)
@@ -74,15 +74,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.world = World(gameScene: self)
 		self.world!.setHighscore(self.highscore)
 		
-		self.bird  = world!.bird
+		setupBird()
 
 		//Physics
 		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
-		
 		self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
 		self.physicsWorld.contactDelegate = self
 
 	}
+	
+
 	
 	//MARK: Updating
 	// Performs any scene-specific updates that need to occur before scene actions are evaluated.
@@ -93,21 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		/* Called before each frame is rendered */
 		
 		if(world!.isWorldMoving()) {
-			if var birdVelocity = bird.physicsBody?.velocity.dy {
-				
-				var rotation : CGFloat = 0
-				
-				if (birdVelocity < 0.0){
-					rotation = birdVelocity * 0.003;
-				}
-				else {
-					rotation = birdVelocity * 0.001;
-				}
-
-				rotation = max(-1, min(0.5, rotation))
-				
-				bird.zRotation = rotation
-			}
+			bird.update()
 		}
 	}
 	
@@ -116,14 +103,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		
 		if(world!.isWorldMoving()) {
-			bird.physicsBody?.velocity = CGVectorMake(0, 0)
-			
-			let impulse = CGVectorFromString(gameplayDict.valueForKey("Impulse-Vector") as String)
-			bird.physicsBody?.applyImpulse(impulse)
-			
+			let impulse = gameplayDict.valueForKey("Impulse-Vector") as CGFloat
+			bird.flyBird(impulse)
 		} else if(canRestart) {
 			self.resetScene()
 		}
+	}
+	
+	func setupBird() {
+		bird = Bird()
+		bird.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
+		self.addChild(bird)
 	}
 	
 	func resetScene() {

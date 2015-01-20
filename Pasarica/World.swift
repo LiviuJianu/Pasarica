@@ -13,8 +13,6 @@ class World {
 	
 	internal let gameScene : GameScene;
 	
-	let bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
-	
 	internal let pipes = SKNode()
 	internal let visibleNodes = SKNode()
 	
@@ -30,9 +28,7 @@ class World {
 	//MARK: Creating the world
 	
 	internal func createWorld()  {
-		
-		let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
-		let birdDownTexture = SKTexture(imageNamed: "BirdDown")
+
 		
 		let groundTexture   = SKTexture(imageNamed: "Ground")
 		let skylineTexture  = SKTexture(imageNamed: "Skyline")
@@ -40,8 +36,6 @@ class World {
 		let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
 		let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
 
-		//Create the Bird
-		createBird(up: birdUpTexture, down: birdDownTexture)
 	
 		//Draw the Ground and set the limits
 		drawGround(ground: groundTexture)
@@ -57,29 +51,6 @@ class World {
 		
 		self.gameScene.addChild(visibleNodes)
 		visibleNodes.addChild(pipes)
-	}
-	
-	internal func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
-		
-		upTexture.filteringMode = SKTextureFilteringMode.Nearest
-		downTexture.filteringMode = SKTextureFilteringMode.Nearest
-		
-		bird.position = CGPoint(x: self.gameScene.frame.size.width / 2.8, y: CGRectGetMidY(self.gameScene.frame))
-		
-		
-		var animation = SKAction.animateWithTextures([upTexture,downTexture], timePerFrame: 0.2)
-		var flap = SKAction.repeatActionForever(animation)
-		bird.runAction(flap)
-		
-		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
-		bird.physicsBody?.dynamic = true
-		bird.physicsBody?.allowsRotation = false
-		
-		bird.physicsBody?.categoryBitMask = CollisionCategory.Bird.rawValue
-		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
-		bird.physicsBody?.contactTestBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
-		
-		self.gameScene.addChild(bird)
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
@@ -181,7 +152,7 @@ class World {
 		pipePair.addChild(pipeUp)
 		
 		var contactNode = SKNode()
-		contactNode.position = CGPointMake(pipeUp.size.width + bird.size.width / 2, CGRectGetMidY(self.gameScene.frame))
+		contactNode.position = CGPointMake(pipeUp.size.width, CGRectGetMidY(self.gameScene.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.gameScene.frame.size.height))
 		contactNode.physicsBody?.dynamic = false
 		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.rawValue
