@@ -13,10 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//Sound variables
 	var birdHasScoredSound = SKAction.playSoundFileNamed("hai.mp3", waitForCompletion: false)
 	var gameOverSound = SKAction.playSoundFileNamed("aa_pacat.mp3", waitForCompletion: false)
-
 	
 	var replayButton:SKLabelNode!
-
 	
 	let gameplayDict : NSDictionary = {
 		let path = NSBundle.mainBundle().pathForResource("Gameplay", ofType: "plist")
@@ -67,7 +65,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
 	
 	override func didMoveToView(view: SKView) {
-
 		
 		self.setBackgroundColorSky()
 		
@@ -75,24 +72,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.world!.setHighscore(self.highscore)
 		
 		setupBird()
-
-		//Physics
-		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
-		self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
-		self.physicsWorld.contactDelegate = self
+		addGravityAndInteraction()
 
 	}
-	
 
-	
 	//MARK: Updating
 	// Performs any scene-specific updates that need to occur before scene actions are evaluated.
 	// Do not call this method directly; it is called exactly once per frame, so long as the scene is presented in a view and is not paused. By default, this method does nothing. Your scene subclass should override this method and perform any necessary updates to the scene.
 	
-
 	override func update(currentTime: CFTimeInterval) {
 		/* Called before each frame is rendered */
-		
 		if(world!.isWorldMoving()) {
 			bird.update()
 		}
@@ -115,6 +104,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		bird.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: CGRectGetMidY(self.frame))
 		self.addChild(bird)
+	}
+	
+	func addGravityAndInteraction() {
+		//Physics
+		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
+		self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
+		self.physicsWorld.contactDelegate = self
 	}
 	
 	func resetScene() {
