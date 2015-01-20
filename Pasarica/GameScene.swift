@@ -76,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	}
 
+
 	//MARK: Updating
 	// Performs any scene-specific updates that need to occur before scene actions are evaluated.
 	// Do not call this method directly; it is called exactly once per frame, so long as the scene is presented in a view and is not paused. By default, this method does nothing. Your scene subclass should override this method and perform any necessary updates to the scene.
