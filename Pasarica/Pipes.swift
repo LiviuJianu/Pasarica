@@ -10,7 +10,6 @@ import SpriteKit
 
 class Pipes : SKSpriteNode {
 	
-	let pipes = Pipes()
 	let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
 	let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
 	
@@ -21,8 +20,8 @@ class Pipes : SKSpriteNode {
 	}
 	
 	convenience override init() {
-		let pipeTexture = SKTexture(imageNamed: "PipeUp")
-		self.init(texture: pipeTexture, color: nil, size: pipeTexture.size())
+		let pipeInitTexture = SKTexture(imageNamed: "PipeUp")
+		self.init(texture: pipeInitTexture, color: nil, size: pipeInitTexture.size())
 	}
 	
 	
@@ -30,7 +29,7 @@ class Pipes : SKSpriteNode {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) -> Pipes {
+	func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
@@ -49,8 +48,6 @@ class Pipes : SKSpriteNode {
 		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
 		
 		self.runAction(spawnThenDelayForever)
-		
-		return pipes
 	}
 	
 	func spawnPipes(pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
@@ -91,7 +88,6 @@ class Pipes : SKSpriteNode {
 		
 		
 		pipePair.runAction(pipesMoveAndRemove)
-		pipes.addChild(pipePair)
 	}
 	
 }
