@@ -29,7 +29,7 @@ class Bird: SKSpriteNode {
 	    fatalError("init(coder:) has not been implemented")
 	}
 	
-	func createBird(up upTexture : SKTexture, down downTexture : SKTexture) -> Bird {
+	func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
 		
 		upTexture.filteringMode = SKTextureFilteringMode.Nearest
 		downTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -44,9 +44,6 @@ class Bird: SKSpriteNode {
 		self.physicsBody?.contactTestBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
 
 		self.flapWings()
-		
-		return self
-		
 	}
 	
 	func flapWings() {
