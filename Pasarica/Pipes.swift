@@ -13,15 +13,15 @@ class Pipes : SKSpriteNode {
 	let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
 	let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
 	
-	override init(texture: SKTexture!, color: UIColor!, size: CGSize) {
+	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
 		super.init(texture: texture, color: color, size: size)
 		
 		self.drawPipes(up: pipeUpTexture, down: pipeDownTexture)
 	}
 	
-	convenience override init() {
+	convenience init() {
 		let pipeInitTexture = SKTexture(imageNamed: "PipeUp")
-		self.init(texture: pipeInitTexture, color: nil, size: pipeInitTexture.size())
+		self.init(texture: pipeInitTexture, color: UIColor.clearColor(), size: pipeInitTexture.size())
 	}
 	
 	
@@ -78,7 +78,7 @@ class Pipes : SKSpriteNode {
 		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		pipePair.addChild(pipeUp)
 		
-		var contactNode = SKNode()
+		let contactNode = SKNode()
 		contactNode.position = CGPointMake(pipeUp.size.width, CGRectGetMidY(self.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.frame.size.height))
 		contactNode.physicsBody?.dynamic = false

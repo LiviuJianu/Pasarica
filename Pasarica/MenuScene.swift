@@ -44,15 +44,18 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		self.physicsWorld.gravity = CGVectorMake(0.0, 0.0)
 
 		
-		bounceTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: Selector("animatePlay"), userInfo: nil, repeats: true)
+		bounceTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
 	}
 	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-		let touch:UITouch = touches.anyObject() as UITouch
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	 
+		if let touch = touches.first{
+
 		let touchLocation = touch.locationInNode(self)
 		
 		if (playButton.containsPoint(touchLocation)) {
 			self.switchToPlay()
+			}
 		}
 	}
 	
@@ -102,8 +105,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		bird.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame) * 0.8)
 		
 		
-		var animation = SKAction.animateWithTextures([upTexture,downTexture], timePerFrame: 0.2)
-		var flap = SKAction.repeatActionForever(animation)
+		let animation = SKAction.animateWithTextures([upTexture,downTexture], timePerFrame: 0.2)
+		let flap = SKAction.repeatActionForever(animation)
 		bird.runAction(flap)
 		
 		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
@@ -120,19 +123,20 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	internal func drawGround(ground groundTexture : SKTexture) {
 		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
-		var moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
-		var resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
-		var moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
-		
-		for var i: CGFloat = 0; i<2 + self.frame.size.width / (groundTexture.size().width); ++i {
-			var sprite = SKSpriteNode(texture: groundTexture)
+		let moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
+		let resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
+		let moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
+		var i : CGFloat = 0
+		while i < CGFloat(2) + self.frame.size.width / (groundTexture.size().width) {
+			++i
+			let sprite = SKSpriteNode(texture: groundTexture)
 			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
 			sprite.runAction(moveGroundSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Ground - lower screen limit
-		var groundLimit = SKNode()
+		let groundLimit = SKNode()
 		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
 		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height))
 		groundLimit.physicsBody?.dynamic = false
@@ -144,20 +148,22 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	internal func drawSky(sky skylineTexture:SKTexture, ground groundTexture : SKTexture) {
 		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
-		var moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
-		var resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
-		var moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
+		let moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
+		let resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
+		let moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
 		
-		for var i: CGFloat = 0; i<2 + self.frame.size.width / (skylineTexture.size().width); ++i {
-			var sprite = SKSpriteNode(texture: skylineTexture)
+		var j : CGFloat = 0
+		while j < CGFloat(2) + self.frame.size.width / (skylineTexture.size().width) {
+			++j
+			let sprite = SKSpriteNode(texture: skylineTexture)
 			sprite.zPosition = -20
-			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
+			sprite.position = CGPointMake(j * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
 			sprite.runAction(moveSkylineSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
-		var skyLimit = SKNode()
+		let skyLimit = SKNode()
 		skyLimit.position = CGPointMake(0, self.frame.size.height)
 		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, 1.0))
 		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
@@ -215,7 +221,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		pipePair.addChild(pipeUp)
 		
-		var contactNode = SKNode()
+		let contactNode = SKNode()
 		contactNode.position = CGPointMake(pipeUp.size.width + bird.size.width / 2, CGRectGetMidY(self.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.frame.size.height))
 		contactNode.physicsBody?.dynamic = false
@@ -260,8 +266,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	func switchToPlay () {
 		bounceTimer.invalidate()
-		
-		if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+		do {
+		if let scene = try GameScene.unarchiveFromFile("GameScene") as? GameScene {
 			// Configure the view.
 			let skView = view! as SKView
 			skView.showsFPS = true
@@ -274,6 +280,9 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 			scene.scaleMode = .AspectFill
 			let gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.15)
 			skView.presentScene(scene, transition: gameTransition)
+		}
+		} catch {
+			print("Switch to play error")
 		}
 		
 		

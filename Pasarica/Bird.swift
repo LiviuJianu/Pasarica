@@ -13,15 +13,15 @@ class Bird: SKSpriteNode {
 	let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
 	let birdDownTexture = SKTexture(imageNamed: "BirdDown")
 	
-	override init(texture: SKTexture!, color: UIColor!, size: CGSize) {
+	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
 		super.init(texture: texture, color: color, size: size)
 		
 		self.createBird(up: birdUpTexture, down: birdDownTexture)
 	}
 
-	convenience override init() {
+	convenience init() {
 		let birdTexture = SKTexture(imageNamed: "BirdUp")
-		self.init(texture: birdTexture, color: nil, size: birdTexture.size())
+		self.init(texture: birdTexture, color: UIColor.clearColor(), size: birdTexture.size())
 	}
 
 	
@@ -47,13 +47,13 @@ class Bird: SKSpriteNode {
 	}
 	
 	func flapWings() {
-		var animation = SKAction.animateWithTextures([birdUpTexture,birdDownTexture], timePerFrame: 0.2)
-		var flap = SKAction.repeatActionForever(animation)
+		let animation = SKAction.animateWithTextures([birdUpTexture,birdDownTexture], timePerFrame: 0.2)
+		let flap = SKAction.repeatActionForever(animation)
 		self.runAction(flap)
 	}
 	
 	func update() {
-		if var birdVelocity = self.physicsBody?.velocity.dy {
+		if let birdVelocity = self.physicsBody?.velocity.dy {
 			
 			var rotation : CGFloat = 0
 	

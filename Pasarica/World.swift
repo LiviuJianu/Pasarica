@@ -56,19 +56,22 @@ class World {
 	internal func drawGround(ground groundTexture : SKTexture) {
 		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
-		var moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
-		var resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
-		var moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
+		let moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
+		let resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
+		let moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
 		
-		for var i: CGFloat = 0; i<2 + self.gameScene.frame.size.width / (groundTexture.size().width); ++i {
-			var sprite = SKSpriteNode(texture: groundTexture)
+		var i : CGFloat = 0
+		while i < 2 + self.gameScene.frame.size.width / (groundTexture.size().width) {
+			++i
+			let sprite = SKSpriteNode(texture: groundTexture)
 			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
 			sprite.runAction(moveGroundSpritesForever)
 			visibleNodes.addChild(sprite)
+			
 		}
 		
 		//Ground - lower screen limit
-		var groundLimit = SKNode()
+		let groundLimit = SKNode()
 		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
 		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, groundTexture.size().height))
 		groundLimit.physicsBody?.dynamic = false
@@ -80,20 +83,21 @@ class World {
 	internal func drawSky(sky skylineTexture:SKTexture, ground groundTexture : SKTexture) {
 		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
 		
-		var moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
-		var resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
-		var moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
-		
-		for var i: CGFloat = 0; i<2 + self.gameScene.frame.size.width / (skylineTexture.size().width); ++i {
-			var sprite = SKSpriteNode(texture: skylineTexture)
+		let moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
+		let resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
+		let moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
+		var j : CGFloat = 0
+		while j < 2 + self.gameScene.frame.size.width / (skylineTexture.size().width) {
+			++j;
+			let sprite = SKSpriteNode(texture: skylineTexture)
 			sprite.zPosition = -20
-			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
+			sprite.position = CGPointMake(j * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
 			sprite.runAction(moveSkylineSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
-		var skyLimit = SKNode()
+		let skyLimit = SKNode()
 		skyLimit.position = CGPointMake(0, self.gameScene.frame.size.height)
 		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, 1.0))
 		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
@@ -151,7 +155,7 @@ class World {
 		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
 		pipePair.addChild(pipeUp)
 		
-		var contactNode = SKNode()
+		let contactNode = SKNode()
 		contactNode.position = CGPointMake(pipeUp.size.width, CGRectGetMidY(self.gameScene.frame))
 		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.gameScene.frame.size.height))
 		contactNode.physicsBody?.dynamic = false

@@ -88,11 +88,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	//MARK: User Interaction
-	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-		
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		if(world!.isWorldMoving()) {
-			let impulse = gameplayDict.valueForKey("Impulse-Vector") as CGFloat
+			let impulse = gameplayDict.valueForKey("Impulse-Vector") as! CGFloat
 			bird.flyBird(impulse)
 		} else if(canRestart) {
 			self.resetScene()
@@ -108,7 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	func addGravityAndInteraction() {
 		//Physics
-		let gravity = gameplayDict.valueForKey("Gravity") as CGFloat
+		let gravity = gameplayDict.valueForKey("Gravity") as! CGFloat
 		self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
 		self.physicsWorld.contactDelegate = self
 	}
@@ -164,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	internal func increaseScore(){
-		score++
+		score += 1
 		if (score > self.highscore){
 			self.highscore = score
 			self.world!.setHighscore(self.highscore)
@@ -187,21 +185,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue
 		
-		var rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
-		var stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
-		var birdSequence = SKAction.sequence([rotateBird,stopBird])
+		let rotateBird = SKAction.rotateByAngle(0.01, duration: 0.003)
+		let stopBird = SKAction.runBlock({() in self.stopBirdFlight()})
+		let birdSequence = SKAction.sequence([rotateBird,stopBird])
 		bird.runAction(birdSequence, withKey: "stopBirdAction")
 		
 		self.removeActionForKey("flash")
-		var turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
-		var wait = SKAction.waitForDuration(0.05)
-		var turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
-		var turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
+		let turnBackgroundRed = SKAction.runBlock({() in self.setBackgroundRed()})
+		let wait = SKAction.waitForDuration(0.05)
+		let turnBackgroundWhite = SKAction.runBlock({() in self.setBackgroundColorWhite()})
+		let turnBackgoundColorSky = SKAction.runBlock({() in self.setBackgroundColorSky()})
 		
-		var sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
-		var repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
-		var canRestartAction = SKAction.runBlock({() in self.letItRestart()})
-		var groupOfActions = SKAction.group([repeatSequence, canRestartAction])
+		let sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
+		let repeatSequence = SKAction.repeatAction(sequenceOfActions, count: 4)
+		let canRestartAction = SKAction.runBlock({() in self.letItRestart()})
+		let groupOfActions = SKAction.group([repeatSequence, canRestartAction])
 		
 		self.runAction(groupOfActions, withKey:"flash")
 	}
