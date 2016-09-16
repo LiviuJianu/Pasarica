@@ -12,7 +12,7 @@ import AVFoundation
 class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	var playButton:SKLabelNode!
-	var bounceTimer:NSTimer!
+	var bounceTimer:Timer!
 	var viewSize : CGSize!
 	
 	let bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
@@ -35,31 +35,31 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		// set value of the highscore to the saved one, if any
 	}
 
-	override func didMoveToView(view: SKView) {
+	override func didMove(to view: SKView) {
 		viewSize = self.size
 		
 		createBackground()
 		visibleNodes.speed = 0
 		pipes.speed = 0;
-		self.physicsWorld.gravity = CGVectorMake(0.0, 0.0)
+		self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
 
 		
-		bounceTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
+		bounceTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
 	}
 	
-	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 	 
 		if let touch = touches.first{
 
-		let touchLocation = touch.locationInNode(self)
+		let touchLocation = touch.location(in: self)
 		
-		if (playButton.containsPoint(touchLocation)) {
+		if (playButton.contains(touchLocation)) {
 			self.switchToPlay()
 			}
 		}
 	}
 	
-	override func update(currentTime: CFTimeInterval) {
+	override func update(_ currentTime: TimeInterval) {
 	}
 
 	
@@ -99,138 +99,138 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	internal func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
 		
-		upTexture.filteringMode = SKTextureFilteringMode.Nearest
-		downTexture.filteringMode = SKTextureFilteringMode.Nearest
+		upTexture.filteringMode = SKTextureFilteringMode.nearest
+		downTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		bird.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame) * 0.8)
+		bird.position = CGPoint(x: self.frame.midX, y: self.frame.midY * 0.8)
 		
 		
-		let animation = SKAction.animateWithTextures([upTexture,downTexture], timePerFrame: 0.2)
-		let flap = SKAction.repeatActionForever(animation)
-		bird.runAction(flap)
+		let animation = SKAction.animate(with: [upTexture,downTexture], timePerFrame: 0.2)
+		let flap = SKAction.repeatForever(animation)
+		bird.run(flap)
 		
 		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
-		bird.physicsBody?.dynamic = true
+		bird.physicsBody?.isDynamic = true
 		bird.physicsBody?.allowsRotation = false
 		
-		bird.physicsBody?.categoryBitMask = CollisionCategory.Bird.rawValue
-		bird.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
-		bird.physicsBody?.contactTestBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
+		bird.physicsBody?.categoryBitMask = CollisionCategory.bird.rawValue
+		bird.physicsBody?.collisionBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
+		bird.physicsBody?.contactTestBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
 		
 		self.addChild(bird)
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
-		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
+		groundTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		let moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
-		let resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
-		let moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
+		let moveGroundSprite = SKAction.moveBy(x: -groundTexture.size().width, y: 0, duration: TimeInterval(0.01 * groundTexture.size().width))
+		let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width, y: 0, duration: 0.0)
+		let moveGroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
 		var i : CGFloat = 0
 		while i < CGFloat(2) + self.frame.size.width / (groundTexture.size().width) {
-			++i
+			i += 1
 			let sprite = SKSpriteNode(texture: groundTexture)
-			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
-			sprite.runAction(moveGroundSpritesForever)
+			sprite.position = CGPoint(x: i * sprite.size.width, y: sprite.size.height / 2)
+			sprite.run(moveGroundSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Ground - lower screen limit
 		let groundLimit = SKNode()
-		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
-		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height))
-		groundLimit.physicsBody?.dynamic = false
-		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
+		groundLimit.position = CGPoint(x: 0, y: groundTexture.size().height / 2)
+		groundLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.size.width, height: groundTexture.size().height))
+		groundLimit.physicsBody?.isDynamic = false
+		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
 		self.addChild(groundLimit)
 		
 	}
 	
 	internal func drawSky(sky skylineTexture:SKTexture, ground groundTexture : SKTexture) {
-		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
+		skylineTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		let moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
-		let resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
-		let moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
+		let moveSkylineSprite = SKAction.moveBy(x: -skylineTexture.size().width, y: 0, duration: TimeInterval(0.01 * skylineTexture.size().width))
+		let resetSkylineSprite = SKAction.moveBy(x: skylineTexture.size().width, y: 0, duration: 0.0)
+		let moveSkylineSpritesForever = SKAction.repeatForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
 		
 		var j : CGFloat = 0
 		while j < CGFloat(2) + self.frame.size.width / (skylineTexture.size().width) {
-			++j
+			j += 1
 			let sprite = SKSpriteNode(texture: skylineTexture)
 			sprite.zPosition = -20
-			sprite.position = CGPointMake(j * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
-			sprite.runAction(moveSkylineSpritesForever)
+			sprite.position = CGPoint(x: j * sprite.size.width, y: sprite.size.height / 2 + groundTexture.size().height)
+			sprite.run(moveSkylineSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
 		let skyLimit = SKNode()
-		skyLimit.position = CGPointMake(0, self.frame.size.height)
-		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, 1.0))
-		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
-		skyLimit.physicsBody?.dynamic = false
+		skyLimit.position = CGPoint(x: 0, y: self.frame.size.height)
+		skyLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.size.width, height: 1.0))
+		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
+		skyLimit.physicsBody?.isDynamic = false
 		
 		self.addChild(skyLimit)
 	}
 	
 	internal func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
-		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
-		pipeDownTexture.filteringMode = SKTextureFilteringMode.Nearest
+		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
+		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		//movement of pipes
 		let distanceToMove = CGFloat(self.frame.size.width + 2.0 * pipeUpTexture.size().width)
-		let movePipes = SKAction.moveByX(-distanceToMove, y: 0.0, duration: NSTimeInterval(0.01 * distanceToMove))
+		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
 		let removePipes = SKAction.removeFromParent()
 		
 		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
 		let pipeGap : CGFloat = 130.0
 		
 		//Spawn Pipes
-		let spawn = SKAction.runBlock({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
-		let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
+		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
+		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
 		let spawnThenDelay = SKAction.sequence([spawn,delay])
-		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
 		
-		self.runAction(spawnThenDelayForever)
+		self.run(spawnThenDelayForever)
 	}
 	
-	internal func spawnPipes(pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
+	internal func spawnPipes(_ pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
 		
 		let pipePair = SKNode()
-		pipePair.position = CGPointMake(self.frame.size.width + pipeUpTexture.size().width * 2.0, 0)
+		pipePair.position = CGPoint(x: self.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
 		pipePair.zPosition = -10
 		
 		let height = UInt32(self.frame.height / 3)
 		let y = arc4random() % height
 		
 		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
-		pipeDown.position = CGPointMake(0.0, CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
+		pipeDown.position = CGPoint(x: 0.0, y: CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
 		
-		pipeDown.physicsBody = SKPhysicsBody(rectangleOfSize: pipeDown.size)
-		pipeDown.physicsBody?.dynamic = false
-		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
-		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
+		pipeDown.physicsBody?.isDynamic = false
+		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
+		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		
 		pipePair.addChild(pipeDown)
 		
 		let pipeUp = SKSpriteNode(texture: pipeUpTexture)
-		pipeUp.position = CGPointMake(0.0, CGFloat(y))
+		pipeUp.position = CGPoint(x: 0.0, y: CGFloat(y))
 		
-		pipeUp.physicsBody = SKPhysicsBody(rectangleOfSize: pipeUp.size)
-		pipeUp.physicsBody?.dynamic = false
-		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
-		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		pipeUp.physicsBody = SKPhysicsBody(rectangleOf: pipeUp.size)
+		pipeUp.physicsBody?.isDynamic = false
+		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
+		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		pipePair.addChild(pipeUp)
 		
 		let contactNode = SKNode()
-		contactNode.position = CGPointMake(pipeUp.size.width + bird.size.width / 2, CGRectGetMidY(self.frame))
-		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.frame.size.height))
-		contactNode.physicsBody?.dynamic = false
-		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.rawValue
-		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		contactNode.position = CGPoint(x: pipeUp.size.width + bird.size.width / 2, y: self.frame.midY)
+		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.frame.size.height))
+		contactNode.physicsBody?.isDynamic = false
+		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
+		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		pipePair.addChild(contactNode)
 		
 		
-		pipePair.runAction(pipesMoveAndRemove)
+		pipePair.run(pipesMoveAndRemove)
 		pipes.addChild(pipePair)
 		
 	}
@@ -241,7 +241,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		gameLabel.text = "pasarica"
 		gameLabel.position = CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
 		gameLabel.fontSize = 72
-		gameLabel.fontColor = SKColor.whiteColor()
+		gameLabel.fontColor = SKColor.white
 		gameLabel.zPosition = -10
 		self.addChild(gameLabel)
 	}
@@ -252,16 +252,16 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		playButton.text = "joaca"
 		playButton.position =  CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.65)
 		playButton.fontSize = 96
-		playButton.fontColor = SKColor.redColor()
+		playButton.fontColor = SKColor.red
 		playButton.zPosition = -10
 		self.addChild(playButton)
 	}
 	
 	func animatePlay () {
-		let bounceLarger = SKAction.scaleTo(1.25, duration: 0.15)
-		let bounceNormal = SKAction.scaleTo(1.0, duration: 0.15)
+		let bounceLarger = SKAction.scale(to: 1.25, duration: 0.15)
+		let bounceNormal = SKAction.scale(to: 1.0, duration: 0.15)
 		let bounceSequence = SKAction.sequence([bounceLarger, bounceNormal])
-		playButton.runAction(SKAction.repeatAction(bounceSequence, count: 3))
+		playButton.run(SKAction.repeat(bounceSequence, count: 3))
 	}
 	
 	func switchToPlay () {
@@ -277,8 +277,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 			skView.ignoresSiblingOrder = true
 			
 			/* Set the scale mode to scale to fit the window */
-			scene.scaleMode = .AspectFill
-			let gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.15)
+			scene.scaleMode = .aspectFill
+			let gameTransition = SKTransition.fade(with: SKColor.black, duration: 0.15)
 			skView.presentScene(scene, transition: gameTransition)
 		}
 		} catch {

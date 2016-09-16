@@ -21,7 +21,7 @@ class Bird: SKSpriteNode {
 
 	convenience init() {
 		let birdTexture = SKTexture(imageNamed: "BirdUp")
-		self.init(texture: birdTexture, color: UIColor.clearColor(), size: birdTexture.size())
+		self.init(texture: birdTexture, color: UIColor.clear, size: birdTexture.size())
 	}
 
 	
@@ -31,25 +31,25 @@ class Bird: SKSpriteNode {
 	
 	func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
 		
-		upTexture.filteringMode = SKTextureFilteringMode.Nearest
-		downTexture.filteringMode = SKTextureFilteringMode.Nearest
+		upTexture.filteringMode = SKTextureFilteringMode.nearest
+		downTexture.filteringMode = SKTextureFilteringMode.nearest
 	
 		
 		self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height/2.0)
-		self.physicsBody?.dynamic = true
+		self.physicsBody?.isDynamic = true
 		self.physicsBody?.allowsRotation = false
 		
-		self.physicsBody?.categoryBitMask = CollisionCategory.Bird.rawValue
-		self.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
-		self.physicsBody?.contactTestBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
+		self.physicsBody?.categoryBitMask = CollisionCategory.bird.rawValue
+		self.physicsBody?.collisionBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
+		self.physicsBody?.contactTestBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
 
 		self.flapWings()
 	}
 	
 	func flapWings() {
-		let animation = SKAction.animateWithTextures([birdUpTexture,birdDownTexture], timePerFrame: 0.2)
-		let flap = SKAction.repeatActionForever(animation)
-		self.runAction(flap)
+		let animation = SKAction.animate(with: [birdUpTexture,birdDownTexture], timePerFrame: 0.2)
+		let flap = SKAction.repeatForever(animation)
+		self.run(flap)
 	}
 	
 	func update() {
@@ -70,12 +70,12 @@ class Bird: SKSpriteNode {
 		}
 	}
 	
-	func flyBird(impulseValue : CGFloat) {
+	func flyBird(_ impulseValue : CGFloat) {
 		
-		self.physicsBody?.velocity = CGVectorMake(0, 0)
-		self.physicsBody?.collisionBitMask = CollisionCategory.World.rawValue | CollisionCategory.Pipe.rawValue
+		self.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+		self.physicsBody?.collisionBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
 
-		let impulse = CGVectorMake(0, impulseValue)
+		let impulse = CGVector(dx: 0, dy: impulseValue)
 		self.physicsBody?.applyImpulse(impulse)
 		
 	}

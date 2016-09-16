@@ -54,117 +54,117 @@ class World {
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
-		groundTexture.filteringMode = SKTextureFilteringMode.Nearest
+		groundTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		let moveGroundSprite = SKAction.moveByX(-groundTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * groundTexture.size().width))
-		let resetGroundSprite = SKAction.moveByX(groundTexture.size().width, y: 0, duration: 0.0)
-		let moveGroundSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
+		let moveGroundSprite = SKAction.moveBy(x: -groundTexture.size().width, y: 0, duration: TimeInterval(0.01 * groundTexture.size().width))
+		let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width, y: 0, duration: 0.0)
+		let moveGroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
 		
 		var i : CGFloat = 0
 		while i < 2 + self.gameScene.frame.size.width / (groundTexture.size().width) {
-			++i
+			i += 1
 			let sprite = SKSpriteNode(texture: groundTexture)
-			sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
-			sprite.runAction(moveGroundSpritesForever)
+			sprite.position = CGPoint(x: i * sprite.size.width, y: sprite.size.height / 2)
+			sprite.run(moveGroundSpritesForever)
 			visibleNodes.addChild(sprite)
 			
 		}
 		
 		//Ground - lower screen limit
 		let groundLimit = SKNode()
-		groundLimit.position = CGPointMake(0, groundTexture.size().height / 2)
-		groundLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, groundTexture.size().height))
-		groundLimit.physicsBody?.dynamic = false
-		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
+		groundLimit.position = CGPoint(x: 0, y: groundTexture.size().height / 2)
+		groundLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.gameScene.frame.size.width, height: groundTexture.size().height))
+		groundLimit.physicsBody?.isDynamic = false
+		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
 		self.gameScene.addChild(groundLimit)
 		
 	}
 	
 	internal func drawSky(sky skylineTexture:SKTexture, ground groundTexture : SKTexture) {
-		skylineTexture.filteringMode = SKTextureFilteringMode.Nearest
+		skylineTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		let moveSkylineSprite = SKAction.moveByX(-skylineTexture.size().width, y: 0, duration: NSTimeInterval(0.01 * skylineTexture.size().width))
-		let resetSkylineSprite = SKAction.moveByX(skylineTexture.size().width, y: 0, duration: 0.0)
-		let moveSkylineSpritesForever = SKAction.repeatActionForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
+		let moveSkylineSprite = SKAction.moveBy(x: -skylineTexture.size().width, y: 0, duration: TimeInterval(0.01 * skylineTexture.size().width))
+		let resetSkylineSprite = SKAction.moveBy(x: skylineTexture.size().width, y: 0, duration: 0.0)
+		let moveSkylineSpritesForever = SKAction.repeatForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
 		var j : CGFloat = 0
 		while j < 2 + self.gameScene.frame.size.width / (skylineTexture.size().width) {
-			++j;
+			j += 1;
 			let sprite = SKSpriteNode(texture: skylineTexture)
 			sprite.zPosition = -20
-			sprite.position = CGPointMake(j * sprite.size.width, sprite.size.height / 2 + groundTexture.size().height)
-			sprite.runAction(moveSkylineSpritesForever)
+			sprite.position = CGPoint(x: j * sprite.size.width, y: sprite.size.height / 2 + groundTexture.size().height)
+			sprite.run(moveSkylineSpritesForever)
 			visibleNodes.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
 		let skyLimit = SKNode()
-		skyLimit.position = CGPointMake(0, self.gameScene.frame.size.height)
-		skyLimit.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.gameScene.frame.size.width, 1.0))
-		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.World.rawValue
-		skyLimit.physicsBody?.dynamic = false
+		skyLimit.position = CGPoint(x: 0, y: self.gameScene.frame.size.height)
+		skyLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.gameScene.frame.size.width, height: 1.0))
+		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
+		skyLimit.physicsBody?.isDynamic = false
 		
 		self.gameScene.addChild(skyLimit)
 	}
 	
 	internal func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
-		pipeUpTexture.filteringMode = SKTextureFilteringMode.Nearest
-		pipeDownTexture.filteringMode = SKTextureFilteringMode.Nearest
+		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
+		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		//movement of pipes
 		let distanceToMove = CGFloat(self.gameScene.frame.size.width + 2.0 * pipeUpTexture.size().width)
-		let movePipes = SKAction.moveByX(-distanceToMove, y: 0.0, duration: NSTimeInterval(0.01 * distanceToMove))
+		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
 		let removePipes = SKAction.removeFromParent()
 		
 		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
 		let pipeGap : CGFloat = 130.0
 		
 		//Spawn Pipes
-		let spawn = SKAction.runBlock({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
-		let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
+		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
+		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
 		let spawnThenDelay = SKAction.sequence([spawn,delay])
-		let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
 		
-		self.gameScene.runAction(spawnThenDelayForever)
+		self.gameScene.run(spawnThenDelayForever)
 	}
 	
-	internal func spawnPipes(pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
+	internal func spawnPipes(_ pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
 		
 		let pipePair = SKNode()
-		pipePair.position = CGPointMake(self.gameScene.frame.size.width + pipeUpTexture.size().width * 2.0, 0)
+		pipePair.position = CGPoint(x: self.gameScene.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
 		pipePair.zPosition = -10
 		
 		let height = UInt32(self.gameScene.frame.height / 3)
 		let y = arc4random() % height
 		
 		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
-		pipeDown.position = CGPointMake(0.0, CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
+		pipeDown.position = CGPoint(x: 0.0, y: CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
 		
-		pipeDown.physicsBody = SKPhysicsBody(rectangleOfSize: pipeDown.size)
-		pipeDown.physicsBody?.dynamic = false
-		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
-		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
+		pipeDown.physicsBody?.isDynamic = false
+		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
+		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		
 		pipePair.addChild(pipeDown)
 		
 		let pipeUp = SKSpriteNode(texture: pipeUpTexture)
-		pipeUp.position = CGPointMake(0.0, CGFloat(y))
+		pipeUp.position = CGPoint(x: 0.0, y: CGFloat(y))
 		
-		pipeUp.physicsBody = SKPhysicsBody(rectangleOfSize: pipeUp.size)
-		pipeUp.physicsBody?.dynamic = false
-		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.Pipe.rawValue
-		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		pipeUp.physicsBody = SKPhysicsBody(rectangleOf: pipeUp.size)
+		pipeUp.physicsBody?.isDynamic = false
+		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
+		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		pipePair.addChild(pipeUp)
 		
 		let contactNode = SKNode()
-		contactNode.position = CGPointMake(pipeUp.size.width, CGRectGetMidY(self.gameScene.frame))
-		contactNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(pipeUp.size.width, self.gameScene.frame.size.height))
-		contactNode.physicsBody?.dynamic = false
-		contactNode.physicsBody?.categoryBitMask = CollisionCategory.Score.rawValue
-		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.Bird.rawValue
+		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.gameScene.frame.midY)
+		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.gameScene.frame.size.height))
+		contactNode.physicsBody?.isDynamic = false
+		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
+		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
 		pipePair.addChild(contactNode)
 		
 		
-		pipePair.runAction(pipesMoveAndRemove)
+		pipePair.run(pipesMoveAndRemove)
 		pipes.addChild(pipePair)
 		
 	}
@@ -172,7 +172,7 @@ class World {
 	
 	internal func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
-		scoreLabelNode.position = CGPointMake(CGRectGetMidX(self.gameScene.frame), self.gameScene.frame.height / 6)
+		scoreLabelNode.position = CGPoint(x: self.gameScene.frame.midX, y: self.gameScene.frame.height / 6)
 		scoreLabelNode.fontSize = 400
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
@@ -181,7 +181,7 @@ class World {
 		
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
-		highScoreLabelNode.position = CGPointMake(self.gameScene.frame.width - 400.0 , self.gameScene.frame.height - highScoreLabelNode.fontSize)
+		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width - 400.0 , y: self.gameScene.frame.height - highScoreLabelNode.fontSize)
 		
 		highScoreLabelNode.alpha = 0.5
 		highScoreLabelNode.zPosition = -30
@@ -209,11 +209,11 @@ class World {
 		pipes.removeAllChildren()
 	}
 	
-	func setHighscore(highscore : Int) {
+	func setHighscore(_ highscore : Int) {
 		highScoreLabelNode.text = "record: " + "\(highscore)"
 	}
 	
-	func setScore(score : Int) {
+	func setScore(_ score : Int) {
 		scoreLabelNode.text = "\(score)"
 	}
 	
