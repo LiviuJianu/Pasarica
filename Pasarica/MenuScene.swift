@@ -257,7 +257,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		self.addChild(playButton)
 	}
 	
-	func animatePlay () {
+	@objc func animatePlay () {
 		let bounceLarger = SKAction.scale(to: 1.25, duration: 0.15)
 		let bounceNormal = SKAction.scale(to: 1.0, duration: 0.15)
 		let bounceSequence = SKAction.sequence([bounceLarger, bounceNormal])
