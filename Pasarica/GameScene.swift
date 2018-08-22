@@ -56,7 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
 		replayButton.fontSize = 96
 		replayButton.fontColor = SKColor.red
-		replayButton.zPosition = -10
 		self.addChild(replayButton)
 	}
 	
