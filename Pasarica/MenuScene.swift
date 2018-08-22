@@ -66,32 +66,13 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	func createBackground() {
 		let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
 		let birdDownTexture = SKTexture(imageNamed: "BirdDown")
-		
-		let groundTexture   = SKTexture(imageNamed: "Ground")
-		let skylineTexture  = SKTexture(imageNamed: "Skyline")
-		
-		let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
-		let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
-		
+
 		drawGameLabel()
 		drawPlayLabel()
 		
-		
 		//Create the Bird
 		createBird(up: birdUpTexture, down: birdDownTexture)
-		
-		//Draw the Ground and set the limits
-		drawGround(ground: groundTexture)
-		
-		//Draw the Sky and set the limits
-		drawSky(sky: skylineTexture, ground: groundTexture)
-		
-		//Draw the pipes
-		drawPipes(up: pipeUpTexture, down: pipeDownTexture)
-		
-		//Draw the score and high score
-//		drawScores()
-		
+
 		self.addChild(visibleNodes)
 		self.addChild(pipes)
 
@@ -119,121 +100,6 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		
 		self.addChild(bird)
 	}
-	
-	internal func drawGround(ground groundTexture : SKTexture) {
-		groundTexture.filteringMode = SKTextureFilteringMode.nearest
-		
-		let moveGroundSprite = SKAction.moveBy(x: -groundTexture.size().width, y: 0, duration: TimeInterval(0.01 * groundTexture.size().width))
-		let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width, y: 0, duration: 0.0)
-		let moveGroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
-		var i : CGFloat = 0
-		while i < CGFloat(2) + self.frame.size.width / (groundTexture.size().width) {
-			i += 1
-			let sprite = SKSpriteNode(texture: groundTexture)
-			sprite.position = CGPoint(x: i * sprite.size.width, y: sprite.size.height / 2)
-			sprite.run(moveGroundSpritesForever)
-			visibleNodes.addChild(sprite)
-		}
-		
-		//Ground - lower screen limit
-		let groundLimit = SKNode()
-		groundLimit.position = CGPoint(x: 0, y: groundTexture.size().height / 2)
-		groundLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.size.width, height: groundTexture.size().height))
-		groundLimit.physicsBody?.isDynamic = false
-		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
-		self.addChild(groundLimit)
-		
-	}
-	
-	internal func drawSky(sky skylineTexture:SKTexture, ground groundTexture : SKTexture) {
-		skylineTexture.filteringMode = SKTextureFilteringMode.nearest
-		
-		let moveSkylineSprite = SKAction.moveBy(x: -skylineTexture.size().width, y: 0, duration: TimeInterval(0.01 * skylineTexture.size().width))
-		let resetSkylineSprite = SKAction.moveBy(x: skylineTexture.size().width, y: 0, duration: 0.0)
-		let moveSkylineSpritesForever = SKAction.repeatForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
-		
-		var j : CGFloat = 0
-		while j < CGFloat(2) + self.frame.size.width / (skylineTexture.size().width) {
-			j += 1
-			let sprite = SKSpriteNode(texture: skylineTexture)
-			sprite.zPosition = -20
-			sprite.position = CGPoint(x: j * sprite.size.width, y: sprite.size.height / 2 + groundTexture.size().height)
-			sprite.run(moveSkylineSpritesForever)
-			visibleNodes.addChild(sprite)
-		}
-		
-		//Sky - upper screen limit
-		let skyLimit = SKNode()
-		skyLimit.position = CGPoint(x: 0, y: self.frame.size.height)
-		skyLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.size.width, height: 1.0))
-		skyLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
-		skyLimit.physicsBody?.isDynamic = false
-		
-		self.addChild(skyLimit)
-	}
-	
-	internal func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
-		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
-		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
-		
-		//movement of pipes
-		let distanceToMove = CGFloat(self.frame.size.width + 2.0 * pipeUpTexture.size().width)
-		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
-		let removePipes = SKAction.removeFromParent()
-		
-		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
-		let pipeGap : CGFloat = 130.0
-		
-		//Spawn Pipes
-		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
-		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
-		let spawnThenDelay = SKAction.sequence([spawn,delay])
-		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
-		
-		self.run(spawnThenDelayForever)
-	}
-	
-	internal func spawnPipes(_ pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
-		
-		let pipePair = SKNode()
-		pipePair.position = CGPoint(x: self.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
-		pipePair.zPosition = -10
-		
-		let height = UInt32(self.frame.height / 3)
-		let y = arc4random() % height
-		
-		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
-		pipeDown.position = CGPoint(x: 0.0, y: CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
-		
-		pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
-		pipeDown.physicsBody?.isDynamic = false
-		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
-		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		
-		pipePair.addChild(pipeDown)
-		
-		let pipeUp = SKSpriteNode(texture: pipeUpTexture)
-		pipeUp.position = CGPoint(x: 0.0, y: CGFloat(y))
-		
-		pipeUp.physicsBody = SKPhysicsBody(rectangleOf: pipeUp.size)
-		pipeUp.physicsBody?.isDynamic = false
-		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
-		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		pipePair.addChild(pipeUp)
-		
-		let contactNode = SKNode()
-		contactNode.position = CGPoint(x: pipeUp.size.width + bird.size.width / 2, y: self.frame.midY)
-		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.frame.size.height))
-		contactNode.physicsBody?.isDynamic = false
-		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
-		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		pipePair.addChild(contactNode)
-		
-		
-		pipePair.run(pipesMoveAndRemove)
-		pipes.addChild(pipePair)
-		
-	}
 
 	func drawGameLabel() {
 		// Game Label
@@ -242,7 +108,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		gameLabel.position = CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
 		gameLabel.fontSize = 72
 		gameLabel.fontColor = SKColor.white
-		gameLabel.zPosition = -10
+		gameLabel.zPosition = 100
 		self.addChild(gameLabel)
 	}
 	
@@ -253,7 +119,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		playButton.position =  CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.65)
 		playButton.fontSize = 96
 		playButton.fontColor = SKColor.red
-		playButton.zPosition = -10
+		playButton.zPosition = 100
 		self.addChild(playButton)
 	}
 	
