@@ -123,6 +123,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		world!.resetWorld()
 		
+		resetBird()
+		
 		canRestart = false
 		//CREATE HERE THE CONDITION TO START THE WORLD AFTER THE START BUTTON IS PRESSED
 		self.removeChildren(in: [replayButton])
@@ -142,11 +144,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	// Called when two bodies first contact each other.
 	func didBegin(_ contact: SKPhysicsContact) {
 		if (shouldScoreBeIncreased(contact)){
-			increaseScore();
+			increaseScore()
 			run(birdHasScoredSound)
 		}
 		else if (shouldGameBeTerminated(contact)){
-			terminateGame();
+			terminateGame()
 			drawPlayLabel()
 		}
 	}
