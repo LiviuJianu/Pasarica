@@ -184,7 +184,6 @@ class World {
 		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width - 400.0 , y: self.gameScene.frame.height - highScoreLabelNode.fontSize)
 		
 		highScoreLabelNode.alpha = 0.5
-		highScoreLabelNode.zPosition = -30
 
 		highScoreLabelNode.text = "N/A"
 
