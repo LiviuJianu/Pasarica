@@ -20,6 +20,8 @@ class World {
 	internal let scoreLabelNode = SKLabelNode()
 	internal let highScoreLabelNode = SKLabelNode()
 	
+	var pauseButton = SKSpriteNode()
+	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
 		createWorld()
@@ -48,6 +50,9 @@ class World {
 	
 		//Draw the score and high score
 		drawScores()
+		
+		//show the pause button on screen
+		createPauseButton()
 		
 		self.gameScene.addChild(visibleNodes)
 		visibleNodes.addChild(pipes)
@@ -181,13 +186,21 @@ class World {
 		
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
-		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width - 400.0 , y: self.gameScene.frame.height - highScoreLabelNode.fontSize)
+		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width - 350.0 , y: self.gameScene.frame.height - highScoreLabelNode.fontSize)
 		
 		highScoreLabelNode.alpha = 0.5
 
 		highScoreLabelNode.text = "N/A"
 
 		self.gameScene.addChild(highScoreLabelNode)
+	}
+	
+	internal func createPauseButton() {
+		pauseButton = SKSpriteNode(imageNamed: "pause")
+		pauseButton.size = CGSize(width: 40, height: 40)
+		pauseButton.position = CGPoint(x: self.gameScene.frame.width - 330, y: 30)
+		pauseButton.zPosition = 100
+		self.gameScene.addChild(pauseButton)
 	}
 	
 	//MARK: App methods
@@ -205,6 +218,7 @@ class World {
 	}
 	
 	func resetWorld() {
+		createPauseButton()
 		pipes.removeAllChildren()
 	}
 	

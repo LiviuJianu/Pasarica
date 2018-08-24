@@ -91,6 +91,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if(world!.isWorldMoving()) {
 			let impulse = gameplayDict.value(forKey: "Impulse-Vector") as! CGFloat
 			bird.flyBird(impulse)
+
+			if (!canRestart) {
+				if let touch = touches.first{
+					let touchLocation = touch.location(in: self)
+					if(world?.pauseButton.contains(touchLocation))! {
+							if self.isPaused == false {
+								self.isPaused = true
+								world?.pauseButton.texture = SKTexture(imageNamed: "play")
+							} else {
+								self.isPaused = false
+								world?.pauseButton.texture = SKTexture(imageNamed: "pause")
+							}
+						}
+					}
+			}
 		} else if(canRestart) {
 			self.resetScene()
 		}
@@ -150,6 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		else if (shouldGameBeTerminated(contact)){
 			terminateGame()
 			drawPlayLabel()
+			world?.pauseButton.removeFromParent()
 		}
 	}
 	
