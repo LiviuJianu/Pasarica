@@ -4,6 +4,7 @@
 
 import SpriteKit
 import AVFoundation
+import Crashlytics
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
@@ -91,16 +92,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if(world!.isWorldMoving()) {
 			let impulse = gameplayDict.value(forKey: "Impulse-Vector") as! CGFloat
 			bird.flyBird(impulse)
-
 			if (!canRestart) {
 				if let touch = touches.first{
 					let touchLocation = touch.location(in: self)
 					if(world?.pauseButton.contains(touchLocation))! {
 							if self.isPaused == false {
+								Answers.logCustomEvent(withName: "Game Paused",
+															   customAttributes: [
+																"Score": score])
 								self.isPaused = true
 								world?.pauseButton.texture = SKTexture(imageNamed: "play")
 							} else {
 								self.isPaused = false
+								Answers.logCustomEvent(withName: "Game Resumed",
+													   customAttributes: [
+														"Score": score])
 								world?.pauseButton.texture = SKTexture(imageNamed: "pause")
 							}
 						}

@@ -8,6 +8,7 @@
 
 import SpriteKit
 import Foundation
+import Crashlytics
 
 class World {
 	
@@ -207,9 +208,16 @@ class World {
 	
 	func stopWorld(){
 		visibleNodes.speed = 0
+		Answers.logLevelEnd("Game Over",
+							score: NSNumber(integerLiteral: Int(scoreLabelNode.text! as String)!),
+							success: true,
+							customAttributes: nil)
+		
 	}
 	
 	func startWorld(){
+		Answers.logLevelStart("Start Play",
+							  customAttributes: nil)
 		visibleNodes.speed = 1
 	}
 	
