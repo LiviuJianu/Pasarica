@@ -179,7 +179,7 @@ class World {
 	internal func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPoint(x: self.gameScene.frame.midX, y: self.gameScene.frame.height / 6)
-		scoreLabelNode.fontSize = 400
+		scoreLabelNode.fontSize = 280
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
 		scoreLabelNode.text = "0"
@@ -209,7 +209,7 @@ class World {
 	func stopWorld(){
 		visibleNodes.speed = 0
 		Answers.logLevelEnd("Game Over",
-							score: NSNumber(integerLiteral: Int(scoreLabelNode.text! as String)!),
+							score: NSNumber(integerLiteral: gameScene.score),
 							success: true,
 							customAttributes: nil)
 		

@@ -53,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	func drawPlayLabel() {
 		// Play Button
 		replayButton = SKLabelNode(fontNamed: "Helvetica")
-		replayButton.text = "joaca"
+		replayButton.text = "joc nou"
 		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
 		replayButton.fontSize = 96
 		replayButton.fontColor = SKColor.red
