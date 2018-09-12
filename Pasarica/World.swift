@@ -14,7 +14,7 @@ class World {
 	
 	internal let gameScene : GameScene;
 	
-	internal let pipes = SKNode()
+	internal let pipes: Pipes
 	internal let visibleNodes = SKNode()
 	
 	//Scoring variables
@@ -25,6 +25,7 @@ class World {
 	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
+		self.pipes = Pipes(gameScene: gameScene)
 		createWorld()
 	}
 	
@@ -32,14 +33,9 @@ class World {
 	
 	internal func createWorld()  {
 
-		
 		let groundTexture   = SKTexture(imageNamed: "Ground")
 		let skylineTexture  = SKTexture(imageNamed: "Skyline")
 		
-		let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
-		let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
-
-	
 		//Draw the Ground and set the limits
 		drawGround(ground: groundTexture)
 	
@@ -47,7 +43,7 @@ class World {
 		drawSky(sky: skylineTexture, ground: groundTexture)
 	
 		//Draw the pipes
-		drawPipes(up: pipeUpTexture, down: pipeDownTexture)
+		pipes.drawPipes()
 	
 		//Draw the score and high score
 		drawScores()
@@ -56,7 +52,7 @@ class World {
 		createPauseButton()
 		
 		self.gameScene.addChild(visibleNodes)
-		visibleNodes.addChild(pipes)
+		visibleNodes.addChild(pipes.pipeNodes)
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
@@ -112,70 +108,6 @@ class World {
 		self.gameScene.addChild(skyLimit)
 	}
 	
-	internal func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
-		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
-		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
-		
-		//movement of pipes
-		let distanceToMove = CGFloat(self.gameScene.frame.size.width + 2.0 * pipeUpTexture.size().width)
-		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
-		let removePipes = SKAction.removeFromParent()
-		
-		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
-		let pipeGap : CGFloat = 130.0
-		
-		//Spawn Pipes
-		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
-		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
-		let spawnThenDelay = SKAction.sequence([spawn,delay])
-		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
-		
-		self.gameScene.run(spawnThenDelayForever)
-	}
-	
-	internal func spawnPipes(_ pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
-		
-		let pipePair = SKNode()
-		pipePair.position = CGPoint(x: self.gameScene.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
-		pipePair.zPosition = -10
-		
-		let height = UInt32(self.gameScene.frame.height / 3)
-		let y = arc4random() % height
-		
-		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
-		pipeDown.position = CGPoint(x: 0.0, y: CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
-		
-		pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
-		pipeDown.physicsBody?.isDynamic = false
-		pipeDown.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
-		pipeDown.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		
-		pipePair.addChild(pipeDown)
-		
-		let pipeUp = SKSpriteNode(texture: pipeUpTexture)
-		pipeUp.position = CGPoint(x: 0.0, y: CGFloat(y))
-		
-		pipeUp.physicsBody = SKPhysicsBody(rectangleOf: pipeUp.size)
-		pipeUp.physicsBody?.isDynamic = false
-		pipeUp.physicsBody?.categoryBitMask = CollisionCategory.pipe.rawValue
-		pipeUp.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		pipePair.addChild(pipeUp)
-		
-		let contactNode = SKNode()
-		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.gameScene.frame.midY)
-		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.gameScene.frame.size.height))
-		contactNode.physicsBody?.isDynamic = false
-		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
-		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
-		pipePair.addChild(contactNode)
-		
-		
-		pipePair.run(pipesMoveAndRemove)
-		pipes.addChild(pipePair)
-		
-	}
-	
-	
 	internal func drawScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPoint(x: self.gameScene.frame.midX, y: self.gameScene.frame.height / 6)
@@ -227,7 +159,7 @@ class World {
 	
 	func resetWorld() {
 		createPauseButton()
-		pipes.removeAllChildren()
+		pipes.pipeNodes.removeAllChildren()
 	}
 	
 	func setHighscore(_ highscore : Int) {

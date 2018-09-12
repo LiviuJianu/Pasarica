@@ -8,55 +8,46 @@
 
 import SpriteKit
 
-class Pipes : SKSpriteNode {
+class Pipes {
+	
+	let pipeNodes = SKNode()
+	let gameScene: GameScene
 	
 	let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
 	let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
 	
-	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-		super.init(texture: texture, color: color, size: size)
-		
-		self.drawPipes(up: pipeUpTexture, down: pipeDownTexture)
+	init(gameScene: GameScene) {
+		self.gameScene = gameScene
 	}
 	
-	convenience init() {
-		let pipeInitTexture = SKTexture(imageNamed: "PipeUp")
-		self.init(texture: pipeInitTexture, color: UIColor.clear, size: pipeInitTexture.size())
-	}
-	
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
-	func drawPipes(up pipeUpTexture:SKTexture, down pipeDownTexture:SKTexture) {
+	func drawPipes() {
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		//movement of pipes
-		let distanceToMove = CGFloat(self.frame.size.width + 2.0 * pipeUpTexture.size().width)
+		let distanceToMove = CGFloat(self.gameScene.frame.size.width + 2.0 * self.pipeUpTexture.size().width)
 		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
 		let removePipes = SKAction.removeFromParent()
 		
 		let pipesMoveAndRemove = SKAction.sequence([movePipes,removePipes])
-		let pipeGap : CGFloat = 130.0
 		
 		//Spawn Pipes
-		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove, gap: pipeGap, upTexture: pipeUpTexture, downTexture: pipeDownTexture)})
+		let spawn = SKAction.run({() in self.spawnPipes(pipesMoveAndRemove)})
 		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
 		let spawnThenDelay = SKAction.sequence([spawn,delay])
 		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
-		
-		self.run(spawnThenDelayForever)
+		// When Creating Pipes, this will make pipes indefinitely when the player died
+		// We need to fix this
+		self.gameScene.run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
 	}
 	
-	func spawnPipes(_ pipesMoveAndRemove : SKAction, gap pipeGap : CGFloat, upTexture pipeUpTexture: SKTexture, downTexture pipeDownTexture: SKTexture) {
-		
+	func spawnPipes(_ pipesMoveAndRemove : SKAction) {
+		let pipeGap : CGFloat = 130.0
 		let pipePair = SKNode()
-		pipePair.position = CGPoint(x: self.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
+		pipePair.position = CGPoint(x: self.gameScene.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
 		pipePair.zPosition = -10
 		
-		let height = UInt32(self.frame.height / 3)
+		let height = UInt32(self.gameScene.frame.height / 3)
 		let y = arc4random() % height
 		
 		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
@@ -79,8 +70,8 @@ class Pipes : SKSpriteNode {
 		pipePair.addChild(pipeUp)
 		
 		let contactNode = SKNode()
-		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.frame.midY)
-		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.frame.size.height))
+		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.gameScene.frame.midY)
+		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.gameScene.frame.size.height))
 		contactNode.physicsBody?.isDynamic = false
 		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
 		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
@@ -88,6 +79,12 @@ class Pipes : SKSpriteNode {
 		
 		
 		pipePair.run(pipesMoveAndRemove)
+		pipeNodes.addChild(pipePair)
+		
+	}
+	
+	func pauseSpawning(pause: Bool) {
+		pipeNodes.isPaused = pause
 	}
 	
 }

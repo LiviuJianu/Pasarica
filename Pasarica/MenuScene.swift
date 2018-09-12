@@ -136,8 +136,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		if let scene = try GameScene.unarchiveFromFile("GameScene") as? GameScene {
 			// Configure the view.
 			let skView = view! as SKView
-			skView.showsFPS = false
-			skView.showsNodeCount = false
+			skView.showsFPS = true
+			skView.showsNodeCount = true
 			
 			/* Sprite Kit applies additional optimizations to improve rendering performance */
 			skView.ignoresSiblingOrder = true
