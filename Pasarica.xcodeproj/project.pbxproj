@@ -10,9 +10,7 @@
 		1B4B475B1A6EDDFF0036255B /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B475A1A6EDDFF0036255B /* Bird.swift */; };
 		1B5D17271A6B1B4200C38431 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D17261A6B1B4200C38431 /* MenuScene.swift */; };
 		1B8B20991A6F13A3007A94E6 /* Pipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8B20981A6F13A3007A94E6 /* Pipes.swift */; };
-		1B8EF9532139269300252F22 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8EF9512139269200252F22 /* Fabric.framework */; };
 		1B8EF9542139269300252F22 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8EF9522139269300252F22 /* Crashlytics.framework */; };
-		1BF58694213D989800CE21A2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF58692213D989600CE21A2 /* Crashlytics.framework */; };
 		1BF58695213D989800CE21A2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF58693213D989800CE21A2 /* Fabric.framework */; };
 		8434DC5819C788CA00825DF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC5719C788CA00825DF3 /* AppDelegate.swift */; };
 		8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC5919C788CA00825DF3 /* GameScene.sks */; };
@@ -92,8 +90,6 @@
 				84FE7BC519D27C0B0009D4F6 /* AVFoundation.framework in Frameworks */,
 				1BF58695213D989800CE21A2 /* Fabric.framework in Frameworks */,
 				1B8EF9542139269300252F22 /* Crashlytics.framework in Frameworks */,
-				1BF58694213D989800CE21A2 /* Crashlytics.framework in Frameworks */,
-				1B8EF9532139269300252F22 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,25 +286,25 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Liviu Jianu";
 				TargetAttributes = {
 					8434DC5119C788CA00825DF3 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = 6KPQA28VX7;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1020;
 					};
 					8434DC6A19C788CA00825DF3 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = 5852CL4PLT;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1020;
 						TestTargetID = 8434DC5119C788CA00825DF3;
 					};
 				};
 			};
 			buildConfigurationList = 8434DC4D19C788CA00825DF3 /* Build configuration list for PBXProject "Pasarica" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -546,8 +542,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -568,8 +563,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -593,8 +587,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Vizitez.ro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pasarica.app/Pasarica";
 			};
 			name = Debug;
@@ -614,8 +607,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Vizitez.ro.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pasarica.app/Pasarica";
 			};
 			name = Release;
