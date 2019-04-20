@@ -12,8 +12,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var bird = Bird()
 	
 	//Sound variables
-	var birdHasScoredSound = SKAction.playSoundFileNamed("hai.mp3", waitForCompletion: false)
-	var gameOverSound = SKAction.playSoundFileNamed("aa_pacat.mp3", waitForCompletion: false)
+	var birdHasScoredSound = SKAction.playSoundFileNamed("pass.mp3", waitForCompletion: false)
+	var gameOverSound = SKAction.playSoundFileNamed("crash.mp3", waitForCompletion: false)
 	
 	var replayButton:SKLabelNode!
 	
