@@ -34,25 +34,5 @@ class GameViewController: UIViewController {
 		let menuScene = MenuScene(size: skView.frame.size)
 		skView.presentScene(menuScene)
     }
-
-    override var shouldAutorotate : Bool {
-        return true
-    }
-
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return UIInterfaceOrientationMask.allButUpsideDown
-        } else {
-            return UIInterfaceOrientationMask.all
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-    
-    override var prefersStatusBarHidden : Bool {
-        return true
-    }
+	
 }
