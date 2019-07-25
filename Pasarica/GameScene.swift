@@ -44,10 +44,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-        // set value of the highscore to the saved one, if any
-        if let high = UserDefaults.standard.object(forKey: "highscore") as? Int	{
-            highscore = high
-        }
 	}
 
 	func drawPlayLabel() {
@@ -58,6 +54,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		replayButton.fontSize = 96
 		replayButton.fontColor = SKColor.red
 		self.addChild(replayButton)
+	}
+	
+	override init(size: CGSize) {
+		super.init(size: size)
+		// set value of the highscore to the saved one, if any
+		if let high = UserDefaults.standard.object(forKey: "highscore") as? Int	{
+			highscore = high
+		}
 	}
 	
 	//MARK: Scene setup

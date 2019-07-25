@@ -132,25 +132,20 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	func switchToPlay () {
 		bounceTimer.invalidate()
-		do {
-		if let scene = try GameScene.unarchiveFromFile("GameScene") as? GameScene {
-			// Configure the view.
-			let skView = view! as SKView
-			skView.showsFPS = true
-			skView.showsNodeCount = true
-			
-			/* Sprite Kit applies additional optimizations to improve rendering performance */
-			skView.ignoresSiblingOrder = true
-			
-			/* Set the scale mode to scale to fit the window */
-			scene.scaleMode = .aspectFill
-			let gameTransition = SKTransition.fade(with: SKColor.black, duration: 0.15)
-			skView.presentScene(scene, transition: gameTransition)
-		}
-		} catch {
-			print("Switch to play error")
-		}
 		
+		let scene = GameScene(size: view!.bounds.size)
+		// Configure the view.
+		let skView = view! as SKView
+		skView.showsFPS = true
+		skView.showsNodeCount = true
+		
+		/* Sprite Kit applies additional optimizations to improve rendering performance */
+		skView.ignoresSiblingOrder = true
+		
+		/* Set the scale mode to scale to fit the window */
+		scene.scaleMode = .aspectFill
+		let gameTransition = SKTransition.fade(with: SKColor.black, duration: 0.15)
+		skView.presentScene(scene, transition: gameTransition)
 		
 	}
 	
