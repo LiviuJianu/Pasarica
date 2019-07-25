@@ -144,13 +144,14 @@ class World {
 							score: NSNumber(integerLiteral: gameScene.score),
 							success: true,
 							customAttributes: nil)
-		
+		gameScene.removeAllActions()
 	}
 	
 	func startWorld(){
 		Answers.logLevelStart("Start Play",
 							  customAttributes: nil)
 		visibleNodes.speed = 1
+		self.pipes.drawPipes()
 	}
 	
 	func isWorldMoving() -> Bool {

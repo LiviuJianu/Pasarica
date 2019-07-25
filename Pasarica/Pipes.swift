@@ -38,6 +38,8 @@ class Pipes {
 		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
 		// When Creating Pipes, this will make pipes indefinitely when the player died
 		// We need to fix this
+		// For the moment we just remove all the actions from the game scene and restart
+		// drawing pipes when a new game is started
 		self.gameScene.run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
 	}
 	
@@ -83,8 +85,5 @@ class Pipes {
 		
 	}
 	
-	func pauseSpawning(pause: Bool) {
-		pipeNodes.isPaused = pause
-	}
 	
 }
