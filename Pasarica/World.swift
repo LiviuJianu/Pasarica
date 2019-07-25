@@ -119,7 +119,7 @@ class World {
 		
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
-		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width - 350.0 , y: self.gameScene.frame.height - highScoreLabelNode.fontSize)
+		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width * 0.87 , y: self.gameScene.frame.maxY - highScoreLabelNode.fontSize * 3)
 		
 		highScoreLabelNode.alpha = 0.5
 
@@ -131,7 +131,7 @@ class World {
 	internal func createPauseButton() {
 		pauseButton = SKSpriteNode(imageNamed: "pause")
 		pauseButton.size = CGSize(width: 40, height: 40)
-		pauseButton.position = CGPoint(x: self.gameScene.frame.width - 330, y: 30)
+		pauseButton.position = CGPoint(x: self.gameScene.frame.width * 0.9, y: pauseButton.frame.height)
 		pauseButton.zPosition = 100
 		self.gameScene.addChild(pauseButton)
 	}
