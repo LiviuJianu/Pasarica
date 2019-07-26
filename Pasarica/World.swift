@@ -10,21 +10,26 @@ import SpriteKit
 import Foundation
 import Crashlytics
 
-class World {
+class World: SKNode {
 	
-	internal let gameScene : GameScene;
+	var gameScene : GameScene
 	
-	internal let pipes: Pipes
-	internal let visibleNodes = SKNode()
+	var pipes: Pipes
 	
 	//Scoring variables
 	internal let scoreLabelNode = SKLabelNode()
 	internal let highScoreLabelNode = SKLabelNode()
 	
 	init(gameScene : GameScene) {
-		self.gameScene = gameScene;
+		self.gameScene = gameScene
 		self.pipes = Pipes(frame: gameScene.frame)
-		createWorld()
+		
+		super.init()
+		self.createWorld()
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	//MARK: Creating the world
@@ -46,8 +51,9 @@ class World {
 		//Draw the score and high score
 		drawScores()
 		
-		self.gameScene.addChild(visibleNodes)
-		visibleNodes.addChild(pipes)
+		self.addChild(pipes)
+		self.gameScene.addChild(self)
+		
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
@@ -63,7 +69,7 @@ class World {
 			let sprite = SKSpriteNode(texture: groundTexture)
 			sprite.position = CGPoint(x: i * sprite.size.width, y: sprite.size.height / 2)
 			sprite.run(moveGroundSpritesForever)
-			visibleNodes.addChild(sprite)
+			self.addChild(sprite)
 			
 		}
 		
@@ -90,7 +96,7 @@ class World {
 			sprite.zPosition = -20
 			sprite.position = CGPoint(x: j * sprite.size.width, y: sprite.size.height / 2 + groundTexture.size().height)
 			sprite.run(moveSkylineSpritesForever)
-			visibleNodes.addChild(sprite)
+			self.addChild(sprite)
 		}
 		
 		//Sky - upper screen limit
@@ -126,7 +132,7 @@ class World {
 	//MARK: App methods
 	
 	func stopWorld(){
-		visibleNodes.speed = 0
+		self.speed = 0
 		Answers.logLevelEnd("Game Over",
 							score: NSNumber(integerLiteral: gameScene.score),
 							success: true,
@@ -137,12 +143,12 @@ class World {
 	func startWorld(){
 		Answers.logLevelStart("Start Play",
 							  customAttributes: nil)
-		visibleNodes.speed = 1
+		self.speed = 1
 		self.pipes.drawPipes(on: self.gameScene)
 	}
 	
 	func isWorldMoving() -> Bool {
-		return visibleNodes.speed > 0
+		return self.speed > 0
 	}
 	
 	func resetWorld() {
