@@ -6,16 +6,19 @@ import SpriteKit
 import AVFoundation
 import Crashlytics
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene {
 	
 	//MARK: Game variables
 	var bird = Bird()
+	var world : World?
 	
 	//Sound variables
 	var birdHasScoredSound = SKAction.playSoundFileNamed("pass.mp3", waitForCompletion: false)
 	var gameOverSound = SKAction.playSoundFileNamed("crash.mp3", waitForCompletion: false)
 	
 	var replayButton:SKLabelNode!
+	var pauseButton = SKSpriteNode()
+
 	
 	let gameplayDict : NSDictionary = {
 		let path = Bundle.main.path(forResource: "Gameplay", ofType: "plist")
@@ -23,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		return dict!
 		}()
 	
-	var world : World?
+	
 	
 	//Restart game if bird collided
 	var canRestart = false
@@ -42,20 +45,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
-
-	func drawPlayLabel() {
-		// Play Button
-		replayButton = SKLabelNode(fontNamed: "Helvetica")
-		replayButton.text = "joc nou"
-		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
-		replayButton.fontSize = 96
-		replayButton.fontColor = SKColor.red
-		self.addChild(replayButton)
-	}
-	
 	override init(size: CGSize) {
 		super.init(size: size)
 		// set value of the highscore to the saved one, if any
@@ -64,6 +53,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
 	//MARK: Scene setup
 	// Called immediately after a scene is presented by a view.
 	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
@@ -75,6 +67,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.world = World(gameScene: self)
 		self.world!.setHighscore(self.highscore)
 		
+		//show the pause button on screen
+		createPauseButton()
 		setupBird()
 		addGravityAndInteraction()
 
@@ -99,20 +93,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			if (!canRestart) {
 				if let touch = touches.first{
 					let touchLocation = touch.location(in: self)
-					if(world?.pauseButton.contains(touchLocation))! {
+					if(self.pauseButton.contains(touchLocation)) {
 							if self.isPaused == false {
 								Answers.logCustomEvent(withName: "Game Paused",
 															   customAttributes: [
 																"Score": score])
 								self.isPaused = true
-								world?.pauseButton.texture = SKTexture(imageNamed: "play")
+								self.pauseButton.texture = SKTexture(imageNamed: "play")
 								self.removeAllActions()
 							} else {
 								self.isPaused = false
 								Answers.logCustomEvent(withName: "Game Resumed",
 													   customAttributes: [
 														"Score": score])
-								world?.pauseButton.texture = SKTexture(imageNamed: "pause")
+								self.pauseButton.texture = SKTexture(imageNamed: "pause")
 								self.world?.pipes.drawPipes()
 							}
 						}
@@ -121,6 +115,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		} else if(canRestart) {
 			self.resetScene()
 		}
+	}
+	
+	func createPauseButton() {
+		pauseButton = SKSpriteNode(imageNamed: "pause")
+		pauseButton.size = CGSize(width: 40, height: 40)
+		pauseButton.position = CGPoint(x: self.frame.width * 0.9, y: pauseButton.frame.height)
+		pauseButton.zPosition = 100
+		self.addChild(pauseButton)
+	}
+	
+	
+	func drawPlayLabel() {
+		// Play Button
+		replayButton = SKLabelNode(fontNamed: "Helvetica")
+		replayButton.text = "joc nou"
+		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
+		replayButton.fontSize = 96
+		replayButton.fontColor = SKColor.red
+		self.addChild(replayButton)
 	}
 	
 	func setupBird() {
@@ -153,6 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		resetBird()
 		
 		canRestart = false
+		createPauseButton()
 		//CREATE HERE THE CONDITION TO START THE WORLD AFTER THE START BUTTON IS PRESSED
 		self.removeChildren(in: [replayButton])
 
@@ -165,20 +179,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		bird.position = CGPoint(x: self.frame.size.width / 2.8, y: self.frame.midY)
 		bird.speed = 1.0
 		bird.zRotation = 0.0
-	}
-	//MARK: Contact detection - SKPhysicsContactDelegate
-
-	// Called when two bodies first contact each other.
-	func didBegin(_ contact: SKPhysicsContact) {
-		if (shouldScoreBeIncreased(contact)){
-			increaseScore()
-			run(birdHasScoredSound)
-		}
-		else if (shouldGameBeTerminated(contact)){
-			terminateGame()
-			drawPlayLabel()
-			world?.pauseButton.removeFromParent()
-		}
 	}
 	
 	internal func shouldScoreBeIncreased(_ contact : SKPhysicsContact) -> Bool {
@@ -249,5 +249,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	func letItRestart() {
 		canRestart = true
+	}
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+	// Called when two bodies first contact each other.
+	func didBegin(_ contact: SKPhysicsContact) {
+		if (shouldScoreBeIncreased(contact)){
+			increaseScore()
+			run(birdHasScoredSound)
+		}
+		else if (shouldGameBeTerminated(contact)){
+			terminateGame()
+			drawPlayLabel()
+			self.pauseButton.removeFromParent()
+		}
 	}
 }
