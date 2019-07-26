@@ -66,6 +66,7 @@ class GameScene: SKScene {
 		
 		self.world = World(gameScene: self)
 		self.world!.setHighscore(self.highscore)
+		self.addChild(self.world!)
 		
 		//show the pause button on screen
 		createPauseButton()

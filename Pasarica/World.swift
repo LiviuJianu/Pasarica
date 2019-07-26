@@ -52,8 +52,6 @@ class World: SKNode {
 		drawScores()
 		
 		self.addChild(pipes)
-		self.gameScene.addChild(self)
-		
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
