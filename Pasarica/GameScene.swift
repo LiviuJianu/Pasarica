@@ -107,7 +107,7 @@ class GameScene: SKScene {
 													   customAttributes: [
 														"Score": score])
 								self.pauseButton.texture = SKTexture(imageNamed: "pause")
-								self.world?.pipes.drawPipes()
+								self.world?.pipes.drawPipes(on: self)
 							}
 						}
 					}

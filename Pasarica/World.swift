@@ -23,7 +23,7 @@ class World {
 	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene;
-		self.pipes = Pipes(gameScene: gameScene)
+		self.pipes = Pipes(frame: gameScene.frame)
 		createWorld()
 	}
 	
@@ -41,13 +41,13 @@ class World {
 		drawSky(sky: skylineTexture, ground: groundTexture)
 	
 		//Draw the pipes
-		pipes.drawPipes()
+		pipes.drawPipes(on: self.gameScene)
 	
 		//Draw the score and high score
 		drawScores()
 		
 		self.gameScene.addChild(visibleNodes)
-		visibleNodes.addChild(pipes.pipeNodes)
+		visibleNodes.addChild(pipes)
 	}
 	
 	internal func drawGround(ground groundTexture : SKTexture) {
@@ -138,7 +138,7 @@ class World {
 		Answers.logLevelStart("Start Play",
 							  customAttributes: nil)
 		visibleNodes.speed = 1
-		self.pipes.drawPipes()
+		self.pipes.drawPipes(on: self.gameScene)
 	}
 	
 	func isWorldMoving() -> Bool {
@@ -146,7 +146,7 @@ class World {
 	}
 	
 	func resetWorld() {
-		pipes.pipeNodes.removeAllChildren()
+		pipes.removeAllChildren()
 	}
 	
 	func setHighscore(_ highscore : Int) {

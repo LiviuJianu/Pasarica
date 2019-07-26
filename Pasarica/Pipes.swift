@@ -8,24 +8,28 @@
 
 import SpriteKit
 
-class Pipes {
+class Pipes: SKNode {
 	
-	let pipeNodes = SKNode()
-	let gameScene: GameScene
+	var gameFrame: CGRect
 	
 	let pipeUpTexture   = SKTexture(imageNamed: "PipeUp")
 	let pipeDownTexture = SKTexture(imageNamed: "PipeDown")
 	
-	init(gameScene: GameScene) {
-		self.gameScene = gameScene
+	init(frame: CGRect) {
+		self.gameFrame = frame
+		super.init()
 	}
 	
-	func drawPipes() {
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func drawPipes(on scene: SKScene) {
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		//movement of pipes
-		let distanceToMove = CGFloat(self.gameScene.frame.size.width + 2.0 * self.pipeUpTexture.size().width)
+		let distanceToMove = self.gameFrame.size.width + 2.0 * self.pipeUpTexture.size().width
 		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
 		let removePipes = SKAction.removeFromParent()
 		
@@ -40,16 +44,16 @@ class Pipes {
 		// We need to fix this
 		// For the moment we just remove all the actions from the game scene and restart
 		// drawing pipes when a new game is started
-		self.gameScene.run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
+		scene.run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
 	}
 	
 	func spawnPipes(_ pipesMoveAndRemove : SKAction) {
 		let pipeGap : CGFloat = 130.0
 		let pipePair = SKNode()
-		pipePair.position = CGPoint(x: self.gameScene.frame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
+		pipePair.position = CGPoint(x: self.gameFrame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
 		pipePair.zPosition = -10
 		
-		let height = UInt32(self.gameScene.frame.height / 3)
+		let height = UInt32(self.gameFrame.height / 3)
 		let y = arc4random() % height
 		
 		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
@@ -72,8 +76,8 @@ class Pipes {
 		pipePair.addChild(pipeUp)
 		
 		let contactNode = SKNode()
-		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.gameScene.frame.midY)
-		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.gameScene.frame.size.height))
+		contactNode.position = CGPoint(x: pipeUp.size.width, y: self.gameFrame.midY)
+		contactNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width, height: self.gameFrame.size.height))
 		contactNode.physicsBody?.isDynamic = false
 		contactNode.physicsBody?.categoryBitMask = CollisionCategory.score.rawValue
 		contactNode.physicsBody?.contactTestBitMask = CollisionCategory.bird.rawValue
@@ -81,7 +85,7 @@ class Pipes {
 		
 		
 		pipePair.run(pipesMoveAndRemove)
-		pipeNodes.addChild(pipePair)
+		self.addChild(pipePair)
 		
 	}
 	
