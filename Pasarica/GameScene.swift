@@ -16,6 +16,10 @@ class GameScene: SKScene {
 	var birdHasScoredSound = SKAction.playSoundFileNamed("pass.mp3", waitForCompletion: false)
 	var gameOverSound = SKAction.playSoundFileNamed("crash.mp3", waitForCompletion: false)
 	
+	//Scoring variables
+	internal let scoreLabelNode = SKLabelNode()
+	internal let highScoreLabelNode = SKLabelNode()
+	
 	var replayButton:SKLabelNode!
 	var pauseButton = SKSpriteNode()
 
@@ -34,12 +38,12 @@ class GameScene: SKScene {
 	//Scoring variables
 	var score : Int = 0 {
 		didSet {
-			self.world?.setScore(score)
+			scoreLabelNode.text = "\(score)"
 		}
 	}
 	var highscore : Int = 0 {
         didSet {
-            self.world?.setHighscore(highscore)
+            highScoreLabelNode.text = "record: " + "\(highscore)"
             UserDefaults.standard.set(highscore, forKey: "highscore")
             UserDefaults.standard.synchronize()
         }
@@ -50,6 +54,7 @@ class GameScene: SKScene {
 		// set value of the highscore to the saved one, if any
 		if let high = UserDefaults.standard.object(forKey: "highscore") as? Int	{
 			highscore = high
+			highScoreLabelNode.text = "record: " + "\(highscore)"
 		}
 	}
 	
@@ -65,12 +70,17 @@ class GameScene: SKScene {
 		self.setBackgroundColorSky()
 		
 		self.world = World(gameScene: self)
-		self.world!.setHighscore(self.highscore)
+		
 		self.addChild(self.world!)
+		
+		//Draw the score and high score
+		drawScores()
 		
 		//show the pause button on screen
 		createPauseButton()
+		
 		setupBird()
+		
 		addGravityAndInteraction()
 
 	}
@@ -197,10 +207,30 @@ class GameScene: SKScene {
 		score += 1
 		if (score > self.highscore){
 			self.highscore = score
-			self.world!.setHighscore(self.highscore)
+			self.highScoreLabelNode.text = "record: " + "\(self.highscore)"
 		}
 	}
-
+	
+	internal func drawScores() {
+		scoreLabelNode.fontName = "Helvetica-Bold"
+		scoreLabelNode.position = CGPoint(x: self.frame.midX, y: self.frame.height / 6)
+		scoreLabelNode.fontSize = 280
+		scoreLabelNode.alpha = 0.2
+		scoreLabelNode.zPosition = -30
+		scoreLabelNode.text = "0"
+		self.addChild(scoreLabelNode)
+		
+		highScoreLabelNode.fontName = "Helvetica"
+		highScoreLabelNode.fontSize = 20
+		highScoreLabelNode.position = CGPoint(x: self.frame.width * 0.87 , y: self.frame.maxY - highScoreLabelNode.fontSize * 3)
+		
+		highScoreLabelNode.alpha = 0.5
+		
+		highScoreLabelNode.text = "record: \(self.highscore)"
+		
+		self.addChild(highScoreLabelNode)
+	}
+	
 	internal func shouldGameBeTerminated(_ contact : SKPhysicsContact) -> Bool {
 		if(world!.isWorldMoving()) {
 			if(contact.bodyA.node == bird || contact.bodyB.node == bird) {

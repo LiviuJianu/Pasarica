@@ -16,10 +16,6 @@ class World: SKNode {
 	
 	var pipes: Pipes
 	
-	//Scoring variables
-	internal let scoreLabelNode = SKLabelNode()
-	internal let highScoreLabelNode = SKLabelNode()
-	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene
 		self.pipes = Pipes(frame: gameScene.frame)
@@ -49,9 +45,6 @@ class World: SKNode {
 		pipes.drawPipes(completion: { (action, actionName) in
 			self.gameScene.run(action, withKey: actionName)
 		})
-	
-		//Draw the score and high score
-		drawScores()
 		
 		self.addChild(pipes)
 	}
@@ -107,25 +100,7 @@ class World: SKNode {
 		self.gameScene.addChild(skyLimit)
 	}
 	
-	internal func drawScores() {
-		scoreLabelNode.fontName = "Helvetica-Bold"
-		scoreLabelNode.position = CGPoint(x: self.gameScene.frame.midX, y: self.gameScene.frame.height / 6)
-		scoreLabelNode.fontSize = 280
-		scoreLabelNode.alpha = 0.2
-		scoreLabelNode.zPosition = -30
-		scoreLabelNode.text = "0"
-		self.gameScene.addChild(scoreLabelNode)
-		
-		highScoreLabelNode.fontName = "Helvetica"
-		highScoreLabelNode.fontSize = 20
-		highScoreLabelNode.position = CGPoint(x: self.gameScene.frame.width * 0.87 , y: self.gameScene.frame.maxY - highScoreLabelNode.fontSize * 3)
-		
-		highScoreLabelNode.alpha = 0.5
 
-		highScoreLabelNode.text = "N/A"
-
-		self.gameScene.addChild(highScoreLabelNode)
-	}
 	
 	//MARK: App methods
 	
@@ -153,14 +128,6 @@ class World: SKNode {
 	
 	func resetWorld() {
 		pipes.removeAllChildren()
-	}
-	
-	func setHighscore(_ highscore : Int) {
-		highScoreLabelNode.text = "record: " + "\(highscore)"
-	}
-	
-	func setScore(_ score : Int) {
-		scoreLabelNode.text = "\(score)"
 	}
 	
 }
