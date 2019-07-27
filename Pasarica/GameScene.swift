@@ -109,14 +109,7 @@ class GameScene: SKScene {
 		}
 	}
 	
-	func createPauseButton() {
-		pauseButton = SKSpriteNode(imageNamed: "pause")
-		pauseButton.name = "Pause"
-		pauseButton.size = CGSize(width: 40, height: 40)
-		pauseButton.position = CGPoint(x: self.frame.width * 0.9, y: pauseButton.frame.height)
-		pauseButton.zPosition = 100
-		self.addChild(pauseButton)
-	}
+
 	
 	
 	func drawPlayLabel() {
@@ -145,16 +138,25 @@ class GameScene: SKScene {
 	}
 	
 	func resetScene() {
-		world!.resetWorld()
-		
 		canRestart = false
 		createPauseButton()
-		//CREATE HERE THE CONDITION TO START THE WORLD AFTER THE START BUTTON IS PRESSED
+		
+		world!.resetWorld()
+		
+		//Will start a new game - remove the Replay button from the screen
 		self.removeChildren(in: [replayButton])
 
 		world!.startWorld()
-		
 		score = 0
+	}
+	
+	func createPauseButton() {
+		pauseButton = SKSpriteNode(imageNamed: "pause")
+		pauseButton.name = "Pause"
+		pauseButton.size = CGSize(width: 40, height: 40)
+		pauseButton.position = CGPoint(x: self.frame.width * 0.9, y: pauseButton.frame.height)
+		pauseButton.zPosition = 100
+		self.addChild(pauseButton)
 	}
 	
 	internal func shouldScoreBeIncreased(_ contact : SKPhysicsContact) -> Bool {
@@ -203,6 +205,7 @@ class GameScene: SKScene {
 		run(gameOverSound)
 		flashBackground()
 		drawPlayLabel()
+		canRestart = true
 	}
 	
 	func flashBackground() {
@@ -214,10 +217,7 @@ class GameScene: SKScene {
 		
 		let sequenceOfActions = SKAction.sequence([turnBackgroundRed, wait, turnBackgroundWhite, wait, turnBackgoundColorSky])
 		let repeatSequence = SKAction.repeat(sequenceOfActions, count: 4)
-		let canRestartAction = SKAction.run({() in self.letItRestart()})
-		let groupOfActions = SKAction.group([repeatSequence, canRestartAction])
-		
-		self.run(groupOfActions, withKey:"flash")
+		self.run(repeatSequence, withKey: "flash")
 	}
 	
 	func setBackgroundRed() {
@@ -230,9 +230,6 @@ class GameScene: SKScene {
 		self.backgroundColor = SKColor(red: 0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
 	}
 	
-	func letItRestart() {
-		canRestart = true
-	}
 }
 
 extension GameScene: SKPhysicsContactDelegate {
