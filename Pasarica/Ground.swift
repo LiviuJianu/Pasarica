@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Ground: SKNode {
+final class Ground: SKNode {
 	
 	let groundTexture   = SKTexture(imageNamed: "Ground")
 

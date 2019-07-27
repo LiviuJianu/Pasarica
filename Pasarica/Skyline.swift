@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Skyline: SKNode {
+final class Skyline: SKNode {
 
 	
 	let skylineTexture  = SKTexture(imageNamed: "Skyline")

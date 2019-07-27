@@ -10,10 +10,9 @@ import SpriteKit
 import Foundation
 import Crashlytics
 
-class World: SKNode {
+final class World: SKNode {
 	
 	var gameScene : GameScene
-	
 	var pipes: Pipes
 	
 	init(gameScene : GameScene) {
@@ -47,14 +46,7 @@ class World: SKNode {
 		
 	}
 	
-
-	
-
-	
-
-	
 	//MARK: App methods
-	
 	func stopWorld(){
 		self.speed = 0
 		Answers.logLevelEnd("Game Over",

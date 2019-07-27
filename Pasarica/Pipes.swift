@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Pipes: SKNode {
+final class Pipes: SKNode {
 	
 	var gameFrame: CGRect
 	
