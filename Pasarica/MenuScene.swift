@@ -44,7 +44,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		drawPlayLabel()
 		
 		//Create the Bird
-		self.addChild(Bird())
+		self.addChild(Bird(frame: self.frame))
 	}
 
 	func drawGameLabel() {

@@ -20,13 +20,14 @@ final class Pipes: SKNode {
 		
 		super.init()
 		self.name = "Pipes"
+		drawPipes()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func drawPipes(completion: (SKAction, String) -> ()) {
+	func drawPipes() {
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
@@ -42,11 +43,8 @@ final class Pipes: SKNode {
 		let delay = SKAction.wait(forDuration: TimeInterval(2.0))
 		let spawnThenDelay = SKAction.sequence([spawn,delay])
 		let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
-		// When Creating Pipes, this will make pipes indefinitely when the player died
-		// We need to fix this
-		// For the moment we just remove all the actions from the game scene and restart
-		// drawing pipes when a new game is started
-		completion(spawnThenDelayForever, "spawnPipesThenDelayForeverAction")
+
+		run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
 	}
 	
 	func spawnPipes(_ pipesMoveAndRemove : SKAction) {
@@ -91,7 +89,6 @@ final class Pipes: SKNode {
 		
 		pipePair.run(pipesMoveAndRemove)
 		self.addChild(pipePair)
-		
 	}
 	
 	

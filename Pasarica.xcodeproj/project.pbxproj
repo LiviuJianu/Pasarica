@@ -16,7 +16,6 @@
 		1B8B20991A6F13A3007A94E6 /* Pipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8B20981A6F13A3007A94E6 /* Pipes.swift */; };
 		1BAC3FF1226B4A0B00DE4E2F /* crash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1BAC3FF0226B4A0B00DE4E2F /* crash.mp3 */; };
 		8434DC5819C788CA00825DF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC5719C788CA00825DF3 /* AppDelegate.swift */; };
-		8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC5919C788CA00825DF3 /* GameScene.sks */; };
 		8434DC5C19C788CA00825DF3 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC5B19C788CA00825DF3 /* GameScene.swift */; };
 		8434DC5E19C788CA00825DF3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434DC5D19C788CA00825DF3 /* GameViewController.swift */; };
 		8434DC6119C788CA00825DF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8434DC5F19C788CA00825DF3 /* Main.storyboard */; };
@@ -58,7 +57,6 @@
 		8434DC5219C788CA00825DF3 /* Pasarica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pasarica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8434DC5619C788CA00825DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8434DC5719C788CA00825DF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8434DC5919C788CA00825DF3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8434DC5B19C788CA00825DF3 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		8434DC5D19C788CA00825DF3 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		8434DC6019C788CA00825DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 		1B4B47551A6D8EAD0036255B /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				8434DC5919C788CA00825DF3 /* GameScene.sks */,
 				8434DC5B19C788CA00825DF3 /* GameScene.swift */,
 				1B5D17261A6B1B4200C38431 /* MenuScene.swift */,
 			);
@@ -339,7 +336,6 @@
 				8434DC6319C788CA00825DF3 /* Images.xcassets in Resources */,
 				84FE7BCC19D28DED0009D4F6 /* pass.mp3 in Resources */,
 				8460D08119C7BCF300E6602E /* BirdDown.png in Resources */,
-				8434DC5A19C788CA00825DF3 /* GameScene.sks in Resources */,
 				84AE6AFA19C8B8B700E06CFE /* Ground.png in Resources */,
 				8434DC6119C788CA00825DF3 /* Main.storyboard in Resources */,
 				84AE6AFC19C8B8B700E06CFE /* PipeUp.png in Resources */,
@@ -542,7 +538,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Pasarica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -564,7 +560,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Pasarica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";

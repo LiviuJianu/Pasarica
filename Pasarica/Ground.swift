@@ -43,7 +43,7 @@ final class Ground: SKNode {
 		//Ground Physics - lower screen limit
 		let groundLimit = SKNode()
 		groundLimit.position = CGPoint(x: 0, y: groundTexture.size().height / 2)
-		groundLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.size.width, height: groundTexture.size().height))
+		groundLimit.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.size.width, height: groundTexture.size().height))
 		groundLimit.physicsBody?.isDynamic = false
 		groundLimit.physicsBody?.categoryBitMask = CollisionCategory.world.rawValue
 		

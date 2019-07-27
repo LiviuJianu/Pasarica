@@ -13,11 +13,14 @@ import Crashlytics
 final class World: SKNode {
 	
 	var gameScene : GameScene
+	
+	var bird: Bird
 	var pipes: Pipes
 	
 	init(gameScene : GameScene) {
 		self.gameScene = gameScene
 		self.pipes = Pipes(frame: gameScene.frame)
+		self.bird = Bird(frame: gameScene.frame)
 		
 		super.init()
 		
@@ -37,11 +40,11 @@ final class World: SKNode {
 		let sky = Skyline(frame: gameScene.frame)
 		self.addChild(sky)
 		
-		//Draw the pipes
-		pipes.drawPipes(completion: { (action, actionName) in
-			self.gameScene.run(action, withKey: actionName)
-		})
 		self.addChild(pipes)
+		
+		
+		self.addChild(bird)
+		
 		
 		let ground = Ground(frame: gameScene.frame)
 		self.addChild(ground)
@@ -52,20 +55,19 @@ final class World: SKNode {
 	//MARK: App methods
 	func stopWorld(){
 		self.speed = 0
+		self.bird.stop()
+		
 		Answers.logLevelEnd("Game Over",
 							score: NSNumber(integerLiteral: gameScene.score),
 							success: true,
 							customAttributes: nil)
-		gameScene.removeAllActions()
 	}
 	
 	func startWorld(){
 		Answers.logLevelStart("Start Play",
 							  customAttributes: nil)
 		self.speed = 1
-		self.pipes.drawPipes(completion: { (action, actionName) in
-			self.gameScene.run(action, withKey: actionName)
-		})
+		self.pipes.drawPipes()
 	}
 	
 	func isWorldMoving() -> Bool {
@@ -74,6 +76,21 @@ final class World: SKNode {
 	
 	func resetWorld() {
 		pipes.removeAllChildren()
+		bird.reset()
+		
+	}
+	
+	func update() {
+		self.bird.update()
+	}
+	
+	func didCollide(from contact: SKPhysicsContact) -> Bool {
+		if self.speed > 0 {
+			if contact.bodyA.node == bird || contact.bodyB.node == bird {
+				return true
+			}
+		}
+		return false
 	}
 	
 }
