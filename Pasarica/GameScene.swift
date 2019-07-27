@@ -92,14 +92,14 @@ class GameScene: SKScene {
 																"Score": score])
 								self.isPaused = true
 								self.pauseButton.texture = SKTexture(imageNamed: "play")
-								self.removeAllActions()
+								self.speed = 0
 							} else {
 								self.isPaused = false
 								Answers.logCustomEvent(withName: "Game Resumed",
 													   customAttributes: [
 														"Score": score])
 								self.pauseButton.texture = SKTexture(imageNamed: "pause")
-								self.world!.pipes.drawPipes()
+								self.speed = 1
 							}
 						}
 					}
