@@ -8,23 +8,16 @@
 
 import SpriteKit
 
-class Bird: SKSpriteNode {
+final class Bird: SKSpriteNode {
 	
-	let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
-	let birdDownTexture = SKTexture(imageNamed: "BirdDown")
+	private let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
+	private let birdDownTexture = SKTexture(imageNamed: "BirdDown")
 	
-	override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-		super.init(texture: texture, color: color, size: size)
-		
+	init() {
+		super.init(texture: birdUpTexture, color: UIColor.clear, size: birdUpTexture.size())
 		self.createBird(up: birdUpTexture, down: birdDownTexture)
 	}
 
-	convenience init() {
-		let birdTexture = SKTexture(imageNamed: "BirdUp")
-		self.init(texture: birdTexture, color: UIColor.clear, size: birdTexture.size())
-	}
-
-	
 	required init?(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")
 	}
