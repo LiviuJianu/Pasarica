@@ -13,20 +13,14 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	var playButton:SKLabelNode!
 	var bounceTimer:Timer!
-	var viewSize : CGSize!
-		
+	
 	//Scoring variables
 	internal let scoreLabelNode = SKLabelNode()
 	internal let highScoreLabelNode = SKLabelNode()
 	
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-		// set value of the highscore to the saved one, if any
-	}
+	
 
 	override func didMove(to view: SKView) {
-		viewSize = self.size
-		
 		createBackground()
 		
 		bounceTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
@@ -57,7 +51,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		// Game Label
 		let gameLabel = SKLabelNode(fontNamed: "Helvetica")
 		gameLabel.text = "pasarica"
-		gameLabel.position = CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
+		gameLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
 		gameLabel.fontSize = 72
 		gameLabel.fontColor = SKColor.white
 		gameLabel.zPosition = 100
@@ -69,7 +63,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		// Play Button
 		playButton = SKLabelNode(fontNamed: "Helvetica")
 		playButton.text = "joaca"
-		playButton.position =  CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.65)
+		playButton.position =  CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
 		playButton.fontSize = 96
 		playButton.fontColor = SKColor.red
 		playButton.zPosition = 100
