@@ -43,8 +43,11 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		drawGameLabel()
 		drawPlayLabel()
 		
+		let bird = Bird(frame: self.frame)
+		bird.physicsBody?.affectedByGravity = false
+		bird.position = CGPoint(x: self.frame.midX, y: self.frame.midY * 0.8)
 		//Create the Bird
-		self.addChild(Bird(frame: self.frame))
+		self.addChild(bird)
 	}
 
 	func drawGameLabel() {
