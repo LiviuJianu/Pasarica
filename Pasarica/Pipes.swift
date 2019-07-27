@@ -29,7 +29,7 @@ class Pipes: SKNode {
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		//movement of pipes
-		let distanceToMove = self.gameFrame.size.width + 2.0 * self.pipeUpTexture.size().width
+		let distanceToMove = self.gameFrame.size.width + 3.0 * self.pipeUpTexture.size().width
 		let movePipes = SKAction.moveBy(x: -distanceToMove, y: 0.0, duration: TimeInterval(0.01 * distanceToMove))
 		let removePipes = SKAction.removeFromParent()
 		
