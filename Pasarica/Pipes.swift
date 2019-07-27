@@ -24,7 +24,7 @@ class Pipes: SKNode {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func drawPipes(on scene: SKScene) {
+	func drawPipes(completion: (SKAction, String) -> ()) {
 		pipeUpTexture.filteringMode = SKTextureFilteringMode.nearest
 		pipeDownTexture.filteringMode = SKTextureFilteringMode.nearest
 		
@@ -44,7 +44,7 @@ class Pipes: SKNode {
 		// We need to fix this
 		// For the moment we just remove all the actions from the game scene and restart
 		// drawing pipes when a new game is started
-		scene.run(spawnThenDelayForever, withKey: "spawnPipesThenDelayForeverAction")
+		completion(spawnThenDelayForever, "spawnPipesThenDelayForeverAction")
 	}
 	
 	func spawnPipes(_ pipesMoveAndRemove : SKAction) {

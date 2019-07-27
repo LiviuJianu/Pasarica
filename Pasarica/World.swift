@@ -46,7 +46,9 @@ class World: SKNode {
 		drawSky(sky: skylineTexture, ground: groundTexture)
 	
 		//Draw the pipes
-		pipes.drawPipes(on: self.gameScene)
+		pipes.drawPipes(completion: { (action, actionName) in
+			self.gameScene.run(action, withKey: actionName)
+		})
 	
 		//Draw the score and high score
 		drawScores()
@@ -142,7 +144,9 @@ class World: SKNode {
 		Answers.logLevelStart("Start Play",
 							  customAttributes: nil)
 		self.speed = 1
-		self.pipes.drawPipes(on: self.gameScene)
+		self.pipes.drawPipes(completion: { (action, actionName) in
+			self.gameScene.run(action, withKey: actionName)
+		})
 	}
 	
 	func isWorldMoving() -> Bool {
