@@ -63,15 +63,14 @@ class World: SKNode {
 		let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width, y: 0, duration: 0.0)
 		let moveGroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveGroundSprite,resetGroundSprite]))
 		
-		var i : CGFloat = 0
-		while i < 2 + self.gameScene.frame.size.width / (groundTexture.size().width) {
-			i += 1
-			let sprite = SKSpriteNode(texture: groundTexture)
-			sprite.position = CGPoint(x: i * sprite.size.width, y: sprite.size.height / 2)
-			sprite.run(moveGroundSpritesForever)
-			self.addChild(sprite)
-			
+		for i in 0...3 {
+			let groundNode = SKSpriteNode(texture: groundTexture)
+			groundNode.name = "Ground"
+			groundNode.position = CGPoint(x: CGFloat(i) * groundNode.size.width, y: groundNode.size.height / 2)
+			groundNode.run(moveGroundSpritesForever)
+			self.addChild(groundNode)
 		}
+	
 		
 		//Ground - lower screen limit
 		let groundLimit = SKNode()
@@ -89,14 +88,13 @@ class World: SKNode {
 		let moveSkylineSprite = SKAction.moveBy(x: -skylineTexture.size().width, y: 0, duration: TimeInterval(0.01 * skylineTexture.size().width))
 		let resetSkylineSprite = SKAction.moveBy(x: skylineTexture.size().width, y: 0, duration: 0.0)
 		let moveSkylineSpritesForever = SKAction.repeatForever(SKAction.sequence([moveSkylineSprite,resetSkylineSprite]))
-		var j : CGFloat = 0
-		while j < 2 + self.gameScene.frame.size.width / (skylineTexture.size().width) {
-			j += 1;
-			let sprite = SKSpriteNode(texture: skylineTexture)
-			sprite.zPosition = -20
-			sprite.position = CGPoint(x: j * sprite.size.width, y: sprite.size.height / 2 + groundTexture.size().height)
-			sprite.run(moveSkylineSpritesForever)
-			self.addChild(sprite)
+		for i in 0...3 {
+			let skylineNode = SKSpriteNode(texture: skylineTexture)
+			skylineNode.zPosition = -20
+			skylineNode.name = "Skyline"
+			skylineNode.position = CGPoint(x: CGFloat(i) * skylineNode.size.width, y: skylineNode.size.height / 2 + groundTexture.size().height)
+			skylineNode.run(moveSkylineSpritesForever)
+			self.addChild(skylineNode)
 		}
 		
 		//Sky - upper screen limit
