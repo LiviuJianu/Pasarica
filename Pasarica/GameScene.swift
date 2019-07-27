@@ -277,7 +277,7 @@ class GameScene: SKScene {
 		self.backgroundColor = UIColor.white
 	}
 	func setBackgroundColorSky() {
-		self.backgroundColor = SKColor(red: 113.0/255.0, green: 197.0/255.0, blue: 207.0/255.0, alpha: 1.0)
+		self.backgroundColor = SKColor(red: 0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
 	}
 	
 	func letItRestart() {

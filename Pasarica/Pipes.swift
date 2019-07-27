@@ -50,6 +50,7 @@ class Pipes: SKNode {
 	func spawnPipes(_ pipesMoveAndRemove : SKAction) {
 		let pipeGap : CGFloat = 130.0
 		let pipePair = SKNode()
+		pipePair.name = "PipePair"
 		pipePair.position = CGPoint(x: self.gameFrame.size.width + pipeUpTexture.size().width * 2.0, y: 0)
 		pipePair.zPosition = -10
 		
@@ -57,6 +58,7 @@ class Pipes: SKNode {
 		let y = arc4random() % height
 		
 		let pipeDown = SKSpriteNode(texture: pipeDownTexture)
+		pipeDown.name = "PipeDown"
 		pipeDown.position = CGPoint(x: 0.0, y: CGFloat(y) + pipeDown.size.height + CGFloat(pipeGap))
 		
 		pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
@@ -67,6 +69,7 @@ class Pipes: SKNode {
 		pipePair.addChild(pipeDown)
 		
 		let pipeUp = SKSpriteNode(texture: pipeUpTexture)
+		pipeUp.name = "PipeUp"
 		pipeUp.position = CGPoint(x: 0.0, y: CGFloat(y))
 		
 		pipeUp.physicsBody = SKPhysicsBody(rectangleOf: pipeUp.size)
