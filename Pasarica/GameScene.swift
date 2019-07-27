@@ -241,8 +241,7 @@ extension GameScene: SKPhysicsContactDelegate {
 		if shouldScoreBeIncreased(contact){
 			increaseScore()
 			run(birdHasScoredSound)
-		}
-		if self.world!.didCollide(from: contact){
+		} else if self.world!.didCollide(from: contact){
 			terminateGame()
 		}
 	}

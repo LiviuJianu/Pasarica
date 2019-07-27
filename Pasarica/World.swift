@@ -86,9 +86,7 @@ final class World: SKNode {
 	
 	func didCollide(from contact: SKPhysicsContact) -> Bool {
 		if self.speed > 0 {
-			if contact.bodyA.node == bird || contact.bodyB.node == bird {
-				return true
-			}
+			return contact.bodyA.node == bird || contact.bodyB.node == bird
 		}
 		return false
 	}
