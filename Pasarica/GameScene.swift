@@ -20,7 +20,7 @@ class GameScene: SKScene {
 	internal let scoreLabelNode = SKLabelNode()
 	internal let highScoreLabelNode = SKLabelNode()
 	
-	var replayButton:SKLabelNode!
+	var replayButton: SKLabelNode!
 	var pauseButton = SKSpriteNode()
 
 	
@@ -132,6 +132,7 @@ class GameScene: SKScene {
 	
 	func createPauseButton() {
 		pauseButton = SKSpriteNode(imageNamed: "pause")
+		pauseButton.name = "Pause"
 		pauseButton.size = CGSize(width: 40, height: 40)
 		pauseButton.position = CGPoint(x: self.frame.width * 0.9, y: pauseButton.frame.height)
 		pauseButton.zPosition = 100
@@ -142,6 +143,7 @@ class GameScene: SKScene {
 	func drawPlayLabel() {
 		// Play Button
 		replayButton = SKLabelNode(fontNamed: "Helvetica")
+		replayButton.name = "Replay"
 		replayButton.text = "joc nou"
 		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
 		replayButton.fontSize = 96
@@ -218,6 +220,7 @@ class GameScene: SKScene {
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
 		scoreLabelNode.text = "0"
+		scoreLabelNode.name = "Score"
 		self.addChild(scoreLabelNode)
 		
 		highScoreLabelNode.fontName = "Helvetica"
@@ -227,7 +230,7 @@ class GameScene: SKScene {
 		highScoreLabelNode.alpha = 0.5
 		
 		highScoreLabelNode.text = "record: \(self.highscore)"
-		
+		highScoreLabelNode.name = "Highscore"
 		self.addChild(highScoreLabelNode)
 	}
 	

@@ -15,6 +15,7 @@ final class Bird: SKSpriteNode {
 	
 	init() {
 		super.init(texture: birdUpTexture, color: UIColor.clear, size: birdUpTexture.size())
+		self.name = "Bird"
 		self.createBird(up: birdUpTexture, down: birdDownTexture)
 	}
 
@@ -23,7 +24,6 @@ final class Bird: SKSpriteNode {
 	}
 	
 	func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
-		
 		upTexture.filteringMode = SKTextureFilteringMode.nearest
 		downTexture.filteringMode = SKTextureFilteringMode.nearest
 	

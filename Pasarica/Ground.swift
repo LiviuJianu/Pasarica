@@ -14,6 +14,7 @@ final class Ground: SKNode {
 
 	init(frame: CGRect) {
 		super.init()
+		self.name = "Ground"
 		self.drawGround(frame: frame)
 	}
 	
@@ -24,7 +25,6 @@ final class Ground: SKNode {
 	func drawGround(frame: CGRect) {
 		groundTexture.filteringMode = SKTextureFilteringMode.nearest
 		
-		
 		//Ground moving actions
 		let moveGroundSprite = SKAction.moveBy(x: -groundTexture.size().width, y: 0, duration: TimeInterval(0.01 * groundTexture.size().width))
 		let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width, y: 0, duration: 0.0)
@@ -33,7 +33,7 @@ final class Ground: SKNode {
 		//Position ground nodes on the screen
 		for i in 0...3 {
 			let groundNode = SKSpriteNode(texture: groundTexture)
-			groundNode.name = "Ground"
+			groundNode.name = "Ground-child-\(i)"
 			groundNode.position = CGPoint(x: CGFloat(i) * groundNode.size.width, y: groundNode.size.height / 2)
 			groundNode.run(moveGroundSpritesForever)
 			self.addChild(groundNode)

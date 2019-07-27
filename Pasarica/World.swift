@@ -20,6 +20,8 @@ final class World: SKNode {
 		self.pipes = Pipes(frame: gameScene.frame)
 		
 		super.init()
+		
+		self.name = "World"
 		self.createWorld()
 	}
 	
@@ -31,6 +33,7 @@ final class World: SKNode {
 	
 	internal func createWorld()  {
 
+		
 		let sky = Skyline(frame: gameScene.frame)
 		self.addChild(sky)
 		

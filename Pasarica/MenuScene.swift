@@ -14,21 +14,10 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	var playButton:SKLabelNode!
 	var bounceTimer:Timer!
 	var viewSize : CGSize!
-	
-	let bird = SKSpriteNode(texture: SKTexture(imageNamed: "BirdUp"))
-	internal let pipes = SKNode()
-	internal let visibleNodes = SKNode()
-	
+		
 	//Scoring variables
 	internal let scoreLabelNode = SKLabelNode()
 	internal let highScoreLabelNode = SKLabelNode()
-	
-
-	
-	override init(size: CGSize) {
-		super.init(size: size)
-	}
-
 	
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -39,66 +28,29 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		viewSize = self.size
 		
 		createBackground()
-		visibleNodes.speed = 0
-		pipes.speed = 0;
-		self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
-
 		
 		bounceTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-	 
-		if let touch = touches.first{
-
-		let touchLocation = touch.location(in: self)
 		
-		if (playButton.contains(touchLocation)) {
-			self.switchToPlay()
+		if let touch = touches.first{
+			
+			let touchLocation = touch.location(in: self)
+			
+			if (playButton.contains(touchLocation)) {
+				self.switchToPlay()
 			}
 		}
 	}
 	
-	override func update(_ currentTime: TimeInterval) {
-	}
-
 	
 	func createBackground() {
-		let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
-		let birdDownTexture = SKTexture(imageNamed: "BirdDown")
-
 		drawGameLabel()
 		drawPlayLabel()
 		
 		//Create the Bird
-		createBird(up: birdUpTexture, down: birdDownTexture)
-
-		self.addChild(visibleNodes)
-		self.addChild(pipes)
-
-	}
-	
-	internal func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
-		
-		upTexture.filteringMode = SKTextureFilteringMode.nearest
-		downTexture.filteringMode = SKTextureFilteringMode.nearest
-		
-		bird.position = CGPoint(x: self.frame.midX, y: self.frame.midY * 0.8)
-		
-		
-		let animation = SKAction.animate(with: [upTexture,downTexture], timePerFrame: 0.2)
-		let flap = SKAction.repeatForever(animation)
-		bird.run(flap)
-		
-		bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height/2.0)
-		bird.physicsBody?.isDynamic = true
-		bird.physicsBody?.allowsRotation = false
-		
-		bird.physicsBody?.categoryBitMask = CollisionCategory.bird.rawValue
-		bird.physicsBody?.collisionBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
-		bird.physicsBody?.contactTestBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
-		
-		self.addChild(bird)
+		self.addChild(Bird())
 	}
 
 	func drawGameLabel() {
@@ -109,6 +61,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		gameLabel.fontSize = 72
 		gameLabel.fontColor = SKColor.white
 		gameLabel.zPosition = 100
+		gameLabel.name = "GameLabel"
 		self.addChild(gameLabel)
 	}
 	
@@ -120,6 +73,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		playButton.fontSize = 96
 		playButton.fontColor = SKColor.red
 		playButton.zPosition = 100
+		playButton.name = "Play"
 		self.addChild(playButton)
 	}
 	

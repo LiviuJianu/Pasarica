@@ -16,6 +16,7 @@ final class Skyline: SKNode {
 
 	init(frame: CGRect) {
 		super.init()
+		self.name = "Skyline"
 		self.drawSky(frame: frame)
 	}
 	
@@ -32,7 +33,7 @@ final class Skyline: SKNode {
 		for i in 0...3 {
 			let skylineNode = SKSpriteNode(texture: skylineTexture)
 			skylineNode.zPosition = -20
-			skylineNode.name = "Skyline"
+			skylineNode.name = "Skyline-child-\(i)"
 			skylineNode.position = CGPoint(x: CGFloat(i) * skylineNode.size.width, y: skylineNode.size.height / 2 + GROUND_HEIGHT)
 			skylineNode.run(moveSkylineSpritesForever)
 			self.addChild(skylineNode)

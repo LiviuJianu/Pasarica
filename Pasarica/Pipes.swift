@@ -17,7 +17,9 @@ final class Pipes: SKNode {
 	
 	init(frame: CGRect) {
 		self.gameFrame = frame
+		
 		super.init()
+		self.name = "Pipes"
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
