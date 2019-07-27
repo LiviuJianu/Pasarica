@@ -195,14 +195,14 @@ class GameScene: SKScene {
 	}
 		
 	internal func terminateGame(){
+		self.removeAllActions()
+		
 		world!.stopWorld();
 		
 		self.pauseButton.removeFromParent()
 		run(gameOverSound)
 		flashBackground()
 		drawPlayLabel()
-		
-		self.removeAllActions()
 	}
 	
 	func flashBackground() {
