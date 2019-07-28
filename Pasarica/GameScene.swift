@@ -50,8 +50,6 @@ class GameScene: SKScene {
 	//This method is intended to be overridden in a subclass. You can use this method to implement any custom behavior for your scene when it is about to be presented by a view. For example, you might use this method to create the scene’s contents.
 	
 	override func didMove(to view: SKView) {
-		
-
 		// set value of the highscore to the saved one, if any
 		if let high = UserDefaults.standard.object(forKey: "highscore") as? Int	{
 			highscore = high
@@ -80,30 +78,43 @@ class GameScene: SKScene {
 	//MARK: User Interaction
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if canRestart {
-			self.resetScene()
+			self.restartGame()
 		} else {
 			world?.bird.flyBird()
-			if let touch = touches.first{
-				let touchLocation = touch.location(in: self)
-				if(self.pauseButton.contains(touchLocation)) {
-					if self.isPaused == false {
-						Answers.logCustomEvent(withName: "Game Paused",
-											   customAttributes: [
-												"Score": score])
-						self.isPaused = true
-						self.pauseButton.texture = SKTexture(imageNamed: "play")
-						self.speed = 0
-					} else {
-						self.isPaused = false
-						Answers.logCustomEvent(withName: "Game Resumed",
-											   customAttributes: [
-												"Score": score])
-						self.pauseButton.texture = SKTexture(imageNamed: "pause")
-						self.speed = 1
-					}
+			guard let touch = touches.first else { return }
+			
+			let touchLocation = touch.location(in: self)
+			
+			if(self.pauseButton.contains(touchLocation)) {
+				if self.isPaused == false {
+					pauseGame()
+				} else {
+					resumeGame()
 				}
 			}
 		}
+	}
+	
+	func pauseGame() {
+		self.isPaused = true
+		self.speed = 0
+		
+		self.pauseButton.texture = SKTexture(imageNamed: "play")
+		
+		Answers.logCustomEvent(withName: "Game Paused",
+							   customAttributes: [
+								"Score": score])
+	}
+	
+	func resumeGame() {
+		self.isPaused = false
+		self.speed = 1
+		
+		self.pauseButton.texture = SKTexture(imageNamed: "pause")
+				
+		Answers.logCustomEvent(withName: "Game Resumed",
+							   customAttributes: [
+								"Score": score])
 	}
 	
 
@@ -119,14 +130,14 @@ class GameScene: SKScene {
 		self.physicsWorld.contactDelegate = self
 	}
 	
-	func resetScene() {
+	func restartGame() {
 		canRestart = false
 		addPauseButton()
 		
 		world!.resetWorld()
 		
 		//Will start a new game - remove the Replay button from the screen
-		self.removeChildren(in: [replayButton])
+		self.replayButton.removeFromParent()
 
 		world!.startWorld()
 		score = 0
@@ -171,20 +182,6 @@ class GameScene: SKScene {
 		highScoreLabelNode.text = "record: \(self.highscore)"
 		highScoreLabelNode.name = "Highscore"
 		self.addChild(highScoreLabelNode)
-	}
-		
-	internal func terminateGame(){
-		self.removeAllActions()
-		
-		self.world!.stopWorld();
-		
-		self.pauseButton.removeFromParent()
-		
-		canRestart = true
-		
-		run(gameOverSound)
-		flashBackground()
-		addReplayButton()
 	}
 	
 	func flashBackground() {
@@ -236,5 +233,19 @@ extension GameScene: SKPhysicsContactDelegate {
 		if (score > self.highscore){
 			self.highscore = score
 		}
+	}
+	
+	internal func terminateGame(){
+		self.removeAllActions()
+		
+		self.world!.stopWorld();
+		
+		self.pauseButton.removeFromParent()
+		
+		canRestart = true
+		
+		run(gameOverSound)
+		flashBackground()
+		addReplayButton()
 	}
 }

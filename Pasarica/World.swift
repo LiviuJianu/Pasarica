@@ -68,6 +68,7 @@ final class World: SKNode {
 							  customAttributes: nil)
 		self.speed = 1
 		self.pipes.drawPipes()
+		self.bird.flyBird()
 	}
 	
 	func isWorldMoving() -> Bool {
