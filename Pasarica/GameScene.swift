@@ -35,7 +35,6 @@ class GameScene: SKScene {
         didSet {
             highScoreLabelNode.text = "record: " + "\(highscore)"
             UserDefaults.standard.set(highscore, forKey: "highscore")
-            UserDefaults.standard.synchronize()
         }
 	}
 	
@@ -199,13 +198,15 @@ class GameScene: SKScene {
 	internal func terminateGame(){
 		self.removeAllActions()
 		
-		world!.stopWorld();
+		self.world!.stopWorld();
 		
 		self.pauseButton.removeFromParent()
+		
+		canRestart = true
+		
 		run(gameOverSound)
 		flashBackground()
 		drawPlayLabel()
-		canRestart = true
 	}
 	
 	func flashBackground() {
