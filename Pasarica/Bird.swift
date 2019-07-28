@@ -10,25 +10,29 @@ import SpriteKit
 
 final class Bird: SKSpriteNode {
 	
+	var gameFrame: CGRect
+	
 	private let birdUpTexture   = SKTexture(imageNamed: "BirdUp")
 	private let birdDownTexture = SKTexture(imageNamed: "BirdDown")
 	
 	init(frame: CGRect) {
+		self.gameFrame = frame
 		super.init(texture: birdUpTexture, color: UIColor.clear, size: birdUpTexture.size())
+		
 		self.name = "Bird"
-		self.createBird(up: birdUpTexture, down: birdDownTexture, frame: frame)
+		self.createBird(up: birdUpTexture, down: birdDownTexture)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")
 	}
 	
-	func createBird(up upTexture : SKTexture, down downTexture : SKTexture, frame: CGRect) {
+	func createBird(up upTexture : SKTexture, down downTexture : SKTexture) {
 		upTexture.filteringMode = SKTextureFilteringMode.nearest
 		downTexture.filteringMode = SKTextureFilteringMode.nearest
 		
 		self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-		self.position = CGPoint(x: frame.size.width / 2.8, y: frame.midY)
+		self.position = CGPoint(x: self.gameFrame.size.width / 2.8, y: self.gameFrame.midY)
 		
 		self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height/2.0)
 		self.physicsBody?.isDynamic = true
@@ -83,7 +87,7 @@ final class Bird: SKSpriteNode {
 	}
 	
 	func reset() {
-		self.position = CGPoint(x: self.frame.size.width / 2.8, y: self.frame.midY)
+		self.position = CGPoint(x: self.gameFrame.size.width / 2.8, y: self.gameFrame.midY)
 		self.speed = 1.0
 		self.zRotation = 0.0
 		
@@ -93,9 +97,6 @@ final class Bird: SKSpriteNode {
 		if self.action(forKey: "stopBirdAction") != nil {
 			self.removeAction(forKey: "stopBirdAction")
 		}
-		
-		let birdProps = SKAction.run({() in self.reset()})
-		self.run(birdProps)
 	}
 	
 	func stop() {

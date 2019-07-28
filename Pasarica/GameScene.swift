@@ -131,16 +131,17 @@ class GameScene: SKScene {
 	}
 	
 	func restartGame() {
+		score = 0
 		canRestart = false
-		addPauseButton()
 		
-		world!.resetWorld()
-		
+		self.addPauseButton()
 		//Will start a new game - remove the Replay button from the screen
 		self.replayButton.removeFromParent()
 
+		
+		world!.resetWorld()
 		world!.startWorld()
-		score = 0
+		
 	}
 	
 	func addReplayButton() {

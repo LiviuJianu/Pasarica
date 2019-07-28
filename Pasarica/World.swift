@@ -78,7 +78,6 @@ final class World: SKNode {
 	func resetWorld() {
 		pipes.removeAllChildren()
 		bird.reset()
-		
 	}
 	
 	func update() {
