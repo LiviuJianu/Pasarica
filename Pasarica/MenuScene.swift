@@ -21,7 +21,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 
 	override func didMove(to view: SKView) {
-		createBackground()
+		addBackground()
 		
 		bounceTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
 	}
@@ -40,8 +40,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
 	
 	func addBackground() {
-		drawGameLabel()
-		drawPlayLabel()
+		addGameLabel()
+		addPlayLabel()
 		
 		let bird = Bird(frame: self.frame)
 		bird.physicsBody?.affectedByGravity = false

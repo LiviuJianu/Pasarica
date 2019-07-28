@@ -79,32 +79,30 @@ class GameScene: SKScene {
 	
 	//MARK: User Interaction
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		if(world!.isWorldMoving()) {
-			world?.bird.flyBird()
-			if (!canRestart) {
-				if let touch = touches.first{
-					let touchLocation = touch.location(in: self)
-					if(self.pauseButton.contains(touchLocation)) {
-							if self.isPaused == false {
-								Answers.logCustomEvent(withName: "Game Paused",
-															   customAttributes: [
-																"Score": score])
-								self.isPaused = true
-								self.pauseButton.texture = SKTexture(imageNamed: "play")
-								self.speed = 0
-							} else {
-								self.isPaused = false
-								Answers.logCustomEvent(withName: "Game Resumed",
-													   customAttributes: [
-														"Score": score])
-								self.pauseButton.texture = SKTexture(imageNamed: "pause")
-								self.speed = 1
-							}
-						}
-					}
-			}
-		} else if(canRestart) {
+		if canRestart {
 			self.resetScene()
+		} else {
+			world?.bird.flyBird()
+			if let touch = touches.first{
+				let touchLocation = touch.location(in: self)
+				if(self.pauseButton.contains(touchLocation)) {
+					if self.isPaused == false {
+						Answers.logCustomEvent(withName: "Game Paused",
+											   customAttributes: [
+												"Score": score])
+						self.isPaused = true
+						self.pauseButton.texture = SKTexture(imageNamed: "play")
+						self.speed = 0
+					} else {
+						self.isPaused = false
+						Answers.logCustomEvent(withName: "Game Resumed",
+											   customAttributes: [
+												"Score": score])
+						self.pauseButton.texture = SKTexture(imageNamed: "pause")
+						self.speed = 1
+					}
+				}
+			}
 		}
 	}
 	
