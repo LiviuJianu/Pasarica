@@ -71,6 +71,8 @@ final class Bird: SKSpriteNode {
 	
 	func flyBird() {
 		
+		self.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+		
 		let gameplayDict : NSDictionary = {
 			let path = Bundle.main.path(forResource: "Gameplay", ofType: "plist")
 			let dict = NSDictionary(contentsOfFile: path!)
@@ -78,10 +80,6 @@ final class Bird: SKSpriteNode {
 		}()
 		
 		let impulseVector = gameplayDict.value(forKey: "Impulse-Vector") as! CGFloat
-		
-		self.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-		self.physicsBody?.collisionBitMask = CollisionCategory.world.rawValue | CollisionCategory.pipe.rawValue
-
 		let impulse = CGVector(dx: 0, dy: impulseVector)
 		self.physicsBody?.applyImpulse(impulse)
 	}

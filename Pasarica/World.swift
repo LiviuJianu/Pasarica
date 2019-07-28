@@ -86,6 +86,7 @@ final class World: SKNode {
 	
 	func didCollide(from contact: SKPhysicsContact) -> Bool {
 		if self.speed > 0 {
+			//when one of the nodes that had contact is the bird, the game stops.
 			return contact.bodyA.node == bird || contact.bodyB.node == bird
 		}
 		return false
