@@ -111,7 +111,7 @@ class GameScene: SKScene {
 		self.speed = 1
 		
 		self.pauseButton.texture = SKTexture(imageNamed: "pause")
-				
+		
 		Answers.logCustomEvent(withName: "Game Resumed",
 							   customAttributes: [
 								"Score": score])
@@ -164,15 +164,24 @@ class GameScene: SKScene {
 	}
 	
 	internal func addScores() {
+		addScoreLabel()
+		addHighscoreLabel()
+	}
+	
+	func addScoreLabel() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
-		scoreLabelNode.position = CGPoint(x: self.frame.midX, y: self.frame.height / 6)
 		scoreLabelNode.fontSize = 280
+		scoreLabelNode.position = CGPoint(x: self.frame.midX, y: self.frame.height / 6)
+		
 		scoreLabelNode.alpha = 0.2
 		scoreLabelNode.zPosition = -30
-		scoreLabelNode.text = "0"
+		
+		scoreLabelNode.text = "\(score)"
 		scoreLabelNode.name = "Score"
 		self.addChild(scoreLabelNode)
-		
+	}
+	
+	func addHighscoreLabel() {
 		highScoreLabelNode.fontName = "Helvetica"
 		highScoreLabelNode.fontSize = 20
 		highScoreLabelNode.position = CGPoint(x: self.frame.width * 0.87 , y: self.frame.maxY - highScoreLabelNode.fontSize * 3)
