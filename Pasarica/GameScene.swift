@@ -62,10 +62,10 @@ class GameScene: SKScene {
 		self.addChild(self.world!)
 		
 		//Draw the score and high score
-		drawScores()
+		addScores()
 		
 		//show the pause button on screen
-		createPauseButton()
+		addPauseButton()
 		
 		addGravityAndInteraction()
 
@@ -109,21 +109,6 @@ class GameScene: SKScene {
 	}
 	
 
-	
-	
-	func drawPlayLabel() {
-		// Play Button
-		replayButton = SKLabelNode(fontNamed: "Helvetica")
-		replayButton.name = "Replay"
-		replayButton.text = "joc nou"
-		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
-		replayButton.fontSize = 96
-		replayButton.fontColor = SKColor.red
-		self.addChild(replayButton)
-	}
-	
-
-	
 	func addGravityAndInteraction() {	
 		let gameplayDict : NSDictionary = {
 			let path = Bundle.main.path(forResource: "Gameplay", ofType: "plist")
@@ -138,7 +123,7 @@ class GameScene: SKScene {
 	
 	func resetScene() {
 		canRestart = false
-		createPauseButton()
+		addPauseButton()
 		
 		world!.resetWorld()
 		
@@ -149,7 +134,18 @@ class GameScene: SKScene {
 		score = 0
 	}
 	
-	func createPauseButton() {
+	func addReplayButton() {
+		// Replay Button
+		replayButton = SKLabelNode(fontNamed: "Helvetica")
+		replayButton.name = "Replay"
+		replayButton.text = "joc nou"
+		replayButton.position =  CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.65)
+		replayButton.fontSize = 96
+		replayButton.fontColor = SKColor.red
+		self.addChild(replayButton)
+	}
+	
+	func addPauseButton() {
 		pauseButton = SKSpriteNode(imageNamed: "pause")
 		pauseButton.name = "Pause"
 		pauseButton.size = CGSize(width: 40, height: 40)
@@ -158,23 +154,7 @@ class GameScene: SKScene {
 		self.addChild(pauseButton)
 	}
 	
-	internal func shouldScoreBeIncreased(_ contact : SKPhysicsContact) -> Bool {
-		if(world!.isWorldMoving()) {
-			if(CollisionCategory.score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.score.isBitmask(contact.bodyB.categoryBitMask)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	internal func increaseScore(){
-		score += 1
-		if (score > self.highscore){
-			self.highscore = score
-		}
-	}
-	
-	internal func drawScores() {
+	internal func addScores() {
 		scoreLabelNode.fontName = "Helvetica-Bold"
 		scoreLabelNode.position = CGPoint(x: self.frame.midX, y: self.frame.height / 6)
 		scoreLabelNode.fontSize = 280
@@ -206,7 +186,7 @@ class GameScene: SKScene {
 		
 		run(gameOverSound)
 		flashBackground()
-		drawPlayLabel()
+		addReplayButton()
 	}
 	
 	func flashBackground() {
@@ -241,6 +221,22 @@ extension GameScene: SKPhysicsContactDelegate {
 			run(birdHasScoredSound)
 		} else if self.world!.didCollide(from: contact){
 			terminateGame()
+		}
+	}
+	
+	internal func shouldScoreBeIncreased(_ contact : SKPhysicsContact) -> Bool {
+		if(world!.isWorldMoving()) {
+			if(CollisionCategory.score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.score.isBitmask(contact.bodyB.categoryBitMask)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	internal func increaseScore(){
+		score += 1
+		if (score > self.highscore){
+			self.highscore = score
 		}
 	}
 }

@@ -39,7 +39,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 	}
 	
 	
-	func createBackground() {
+	func addBackground() {
 		drawGameLabel()
 		drawPlayLabel()
 		
@@ -50,7 +50,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		self.addChild(bird)
 	}
 
-	func drawGameLabel() {
+	func addGameLabel() {
 		// Game Label
 		let gameLabel = SKLabelNode(fontNamed: "Helvetica")
 		gameLabel.text = "pasarica"
@@ -62,7 +62,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		self.addChild(gameLabel)
 	}
 	
-	func drawPlayLabel() {
+	func addPlayLabel() {
 		// Play Button
 		playButton = SKLabelNode(fontNamed: "Helvetica")
 		playButton.text = "joaca"
