@@ -71,7 +71,7 @@ final class World: SKNode {
 		self.bird.flyBird()
 	}
 	
-	func isWorldMoving() -> Bool {
+	func isMoving() -> Bool {
 		return self.speed > 0
 	}
 	

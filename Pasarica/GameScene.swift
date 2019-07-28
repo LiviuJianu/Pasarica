@@ -70,7 +70,7 @@ class GameScene: SKScene {
 	}
 
 	override func update(_ currentTime: TimeInterval) {
-		if(world!.isWorldMoving()) {
+		if(world!.isMoving()) {
 			world!.update()
 		}
 	}
@@ -229,7 +229,7 @@ extension GameScene: SKPhysicsContactDelegate {
 	}
 	
 	internal func shouldScoreBeIncreased(_ contact : SKPhysicsContact) -> Bool {
-		if(world!.isWorldMoving()) {
+		if(world!.isMoving()) {
 			if(CollisionCategory.score.isBitmask(contact.bodyA.categoryBitMask) || CollisionCategory.score.isBitmask(contact.bodyB.categoryBitMask)) {
 				return true;
 			}
