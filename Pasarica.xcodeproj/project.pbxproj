@@ -7,8 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B21024D22EBAB9900363091 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B21024B22EBAB9900363091 /* Fabric.framework */; };
-		1B21024E22EBAB9900363091 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B21024C22EBAB9900363091 /* Crashlytics.framework */; };
+		1B2517DB234E339900E07379 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517CC234E339800E07379 /* FirebaseCore.framework */; };
+		1B2517DC234E339900E07379 /* FIRAnalyticsConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517CD234E339800E07379 /* FIRAnalyticsConnector.framework */; };
+		1B2517DD234E339900E07379 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517CE234E339800E07379 /* Fabric.framework */; };
+		1B2517DE234E339900E07379 /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517CF234E339800E07379 /* Protobuf.framework */; };
+		1B2517DF234E339900E07379 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D0234E339800E07379 /* FirebaseInstanceID.framework */; };
+		1B2517E0234E339900E07379 /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D1234E339900E07379 /* GoogleDataTransportCCTSupport.framework */; };
+		1B2517E1234E339900E07379 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D2234E339900E07379 /* FirebaseAnalytics.framework */; };
+		1B2517E2234E339900E07379 /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D3234E339900E07379 /* GoogleDataTransport.framework */; };
+		1B2517E3234E339900E07379 /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D4234E339900E07379 /* FirebaseCoreDiagnostics.framework */; };
+		1B2517E4234E339900E07379 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D5234E339900E07379 /* GoogleUtilities.framework */; };
+		1B2517E5234E339900E07379 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D6234E339900E07379 /* Crashlytics.framework */; };
+		1B2517E6234E339900E07379 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D7234E339900E07379 /* nanopb.framework */; };
+		1B2517E7234E339900E07379 /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D8234E339900E07379 /* GoogleAppMeasurement.framework */; };
+		1B2517E8234E339900E07379 /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517D9234E339900E07379 /* FirebaseMessaging.framework */; };
+		1B2517E9234E339900E07379 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2517DA234E339900E07379 /* GoogleMobileAds.framework */; };
+		1B2517EB234E345800E07379 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B2517EA234E345800E07379 /* GoogleService-Info.plist */; };
 		1B2E037C22ECDD2900EECDA0 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E037B22ECDD2900EECDA0 /* Ground.swift */; };
 		1B2E037E22ECDF7300EECDA0 /* Skyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E037D22ECDF7300EECDA0 /* Skyline.swift */; };
 		1B4B475B1A6EDDFF0036255B /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B475A1A6EDDFF0036255B /* Bird.swift */; };
@@ -46,8 +60,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B21024B22EBAB9900363091 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		1B21024C22EBAB9900363091 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		1B2517CC234E339800E07379 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = "<group>"; };
+		1B2517CD234E339800E07379 /* FIRAnalyticsConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FIRAnalyticsConnector.framework; sourceTree = "<group>"; };
+		1B2517CE234E339800E07379 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		1B2517CF234E339800E07379 /* Protobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protobuf.framework; sourceTree = "<group>"; };
+		1B2517D0234E339800E07379 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		1B2517D1234E339900E07379 /* GoogleDataTransportCCTSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleDataTransportCCTSupport.framework; sourceTree = "<group>"; };
+		1B2517D2234E339900E07379 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		1B2517D3234E339900E07379 /* GoogleDataTransport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleDataTransport.framework; sourceTree = "<group>"; };
+		1B2517D4234E339900E07379 /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
+		1B2517D5234E339900E07379 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		1B2517D6234E339900E07379 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		1B2517D7234E339900E07379 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
+		1B2517D8234E339900E07379 /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		1B2517D9234E339900E07379 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseMessaging.framework; sourceTree = "<group>"; };
+		1B2517DA234E339900E07379 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		1B2517EA234E345800E07379 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1B2E037B22ECDD2900EECDA0 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		1B2E037D22ECDF7300EECDA0 /* Skyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skyline.swift; sourceTree = "<group>"; };
 		1B4B475A1A6EDDFF0036255B /* Bird.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bird.swift; sourceTree = "<group>"; };
@@ -83,9 +111,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B2517E9234E339900E07379 /* GoogleMobileAds.framework in Frameworks */,
+				1B2517DB234E339900E07379 /* FirebaseCore.framework in Frameworks */,
+				1B2517E0234E339900E07379 /* GoogleDataTransportCCTSupport.framework in Frameworks */,
+				1B2517E2234E339900E07379 /* GoogleDataTransport.framework in Frameworks */,
+				1B2517E8234E339900E07379 /* FirebaseMessaging.framework in Frameworks */,
 				84FE7BC519D27C0B0009D4F6 /* AVFoundation.framework in Frameworks */,
-				1B21024E22EBAB9900363091 /* Crashlytics.framework in Frameworks */,
-				1B21024D22EBAB9900363091 /* Fabric.framework in Frameworks */,
+				1B2517DE234E339900E07379 /* Protobuf.framework in Frameworks */,
+				1B2517E1234E339900E07379 /* FirebaseAnalytics.framework in Frameworks */,
+				1B2517E5234E339900E07379 /* Crashlytics.framework in Frameworks */,
+				1B2517E6234E339900E07379 /* nanopb.framework in Frameworks */,
+				1B2517DF234E339900E07379 /* FirebaseInstanceID.framework in Frameworks */,
+				1B2517DC234E339900E07379 /* FIRAnalyticsConnector.framework in Frameworks */,
+				1B2517E3234E339900E07379 /* FirebaseCoreDiagnostics.framework in Frameworks */,
+				1B2517E4234E339900E07379 /* GoogleUtilities.framework in Frameworks */,
+				1B2517E7234E339900E07379 /* GoogleAppMeasurement.framework in Frameworks */,
+				1B2517DD234E339900E07379 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,8 +143,21 @@
 		1B21024922EBAB5A00363091 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1B21024C22EBAB9900363091 /* Crashlytics.framework */,
-				1B21024B22EBAB9900363091 /* Fabric.framework */,
+				1B2517D6234E339900E07379 /* Crashlytics.framework */,
+				1B2517CE234E339800E07379 /* Fabric.framework */,
+				1B2517CD234E339800E07379 /* FIRAnalyticsConnector.framework */,
+				1B2517D2234E339900E07379 /* FirebaseAnalytics.framework */,
+				1B2517CC234E339800E07379 /* FirebaseCore.framework */,
+				1B2517D4234E339900E07379 /* FirebaseCoreDiagnostics.framework */,
+				1B2517D0234E339800E07379 /* FirebaseInstanceID.framework */,
+				1B2517D9234E339900E07379 /* FirebaseMessaging.framework */,
+				1B2517D8234E339900E07379 /* GoogleAppMeasurement.framework */,
+				1B2517D3234E339900E07379 /* GoogleDataTransport.framework */,
+				1B2517D1234E339900E07379 /* GoogleDataTransportCCTSupport.framework */,
+				1B2517DA234E339900E07379 /* GoogleMobileAds.framework */,
+				1B2517D5234E339900E07379 /* GoogleUtilities.framework */,
+				1B2517D7234E339900E07379 /* nanopb.framework */,
+				1B2517CF234E339800E07379 /* Protobuf.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -179,6 +233,7 @@
 		8434DC5419C788CA00825DF3 /* Pasarica */ = {
 			isa = PBXGroup;
 			children = (
+				1B2517EA234E345800E07379 /* GoogleService-Info.plist */,
 				1B4B47561A6D8EB80036255B /* Controller */,
 				1B4B47551A6D8EAD0036255B /* Scenes */,
 				1B4B47571A6D8EC50036255B /* Utilities */,
@@ -292,7 +347,7 @@
 				TargetAttributes = {
 					8434DC5119C788CA00825DF3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = 6KPQA28VX7;
+						DevelopmentTeam = ZH4QTTZANA;
 						LastSwiftMigration = 1020;
 					};
 					8434DC6A19C788CA00825DF3 = {
@@ -327,6 +382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B2517EB234E345800E07379 /* GoogleService-Info.plist in Resources */,
 				FEECFA5919D016CC00AE7B4F /* Gameplay.plist in Resources */,
 				84AE6AFB19C8B8B700E06CFE /* PipeDown.png in Resources */,
 				8434DC6619C788CA00825DF3 /* LaunchScreen.xib in Resources */,
@@ -532,6 +588,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZH4QTTZANA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -540,6 +597,10 @@
 				INFOPLIST_FILE = Pasarica/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -554,6 +615,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZH4QTTZANA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -562,6 +624,10 @@
 				INFOPLIST_FILE = Pasarica/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ro.vizitez.pasarica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
