@@ -59,7 +59,6 @@ final class World: SKNode {
 		self.bird.stop()
 		
 		Analytics.logEvent(AnalyticsEventLevelEnd, parameters: [
-			AnalyticsParameterItemName: "score",
 			AnalyticsParameterScore: "\(gameScene.score)"
 		])
 		

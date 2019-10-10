@@ -8,6 +8,7 @@
 
 import SpriteKit
 import AVFoundation
+import FirebaseAnalytics
 
 class MenuScene: SKScene, AVAudioPlayerDelegate {
 	
@@ -24,6 +25,9 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
 		addBackground()
 		
 		bounceTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(MenuScene.animatePlay), userInfo: nil, repeats: true)
+		Analytics.logEvent(AnalyticsEventAppOpen, parameters: [
+			"screen": "MenuScene"
+		])
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

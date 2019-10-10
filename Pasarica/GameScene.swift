@@ -103,7 +103,6 @@ class GameScene: SKScene {
 		self.pauseButton.texture = SKTexture(imageNamed: "play")
 
 		Analytics.logEvent("pause", parameters: [
-			AnalyticsParameterItemName: "score",
 			AnalyticsParameterScore: "\(score)"
 		])
 		
@@ -116,7 +115,6 @@ class GameScene: SKScene {
 		self.pauseButton.texture = SKTexture(imageNamed: "pause")
 
 		Analytics.logEvent("resume", parameters: [
-			AnalyticsParameterItemName: "score",
 			AnalyticsParameterScore: "\(score)"
 		])
 		
@@ -136,6 +134,8 @@ class GameScene: SKScene {
 	}
 	
 	func restartGame() {
+		Analytics.logEvent("restart", parameters: nil)
+		
 		score = 0
 		canRestart = false
 		
