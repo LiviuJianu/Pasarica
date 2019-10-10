@@ -9,6 +9,7 @@
 import SpriteKit
 import Foundation
 import Crashlytics
+import FirebaseAnalytics
 
 final class World: SKNode {
 	
@@ -57,15 +58,16 @@ final class World: SKNode {
 		self.speed = 0
 		self.bird.stop()
 		
-		Answers.logLevelEnd("Game Over",
-							score: NSNumber(integerLiteral: gameScene.score),
-							success: true,
-							customAttributes: nil)
+		Analytics.logEvent(AnalyticsEventLevelEnd, parameters: [
+			AnalyticsParameterItemName: "score",
+			AnalyticsParameterScore: "\(gameScene.score)"
+		])
+		
 	}
 	
 	func startWorld(){
-		Answers.logLevelStart("Start Play",
-							  customAttributes: nil)
+		Analytics.logEvent(AnalyticsEventLevelStart, parameters: nil)
+		
 		self.speed = 1
 		self.pipes.drawPipes()
 		self.bird.flyBird()

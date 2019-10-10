@@ -5,6 +5,7 @@
 import SpriteKit
 import AVFoundation
 import Crashlytics
+import FirebaseAnalytics
 
 class GameScene: SKScene {
 	
@@ -100,10 +101,12 @@ class GameScene: SKScene {
 		self.speed = 0
 		
 		self.pauseButton.texture = SKTexture(imageNamed: "play")
+
+		Analytics.logEvent("pause", parameters: [
+			AnalyticsParameterItemName: "score",
+			AnalyticsParameterScore: "\(score)"
+		])
 		
-		Answers.logCustomEvent(withName: "Game Paused",
-							   customAttributes: [
-								"Score": score])
 	}
 	
 	func resumeGame() {
@@ -111,10 +114,12 @@ class GameScene: SKScene {
 		self.speed = 1
 		
 		self.pauseButton.texture = SKTexture(imageNamed: "pause")
+
+		Analytics.logEvent("resume", parameters: [
+			AnalyticsParameterItemName: "score",
+			AnalyticsParameterScore: "\(score)"
+		])
 		
-		Answers.logCustomEvent(withName: "Game Resumed",
-							   customAttributes: [
-								"Score": score])
 	}
 	
 
