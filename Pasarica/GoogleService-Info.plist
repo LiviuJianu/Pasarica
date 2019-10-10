@@ -32,9 +32,5 @@
 	<string>1:70521248570:ios:3d94cdfb4f4e40b2214e03</string>
 	<key>DATABASE_URL</key>
 	<string>https://pasarica-f3eb3.firebaseio.com</string>
-	<key>GADIsAdManagerApp</key>
-	<false/>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-6411904471913540~7149822973</string>
 </dict>
 </plist>
